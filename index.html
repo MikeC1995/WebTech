@@ -20,7 +20,7 @@
   <body>
     <div id="side-panel">
       <div id="top-bar">
-        <img id="menu-icon" src="/assets/images/icons/white/menu.png">
+        <img id="menu-icon" src="/assets/images/icons/white/back.png">
       </div>
 
       <!-- Side panel content goes here. TODO: Angularify -->
@@ -30,28 +30,28 @@
         <img id="profile-settings-expand" src="/assets/images/icons/white/expand.png">
 
         <ul id="menu-items">
-          <li>
-            <a href="#"><img src="/assets/images/icons/white/pin.png">My Map</a>
+          <li ui-sref-active="selected">
+            <a ui-sref="map"><img src="/assets/images/icons/white/pin.png">My Map</a>
           </li>
-          <li class="selected">
-            <a href="#"><img src="/assets/images/icons/white/manage.png">Manage Trips</a>
+          <li ui-sref-active="selected">
+            <a ui-sref="trips"><img src="/assets/images/icons/white/manage.png">Manage Trips</a>
           </li>
-          <li>
-            <a href="#"><img src="/assets/images/icons/white/map.png">Friend's Maps</a>
+          <li ui-sref-active="selected">
+            <a ui-sref="friends"><img src="/assets/images/icons/white/map.png">Friend's Maps</a>
           </li>
         </ul>
       </div>
       <!-- -->
 
     </div>
-    <div id="content-panel">
+    <div ui-view id="content-panel">
       <!-- Main content goes here. TODO: Angularify -->
     </div>
 
     <!-- Dependencies -->
     <script src="/dependencies/jquery-2.1.1.min.js"></script>
     <script src="/dependencies/angular.min.js"></script>
-    <script src="/dependencies/angular-route.min.js"></script>
+    <script src="/dependencies/angular-ui-router.min.js"></script>
 
     <!-- Scripts -->
     <script src="/app/app.js"></script>
