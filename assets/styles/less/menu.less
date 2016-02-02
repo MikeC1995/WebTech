@@ -1,0 +1,55 @@
+#menu {
+  width: 100%;
+  height: calc(~"100% - 50px");
+  background-color: @primary-dark;
+  color: #fff;
+  text-align: center;
+
+  #profile-picture {
+    display: block;
+    width: 80px;
+    height: auto;
+    margin: auto;
+    padding: 15px 0;
+    border-radius: 50%;
+  }
+  #profile-name {
+    font-size: 18px;
+    font-weight: 300;
+  }
+  #profile-settings-expand {
+    height: 10px;
+    width: auto;
+    padding: 0 5px;
+    cursor: pointer;
+    cursor: hand;
+  }
+
+  #menu-items {
+    text-align: left;
+    font-size: 14px;
+    width: 100%;
+    li {
+      box-sizing: border-box;
+      &:hover {
+        background-color: @primary-light;
+      }
+      &.selected {
+        border-left: 5px solid @accent;
+      }
+      &:not(.selected) {
+        border-left: 5px solid transparent;
+      }
+      a {
+        display: block;
+        padding: 15px 10px;
+        text-transform: uppercase;
+        img {
+          height: 15px;
+          width: auto;
+          padding-right: 15px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+Icons:
+menu: http://www.flaticon.com/free-icon/menu-button_60510#term=menu&page=1&position=2
+expand: http://www.flaticon.com/free-icon/arrow-point-to-down_32209#term=down&page=1&position=4
+pin: http://www.flaticon.com/free-icon/map-pin-silhouette_8753#term=pin&page=1&position=2
+map: http://www.flaticon.com/free-icon/map-location_32364#term=map&page=1&position=11
