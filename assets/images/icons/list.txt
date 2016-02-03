@@ -4,3 +4,4 @@ expand: http://www.flaticon.com/free-icon/arrow-point-to-down_32209#term=down&pa
 pin: http://www.flaticon.com/free-icon/map-pin-silhouette_8753#term=pin&page=1&position=2
 map: http://www.flaticon.com/free-icon/map-location_32364#term=map&page=1&position=11
 back: http://www.flaticon.com/free-icon/left-arrow_61752#term=back&page=1&position=7
+add: http://www.flaticon.com/free-icon/add-circular-outlined-button_54443#term=add&page=1&position=1

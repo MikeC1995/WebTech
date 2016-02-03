@@ -1,0 +1,13 @@
+<ul class="trip-tabs" ng-controller="tripTabsController">
+  <!-- Trip tabs -->
+  <!-- When ng-repeat has finished call the rendered() function defined in the
+  trip-tabs directive, so that the directive can access the repeated elements. -->
+  <li class="trip-item" ng-init="$last && rendered()" ng-repeat="trip in trips">
+    <a href="#">{{ trip }}</a>
+  </li>
+
+  <!-- Add trip image -->
+  <li>
+    <a href="#"><img src="/assets/images/icons/black/add.png"></a>
+  </li>
+</ul>

@@ -1,7 +1,7 @@
 'use strict';
 
 // The root application module for this app
-var app = angular.module('app', ['ui.router']);
+var app = angular.module('app', ['ui.router', 'trips']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
