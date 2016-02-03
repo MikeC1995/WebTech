@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app" ng-controller="appController">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <base href="/">
@@ -17,33 +17,8 @@
     <link rel="stylesheet" href="/assets/styles/css/app.css">
   </head>
 
-  <body>
-    <div id="side-panel">
-      <div id="top-bar">
-        <img id="menu-icon" src="/assets/images/icons/white/back.png">
-      </div>
-
-      <!-- Side panel content goes here. TODO: Angularify -->
-      <div id="menu">
-        <img id="profile-picture" src="/assets/images/tmp/profile_picture.jpg">
-        <span id="profile-name">Michael Christensen</span>
-        <img id="profile-settings-expand" src="/assets/images/icons/white/expand.png">
-
-        <ul id="menu-items">
-          <li ui-sref-active="selected">
-            <a ui-sref="map"><img src="/assets/images/icons/white/pin.png">My Map</a>
-          </li>
-          <li ui-sref-active="selected">
-            <a ui-sref="trips"><img src="/assets/images/icons/white/manage.png">Manage Trips</a>
-          </li>
-          <li ui-sref-active="selected">
-            <a ui-sref="friends"><img src="/assets/images/icons/white/map.png">Friend's Maps</a>
-          </li>
-        </ul>
-      </div>
-      <!-- -->
-
-    </div>
+  <body ng-app="app" ng-controller="appController">
+    <side-panel></side-panel>
     <div ui-view id="content-panel">
       <!-- Main content goes here. TODO: Angularify -->
     </div>
@@ -55,5 +30,6 @@
 
     <!-- Scripts -->
     <script src="/app/app.js"></script>
+    <script src="/app/shared/panel/panel.directive.js"></script>
   </body>
 </html>

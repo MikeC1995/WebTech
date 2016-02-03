@@ -7,15 +7,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state("map", {
       url:"/",
-      templateUrl:"/app/components/map/map.view.html"
+      views: {
+        '': { templateUrl:"/app/components/map/map.view.html" }
+      }
     })
     .state("trips", {
       url:"/trips",
-      templateUrl:"/app/components/trips/trips.view.html"
+      views: {
+        '': { templateUrl:"/app/components/trips/trips.view.html" }
+      }
     })
     .state("friends", {
       url:"/friends",
-      templateUrl:"/app/components/friends/friends.view.html"
+      views: {
+        '': { templateUrl:"/app/components/friends/friends.view.html" }
+      }
     });
   $urlRouterProvider.otherwise("/");
 });
