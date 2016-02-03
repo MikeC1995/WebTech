@@ -1,7 +1,8 @@
 {
-  "name": "WebTechServer",
+  "name": "WebTechClient",
   "version": "1.0.0",
-  "description": "Mike Christensen's COMS32500 Web Tech Project Server",
+  "description": "Mike Christensen's COMS32500 Web Tech Project Client",
+  "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,8 +17,14 @@
   },
   "homepage": "https://github.com/MikeC1995/WebTech",
   "dependencies": {
-    "body-parser": "^1.14.2",
-    "express": "^4.13.4",
-    "mongoose": "^4.4.0"
+    "angular": "^1.4.9",
+    "angular-ui-router": "^0.2.17",
+    "jquery": "^2.2.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "^1.2.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "jit-grunt": "^0.9.1"
   }
 }
