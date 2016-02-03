@@ -7,7 +7,7 @@ app.directive('sidePanel', function() {
   return {
       restrict: 'E',
       replace: 'true',
-      templateUrl: '/app/shared/panel/panel.view.html',
+      templateUrl: '/app/shared/side-panel/side-panel.view.html',
       link: function(scope, elem, attrs) {
         var menu_icon = elem.find('#menu-icon');
         var menu = elem.find('#menu');
