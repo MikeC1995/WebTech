@@ -1,6 +1,7 @@
 <div id="side-panel" ng-controller="sidePanelController">
   <div id="top-bar">
-    <img id="menu-icon" class="hidden" src="/assets/images/icons/white/back.png">
+    <!-- Menu/Back icon. Only appear when in Map state. -->
+    <img id="menu-icon" ng-class="{ hidden: !$state.includes('map') }" src="/assets/images/icons/white/back.png">
   </div>
 
   <div id="menu" class="open">

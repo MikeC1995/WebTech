@@ -1,7 +1,7 @@
 'use strict';
 
-// A directive for the side panel menu component
-// TODO: scope inheritance?
+// A directive for the side panel menu component.
+// This directive has the parent's scope!
 var app = angular.module('app');
 app.directive('sidePanel', function() {
   return {
