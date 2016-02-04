@@ -1,8 +1,19 @@
 'use strict';
 
-// TODO: This is a temporary controller.
-// User data should be stored somewhere and accessed via e.g. a service.
 var trips = angular.module('trips');
-trips.controller('tripTabsController', function($scope) {
-  $scope.trips = ['Trip 1', 'Trip 2', 'Trip 3'];
-});
+trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scope, tripsFactory) {
+  $scope.trips;
+
+  getTrips();
+
+  function getTrips() {
+    tripsFactory.getTrips()
+        .success(function (data) {
+            $scope.trips = data.data;
+        })
+        .error(function (error) {
+          // TODO: handle connection error
+          $scope.trips = [];
+        });
+  }
+}]);
