@@ -1,3 +1,5 @@
+'use strict';
+
 var err = require('../responses/errors.js');
 var success = require('../responses/successes.js');
 var Trip = require('../models/trip.js');

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   BadRequest: function(missing, errorCode) {
     if(missing) {

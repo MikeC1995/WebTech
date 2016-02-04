@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(grunt) {
   // Just in time Grunt plugin loading
   require('jit-grunt')(grunt);

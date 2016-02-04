@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   OK: function(data) {
     this.message = 'Success';
