@@ -10,18 +10,29 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
 
   function getTrips() {
     tripsFactory.getTrips()
-        .success(function (data) {
+        .success(function(data) {
             $scope.trips = data.data;
         })
-        .error(function (error) {
+        .error(function(error) {
           // TODO: handle connection error
           $scope.trips = [];
         });
-  }
+  };
 
   $scope.addTrip = function() {
     if ($scope.tripName) {
-      console.log("ADD TRIP " + $scope.tripName);
+      var trip = {
+        name: $scope.tripName.toUpperCase()
+      };
+      tripsFactory.addTrip(trip)
+        .success(function(data) {
+          getTrips();
+        })
+        .error(function(error) {
+          //TODO handle error
+          alert('Unable to add trip! :(');
+        });
+      console.log("ADD TRIP " + $scope.tripName.toUpperCase());
     }
   };
 

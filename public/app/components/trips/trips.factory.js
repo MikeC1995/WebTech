@@ -10,5 +10,9 @@ trips.factory('tripsFactory', ['$http', function tripsFactory($http) {
     return $http.get(urlBase);
   };
 
+  tripsFactory.addTrip = function(trip) {
+    return $http.post(urlBase, trip);
+  };
+
   return tripsFactory;
 }]);
