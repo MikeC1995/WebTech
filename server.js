@@ -29,9 +29,9 @@ app.use('/api', apiRouter);
 // 404 ERROR HANDLER
 // This is the last piece of middleware to be wired up.
 // If no routes matched, return a 404.
-var err = require('./errors.js');
+var err = require('./responses/errors.js');
 app.use(function(req, res, next) {
-    res.send(new err.notFound());
+    res.send(new err.NotFound());
 });
 
 // START THE SERVER
