@@ -2,7 +2,9 @@
 
 var trips = angular.module('trips');
 trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scope, tripsFactory) {
-  $scope.trips;
+  $scope.trips; // a list of trip objects fetched from the server
+  $scope.selectedIndex = 0; // the currently selected tab
+  $scope.tripName = ""; // the name of the new trip to add
 
   getTrips();
 
@@ -15,5 +17,18 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
           // TODO: handle connection error
           $scope.trips = [];
         });
+  }
+
+  $scope.addTrip = function() {
+    if ($scope.tripName) {
+      console.log("ADD TRIP " + $scope.tripName);
+    }
+  };
+
+  $scope.select = function(index) {
+    $scope.selectedIndex = index;
+  }
+  $scope.isSelected = function(index) {
+    return index == $scope.selectedIndex;
   }
 }]);

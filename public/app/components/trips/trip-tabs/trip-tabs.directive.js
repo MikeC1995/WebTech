@@ -18,6 +18,12 @@ trips.directive('tripTabs', function() {
             $(this).addClass('selected');
           });
         };
+
+        scope.toggleShowInput = function() {
+          elem.children('img, form').toggleClass('hidden');
+          elem.children('form input').focus();
+          elem.children('form input').select();
+        }
       }
   };
 });

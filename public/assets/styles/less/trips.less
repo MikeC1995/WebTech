@@ -1,6 +1,7 @@
 #trips-container {
   width: 100%;
   height: 100%;
+  line-height: 25px;
   box-sizing: border-box;
   padding: 20px 30px;
 
@@ -13,6 +14,7 @@
     letter-spacing: 1px;
     font-size: 15px;
     color: #444;
+    padding: 10px 0;
 
     li {
       display: inline;
@@ -23,12 +25,35 @@
         font-weight: 600;
         color: #000;
       }
+    }
 
-      a img {
-        // absolute position required to make img vertically position properly
-        position: absolute;
-        height: 20px;
-        width: auto;
+    .hidden {
+      visibility: hidden;
+      position: absolute;
+    }
+
+    img {
+      // parent line-height: 20px, img vertical-align: middle to vert center
+      vertical-align: middle;
+      height: 20px;
+      width: auto;
+      cursor: hand;
+      cursor: pointer;
+    }
+    form {
+      display: inline;
+      input {
+        height: 25px;
+        box-sizing: border-box;
+        padding: 5px 5px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 15px;
+        text-transform: uppercase;
+        border: none;
+        border-bottom: 1px solid #000;
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
