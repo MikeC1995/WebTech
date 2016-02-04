@@ -4,11 +4,17 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var mongoose   = require('mongoose');
 
 // CONFIGURE MODULES
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// CONNECT TO DATABASE
+mongoose.connect('mongodb://localhost/webtechdb');
+
+// SET NODE ENVIRONMENT
+var env = (process.env.NODE_ENV || "development");
 // SET PORT NUMBER
 var port = process.env.PORT || 8080;
 
@@ -17,13 +23,8 @@ var port = process.env.PORT || 8080;
 app.use('/', express.static('public'));
 
 // REGISTER REST API ROUTING, PREFIXED WITH "/API"
-var router = express.Router();
-app.use('/api', router);
-
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
-});
+var apiRouter = require('./api-routes.js')(app);
+app.use('/api', apiRouter);
 
 // ERROR HANDLERS
 // catch 404 and forward to error handler
@@ -33,6 +34,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+/*
 // development error handler; print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
@@ -52,6 +54,7 @@ if (app.get('env') === 'development') {
       });
   });
 }
+*/
 
 // START THE SERVER
 app.listen(port);
