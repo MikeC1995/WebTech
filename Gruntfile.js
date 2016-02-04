@@ -16,21 +16,35 @@ module.exports = function(grunt) {
           strictUnits: true
         },
         files: {
-          "assets/styles/css/app.css": "assets/styles/less/app.less" // destination file and source file
+          "public/assets/styles/css/app.css": "public/assets/styles/less/app.less" // destination file and source file
         }
       }
     },
     // FILE WATCHING
     watch: {
       styles: {
-        files: ['assets/styles/less/**/*.less'], // which files to watch
+        files: ['public/assets/styles/less/**/*.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true
         }
       }
+    },
+    // LIVE RELOAD SERVER
+    nodemon: {
+      dev: {
+        script: 'server.js'
+      }
+    },
+    // WATCH FILES FOR COMPILATION + RUN NODEMON CONCURRENTLY
+    concurrent: {
+      options: {
+        logConcurrentOutput: true
+      },
+      tasks: ['nodemon', 'watch']
     }
+
   });
 
-  grunt.registerTask('default', ['less', 'watch']);
+  grunt.registerTask('default', ['less', 'concurrent']);
 };
