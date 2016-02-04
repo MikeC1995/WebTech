@@ -1,23 +1,23 @@
 'use strict';
 
 module.exports = {
-  BadRequest: function(missing, errorCode) {
+  BadRequest: function(res, missing) {
+    res.statusCode = 400;
     if(missing) {
       this.message = 'The request is missing parameters: ' + JSON.stringify(missing);
     } else {
       this.message = 'The server could not process the request.';
     }
-    this.statusCode = 400;
-    this.errorCode = errorCode || 400;
+    res.send(this);
   },
-  NotFound: function(message, errorCode) {
+  NotFound: function(res, message) {
+    res.statusCode = 404;
     this.message = message || 'The requested resource couldn\'t be found';
-    this.statusCode = 404;
-    this.errorCode = errorCode || 404;
+    res.send(this);
   },
-  InternalServerError: function() {
+  InternalServerError: function(res) {
+    res.statusCode = 500;
     this.message = message || 'Something went wrong. We\'re looking into it.';
-    this.statusCode = 500;
-    this.errorCode = errorCode || 500;
+    res.send(this);
   }
 };

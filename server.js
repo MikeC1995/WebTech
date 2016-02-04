@@ -31,7 +31,7 @@ app.use('/api', apiRouter);
 // If no routes matched, return a 404.
 var err = require('./responses/errors.js');
 app.use(function(req, res, next) {
-    res.send(new err.NotFound());
+    return err.NotFound(res);
 });
 
 // START THE SERVER

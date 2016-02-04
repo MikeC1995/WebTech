@@ -1,19 +1,21 @@
 'use strict';
 
 module.exports = {
-  OK: function(data) {
+  OK: function(res, data) {
+    res.statusCode = 200;
     this.message = 'Success';
-    this.statusCode = 200;
     if(data) {
       this.data = data;
     }
+    res.send(this);
   },
-  Created: function(what) {
+  Created: function(res, what) {
+    res.statusCode = 201;
     if(what) {
       this.message = 'Successfully created ' + JSON.stringify(what);
     } else {
       this.message = 'The request has been fulfilled and resulted in a new resource being created.';
     }
-    this.statusCode = 201;
+    res.send(this);
   }
 };
