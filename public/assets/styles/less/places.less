@@ -1,0 +1,78 @@
+.places-component {
+  position: relative;
+  .node {
+    padding-bottom: 20px;
+
+    input[type="radio"] {
+      display: none;
+    }
+    label .nub-outer {
+      margin-right: 20px;
+    }
+    input[type="radio"] + label .nub-outer {
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      width:20px;
+      height:20px;
+      background-color: #fff;
+      border: 2px solid #d32f2f;
+      border-radius: 50%;
+      cursor: pointer;
+
+      .nub-select {
+        position: absolute;
+        background-color: #fff;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        border-radius: 50%;
+      }
+    }
+    input[type="radio"] + label .dashed {
+      border-style: dotted;
+    }
+    input[type="radio"]:checked + label .nub-outer .nub-select {
+      background-color: #d32f2f;
+    }
+
+    label .place-text {
+      // Required for proper alignment with nodes
+      position: absolute;
+      font-size: 16px;
+    }
+
+    label form {
+      display: inline;
+      .add-place {
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 1px solid #000;
+        padding-bottom: 5px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 14px;
+        font-style: italic;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .node-content {
+      margin-left: 40px;
+      width: 200px;
+      height: 200px;
+      background-color: #333333;
+    }
+  }
+
+  .connector {
+    position: absolute;
+    width: 4px;
+    height: calc(~"100% - 30px");
+    left: 8px;
+    background-color: #d32f2f;
+  }
+}
