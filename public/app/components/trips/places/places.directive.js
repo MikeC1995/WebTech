@@ -6,13 +6,10 @@ app.directive('places', function() {
       restrict: 'E',
       replace: 'true',
       scope: {},
+      controller: 'placesController',
       templateUrl: '/app/components/trips/places/places.view.html',
       link: function(scope, elem, attrs) {
-        scope.places = ["Paris, France", "Berlin, Germany", "Amsterdam, Netherlands", "Prague, Czech Republic"];
-        scope.selected = 0;
-        scope.isSelected = function(index) {
-          return index == scope.selected;
-        }
+
       }
   };
 });

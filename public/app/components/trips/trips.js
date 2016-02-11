@@ -1,8 +1,8 @@
 'use strict';
 
 // The trips module
-var trips = angular.module('trips', ['ui.router']);
+var trips = angular.module('trips', ['ui.router', 'api']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+trips.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/trips");
 });

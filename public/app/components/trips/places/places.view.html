@@ -1,13 +1,13 @@
 <div class="places-component">
   <div class="connector"></div>
-  <div class="node" ng-repeat="place in places">
+  <div class="node" ng-repeat="place in places()">
     <!-- ng-repeat creates its own child scope so must bind input to "selected" on the parent scope -->
     <input type="radio" id="nub-{{$index}}" name="places-radio" ng-model="$parent.selected" value="{{$index}}"></input>
     <label for="nub-{{$index}}">
       <span class="nub-outer">
         <div class="nub-select"></div>
       </span>
-      <span class="place-text">{{place}}</span>
+      <span class="place-text">{{ place.name }}</span>
     </label>
     <div class="node-content" ng-show="isSelected($index)"></div>
   </div>
@@ -17,8 +17,8 @@
       <span class="nub-outer dashed">
         <div class="nub-select"></div>
       </span>
-      <form>
-        <input class="place-text add-place" placeholder="Add a place" ng-focus=""></input>
+      <form ng-submit="submit()">
+        <input type="text" ng-model="placeName" class="place-text add-place" placeholder="Add a place" ng-focus=""></input>
       </form>
     </label>
   </div>

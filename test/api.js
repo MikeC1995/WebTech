@@ -36,4 +36,33 @@ describe('Routing', function() {
             });
     });
   });
+  // TEST /api/trips/places
+  describe('Places', function() {
+    var url = '/api/trips/places';
+    it('GET ' + url, function(done) {
+      server.get(url)
+            .end(function(err,res) {
+              console.log(res.status);
+              res.should.be.OK();
+              done();
+            });
+    });
+    it('POST ' + url + ' :: missing properties in body', function(done) {
+      server.post(url)
+            .send({})
+            .end(function(err,res) {
+              res.should.be.BadRequest();
+              done();
+            });
+    });
+    it('POST ' + url + ' :: correct properties in body', function(done) {
+      server.post(url)
+            .send({ name : 'test'})
+            .send({ trip_id: 'test_id'})
+            .end(function(err,res) {
+              res.should.be.Created();
+              done();
+            });
+    });
+  });
 });
