@@ -9,6 +9,14 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
   // function bindings
   $scope.trips = tripsFactory.trips;    // getter
 
+  // Initialise + update currentTrip
+  tripsFactory.getTrips(function() {
+    $scope.currentTrip = $scope.trips()[$scope.selectedIndex];
+  });
+  $scope.$watch('selectedIndex', function (value) {
+    $scope.currentTrip = $scope.trips()[value];
+  });
+
   // function bindings
   $scope.submit = function() {
     tripsFactory.addTrip($scope.tripName);

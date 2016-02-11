@@ -10,6 +10,10 @@ trips.directive('tripTabs', function() {
       restrict: 'E',
       replace: 'true',
       templateUrl: '/app/components/trips/trip-tabs/trip-tabs.view.html',
+      controller: 'tripTabsController',
+      scope: {
+        currentTrip: '=currentTrip'
+      },
       link: function(scope, elem, attrs) {
         // called when ng-repeat has finished
         scope.rendered = function() {

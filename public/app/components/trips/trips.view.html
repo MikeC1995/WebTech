@@ -1,6 +1,6 @@
-<div id="trips-container">
+<div id="trips-container" ng-controller="tripsController">
   <h1>Your Trips</h1>
 
-  <trip-tabs></trip-tabs>
-  <places></places>
+  <trip-tabs current-trip="currentTrip"></trip-tabs>
+  <places current-trip="currentTrip"></places>
 </div>

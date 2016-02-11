@@ -2,19 +2,18 @@
 
 var trips = angular.module('trips');
 trips.controller('placesController', ['$scope', 'tripsFactory', function($scope, tripsFactory) {
-  $scope.selected = 0;
+  $scope.selectedIndex = 0;
   $scope.placeName = '';
 
   // function bindings
   $scope.places = tripsFactory.places;
 
   $scope.submit = function() {
-    //TODO places needs trip id
-    tripsFactory.addPlace($scope.placeName, 'testid');
+    tripsFactory.addPlace($scope.placeName, $scope.currentTrip()._id);
     $scope.placeName = '';
   }
 
   $scope.isSelected = function(index) {
-    return index == $scope.selected;
+    return index == $scope.selectedIndex;
   }
 }]);

@@ -9,19 +9,18 @@ trips.factory('tripsFactory', ['$http', 'apiFactory', function tripsFactory($htt
   tripsFactory.trips = function() { return trips; }
   tripsFactory.places = function() { return places; }
 
-  getTrips();
-  getPlaces();
-
-  function getTrips() {
+  tripsFactory.getTrips = function(callback) {
     apiFactory.getTrips()
-        .success(function(data) {
-            trips = data.data;
-        })
-        .error(function(error) {
-          // TODO: handle connection error
-          trips = [];
-        });
+      .success(function(data) {
+          trips = data.data;
+          if(callback !== undefined) callback(trips);
+      })
+      .error(function(error) {
+        // TODO: handle connection error
+        trips = [];
+      });
   };
+  tripsFactory.getTrips();
 
   function getPlaces() {
     apiFactory.getPlaces()
@@ -33,6 +32,7 @@ trips.factory('tripsFactory', ['$http', 'apiFactory', function tripsFactory($htt
           places = [];
         });
   };
+  getPlaces();
 
   tripsFactory.addTrip = function(tripName) {
     if (tripName) {

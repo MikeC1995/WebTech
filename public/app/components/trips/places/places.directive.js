@@ -5,11 +5,12 @@ app.directive('places', function() {
   return {
       restrict: 'E',
       replace: 'true',
-      scope: {},
+      scope: {
+        currentTrip: '&currentTrip'
+      },
       controller: 'placesController',
       templateUrl: '/app/components/trips/places/places.view.html',
       link: function(scope, elem, attrs) {
-
       }
   };
 });
