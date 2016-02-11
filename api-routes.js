@@ -15,5 +15,10 @@ module.exports = function(app) {
     .get(trips.get)
     .post(trips.post);
 
+  var places = require('./routes/places.js');
+  router.route('/trips/places')
+    .get(places.get)
+    .post(places.post);
+
   return router;
 }

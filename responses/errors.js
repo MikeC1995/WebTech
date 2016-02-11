@@ -15,7 +15,7 @@ module.exports = {
     this.message = message || 'The requested resource couldn\'t be found';
     res.send(this);
   },
-  InternalServerError: function(res) {
+  InternalServerError: function(res, message) {
     res.statusCode = 500;
     this.message = message || 'Something went wrong. We\'re looking into it.';
     res.send(this);
