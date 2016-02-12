@@ -76,7 +76,6 @@ trips.factory('tripsFactory', ['$http', 'apiFactory', function tripsFactory($htt
           //TODO handle error
           alert('Unable to add trip! :(');
         });
-      console.log("ADD TRIP " + tripName.toUpperCase());
     }
   };
 
@@ -95,7 +94,6 @@ trips.factory('tripsFactory', ['$http', 'apiFactory', function tripsFactory($htt
           //TODO handle error
           alert('Unable to add place! :(');
         });
-      console.log("ADD PLACE " + placeName.toUpperCase());
     }
   };
 
