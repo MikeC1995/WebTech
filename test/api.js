@@ -39,8 +39,16 @@ describe('Routing', function() {
   // TEST /api/trips/places
   describe('Places', function() {
     var url = '/api/trips/places';
-    it('GET ' + url, function(done) {
+    it('GET ' + url + ' :: empty parameters in URL', function(done) {
       server.get(url)
+            .end(function(err,res) {
+              console.log(res.status);
+              res.should.be.OK();
+              done();
+            });
+    });
+    it('GET ' + url + ' :: trip_id parameter in URL', function(done) {
+      server.get(url + '?trip_id=test_id')
             .end(function(err,res) {
               console.log(res.status);
               res.should.be.OK();

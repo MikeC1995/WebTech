@@ -6,7 +6,11 @@ var Place = require('../models/place.js');
 
 module.exports = {
   get:  function(req, res) {
-    Place.find({}, function(err, places) {
+    var params = {};
+    if(req.query.trip_id !== undefined) {
+      params.trip_id = req.query.trip_id;
+    }
+    Place.find(params, function(err, places) {
       if(err) return error.InternalServerError(res);
       return success.OK(res, places);
     });
