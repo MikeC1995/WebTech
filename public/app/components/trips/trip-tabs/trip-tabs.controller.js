@@ -7,11 +7,11 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
   $scope.placeName = ""; // the name of the new trip to add
 
   // function bindings
-  $scope.trips = tripsFactory.trips;    // getter
+  $scope.trips = tripsFactory.getTrips;    // getter
 
   // Initialise + update currentTrip
-  tripsFactory.getTrips(function() {
-    $scope.currentTrip = $scope.trips()[$scope.selectedIndex];
+  tripsFactory.getTrips(function(response) {
+    $scope.currentTrip = response[$scope.selectedIndex];
   });
   $scope.$watch('selectedIndex', function (value) {
     $scope.currentTrip = $scope.trips()[value];
