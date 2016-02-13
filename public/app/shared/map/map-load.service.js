@@ -7,7 +7,7 @@ app.service('loadGoogleMapAPI', ['$window', '$q', 'mapApiKey', function ( $windo
   function loadScript() {
     // Use global document since Angular's $document is weak
     var script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + mapApiKey + '&libraries=places&callback=initMap';
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + mapApiKey + '&callback=initMap&libraries=places';
     document.body.appendChild(script);
   }
 
