@@ -11,9 +11,7 @@ trips.directive('tripTabs', function() {
       replace: 'true',
       templateUrl: '/app/components/trips/trip-tabs/trip-tabs.view.html',
       controller: 'tripTabsController',
-      scope: {
-        currentTrip: '=currentTrip'
-      },
+      scope: {},
       link: function(scope, elem, attrs) {
         // called when ng-repeat has finished
         scope.rendered = function() {

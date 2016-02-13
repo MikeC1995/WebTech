@@ -3,15 +3,13 @@
 var trips = angular.module('trips');
 trips.controller('placesController', ['$scope', 'tripsFactory', function($scope, tripsFactory) {
   $scope.selectedIndex = 0; // the currently selected place
-  $scope.placeName = '';  // the name of the new place to add
 
   // function bindings
+  $scope.trips = tripsFactory.getTrips;    // getter
   $scope.places = tripsFactory.getPlaces;
 
-  // add place form submit
-  $scope.submit = function() {
-    tripsFactory.addPlace($scope.placeName, $scope.currentTrip()._id);
-    $scope.placeName = '';
+  $scope.getSelectedTrip = function() {
+    return $scope.trips()[tripsFactory.getSelectedTripIndex()];
   }
 
   // check if a place is selected by index

@@ -1,6 +1,6 @@
 <div class="places-component">
   <div class="connector"></div>
-  <div class="node" ng-repeat="place in places() | filter:{ trip_id: currentTrip()._id }">
+  <div class="node" ng-repeat="place in places() | filter:{ trip_id: getSelectedTrip()._id }">
     <!-- ng-repeat creates its own child scope so must bind input to "selected" on the parent scope -->
     <input type="radio" id="nub-{{$index}}" name="places-radio" ng-model="$parent.selectedIndex" value="{{$index}}"></input>
     <label for="nub-{{$index}}">
@@ -18,9 +18,7 @@
       <span class="nub-outer dashed">
         <div class="nub-select"></div>
       </span>
-      <form ng-submit="submit()">
-        <input type="text" ng-model="placeName" class="place-text add-place" placeholder="Add a place" ng-focus=""></input>
-      </form>
+      <a class="place-text add-place" ui-sref="trips.modal.addPlace">Add a place</a>
     </label>
   </div>
 </div>

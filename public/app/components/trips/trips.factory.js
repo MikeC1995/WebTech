@@ -1,11 +1,12 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.factory('tripsFactory', ['$http', 'apiFactory', function tripsFactory($http, apiFactory) {
+trips.factory('tripsFactory', ['$rootScope', '$http', 'apiFactory', function tripsFactory($rootScope, $http, apiFactory) {
   var tripsFactory = {};
 
   var trips = []; // a list of trip objects fetched from the server
   var places = []; // a list of place objects fetched from the server
+  var selectedTripIndex = 0;
 
   // Initial fetch of trips
   apiFactory.getTrips()
@@ -27,6 +28,12 @@ trips.factory('tripsFactory', ['$http', 'apiFactory', function tripsFactory($htt
 
 
   // PUBLIC METHODS
+  tripsFactory.getSelectedTripIndex = function() {
+    return selectedTripIndex;
+  }
+  tripsFactory.setSelectedTripIndex = function(value) {
+    selectedTripIndex = value;
+  }
 
   // If callback is specified, fetches trips from server
   // Otherwise, returns local trips object

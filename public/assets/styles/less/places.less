@@ -37,26 +37,17 @@
       background-color: #d32f2f;
     }
 
-    label .place-text {
-      // Required for proper alignment with nodes
-      position: absolute;
-      font-size: 16px;
-    }
-
-    label form {
-      display: inline;
+    label {
+      .place-text {
+        // Required for proper alignment with nodes
+        position: absolute;
+        font-size: 16px;
+      }
       .add-place {
-        box-sizing: border-box;
-        border: none;
-        border-bottom: 1px solid #000;
-        padding-bottom: 5px;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        font-style: italic;
 
-        &:focus {
-          outline: none;
-        }
+        color: @accent;
+        font-style: italic;
+        text-decoration: underline;
       }
     }
 

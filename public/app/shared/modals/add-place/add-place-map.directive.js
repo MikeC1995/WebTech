@@ -7,7 +7,6 @@ modals.directive('addPlaceMapDirective', ['loadGoogleMapAPI', function(loadGoogl
       scope: {
         mapId: '@id' // id of directive instance to register map to
       },
-      controller: 'addPlaceController',
       link: function($scope, elem, attrs) {
         // Loads google map script
         loadGoogleMapAPI.then(function () {
