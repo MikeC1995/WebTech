@@ -1,7 +1,7 @@
 'use strict';
 
 // The root application module for this app
-var app = angular.module('app', ['ui.router', 'trips']);
+var app = angular.module('app', ['ui.router', 'trips', 'modals']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -29,3 +29,5 @@ app.config(function($stateProvider, $urlRouterProvider) {
 app.controller('appController', function() {
 
 });
+
+app.value('mapApiKey', 'AIzaSyCP5BKla9RY0aObtlovjVzIBV2XEsfYj48');

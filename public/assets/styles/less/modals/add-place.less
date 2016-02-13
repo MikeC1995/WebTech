@@ -25,9 +25,9 @@
     .map {
       // override padding for full width
       width: 600px;
-      height: 250px;
+      height: 400px;
       margin: 25px -25px;
-      background-color: #ff3333;
+      background-color: transparent;
     }
 
     input[type="date"]:before {
@@ -45,24 +45,7 @@
       margin-top: 50px;
       button {
         float: right;
-        width: 100px;
-        height: 100%;
-        background-color: transparent;
-        border: none;
-        border-radius: 3px;
-        font-size: 14px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #ddd;
-        }
-      }
-      button[type="submit"] {
-        color: @accent;
-        &:hover {
-          background-color: @accent;
-          color: #fff;
-        }
+        margin: 0 10px;
       }
     }
   }

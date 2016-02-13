@@ -1,4 +1,4 @@
-<div class="modal-box add-place">
+<div class="modal-box add-place" ng-controller="addPlaceController">
   <h2>Add a Place</h2>
   <form>
     <input type="text" placeholder="Location..." name="location" required></input>
@@ -6,13 +6,13 @@
       on trip
       <span>INTERRAIL 2015<span>
     </span>
-    <div class="map"></div>
+    <div map id="add-place-map" class="map"></div>
     <input type="date" placeholder="From" required></input>
     <span>-</span>
     <input type="date" placeholder="To" required></input>
     <div class="buttons">
-      <button type="submit">OK</button>
-      <button>CANCEL</button>
+      <button type="submit" class="material-button-raised">OK</button>
+      <button class="material-button-flat">CANCEL</button>
     </div>
   </form>
 </div>
