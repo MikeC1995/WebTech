@@ -1,14 +1,14 @@
 <div class="modal-box add-place" ng-controller="addPlaceController">
   <h2>Add a Place</h2>
-  <form ng-submit="submit()">
-    <input id="add-place-search" type="text" placeholder="Where did you go?" ng-model="name" required></input>
+  <form ng-submit="submit()" name="add-place-form">
+    <input id="add-place-search" type="text" placeholder="Where did you go?" name="add-place-form" ng-model="name" required></input>
     <div add-place-map ng-model="location" id="add-place-map" class="map"></div>
-    <input type="date" placeholder="From" required></input>
+    <input type="date" placeholder="From" ng-model="from_date" name="add-place-form" required></input>
     <span>-</span>
-    <input type="date" placeholder="To" required></input>
+    <input type="date" placeholder="To" ng-model="to_date" name="add-place-form" required></input>
     <div class="buttons">
-      <button type="submit" class="material-button-raised">OK</button>
-      <button ui-sref="trips" class="material-button-flat">CANCEL</button>
+      <button type="submit" class="material-button-raised" name="add-place-form">OK</button>
+      <button ui-sref="trips" class="material-button-flat" name="add-place-form">CANCEL</button>
     </div>
   </form>
 </div>

@@ -1,8 +1,16 @@
 var mongoose = require('mongoose');
 
-var placeSchema = new mongoose.Schema({
+var Location = new mongoose.Schema({
   name: String,
-  trip_id: String
+  lat: Number,
+  lng: Number
+});
+
+var placeSchema = new mongoose.Schema({
+  trip_id: String,
+  location: Location,
+  from_date: Date,
+  to_date: Date
 });
 
 var Place = mongoose.model('Place', placeSchema);

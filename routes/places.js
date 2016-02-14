@@ -16,12 +16,22 @@ module.exports = {
     });
   },
   post: function(req, res) {
-    if(req.body.name === undefined) {
-      return error.BadRequest(res, 'name');
-    } else if(req.body.trip_id === undefined) {
+    // TODO: cleaner mongoose method for validating POST body against schema?
+    if(req.body.trip_id === undefined) {
       return error.BadRequest(res, 'trip_id');
+    } else if(req.body.location === undefined) {  // TODO: children of Location
+      return error.BadRequest(res, 'location');
+    } else if(req.body.from_date === undefined) {
+      return error.BadRequest(res, 'from_date');
+    } else if(req.body.to_date === undefined) {
+      return error.BadRequest(res, 'to_date');
     }
-    var t = new Place({ name: req.body.name, trip_id: req.body.trip_id });
+    var t = new Place({
+      trip_id: req.body.trip_id,
+      location: req.body.location,
+      from_date: req.body.from_date,
+      to_date: req.body.to_date
+    });
     t.save(function(err) {
       if (err) return error.InternalServerError(res);
       return success.Created(res, 'Place');

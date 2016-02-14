@@ -1,13 +1,13 @@
 <div class="places-component">
   <div class="connector"></div>
-  <div class="node" ng-repeat="place in places() | filter:{ trip_id: getSelectedTrip()._id }">
+  <div class="node" ng-repeat="place in places() | filter:{ trip_id: getSelectedTrip()._id } | orderBy:'from_date':false">
     <!-- ng-repeat creates its own child scope so must bind input to "selected" on the parent scope -->
     <input type="radio" id="nub-{{$index}}" name="places-radio" ng-model="$parent.selectedIndex" value="{{$index}}"></input>
     <label for="nub-{{$index}}">
       <span class="nub-outer">
         <div class="nub-select"></div>
       </span>
-      <span class="place-text">{{ place.name }}</span>
+      <span class="place-text">{{ place.location.name }}</span>
     </label>
     <!--<div class="node-content" ng-show="isSelected($index)"></div>-->
     <gallery class="node-content" ng-show="isSelected($index)"></gallery>
