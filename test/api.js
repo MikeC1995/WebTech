@@ -65,8 +65,15 @@ describe('Routing', function() {
     });
     it('POST ' + url + ' :: correct properties in body', function(done) {
       server.post(url)
-            .send({ name : 'test'})
-            .send({ trip_id: 'test_id'})
+            .send(
+              { trip_id : 'test',
+                location : {
+                  name: "test_location",
+                  lat: "5", lng: "5"
+                },
+                from_date : "1995-05-13",
+                to_date: "2016-02-14"
+              })
             .end(function(err,res) {
               res.should.be.Created();
               done();
