@@ -86,22 +86,17 @@ trips.factory('tripsFactory', ['$rootScope', '$http', 'apiFactory', function tri
     }
   };
 
-  tripsFactory.addPlace = function(placeName, trip_id) {
-    if (placeName) {
-      var place = {
-        name: placeName,
-        trip_id: trip_id
-      };
-      apiFactory.addPlace(place)
-        .then(function(data) {
-          apiFactory.getPlaces().then(function(response) {
-            places = response.data.data;
-          });
-        }, function(error) {
-          //TODO handle error
-          alert('Unable to add place! :(');
+  // expose apiFactory.addPlace
+  tripsFactory.addPlace = function(place) {
+    apiFactory.addPlace(place)
+      .then(function(data) {
+        apiFactory.getPlaces().then(function(response) {
+          places = response.data.data;
         });
-    }
+      }, function(error) {
+        //TODO handle error
+        alert('Unable to add place! :(');
+      });
   };
 
   return tripsFactory;

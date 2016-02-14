@@ -1,7 +1,7 @@
 'use strict';
 
 var modals = angular.module('modals');
-modals.directive('addPlaceMapDirective', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
+modals.directive('addPlaceMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
   return {
       restrict: 'A',
       scope: {
@@ -26,9 +26,21 @@ modals.directive('addPlaceMapDirective', ['loadGoogleMapAPI', function(loadGoogl
           // https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
 
           // Create the search box and link it to the UI element.
-          var input = elem.parent().find('#add-place-search')[0];
-          var searchBox = new google.maps.places.SearchBox(input);
-          $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+          // input[0] has the raw DOM element
+          var input = elem.parent().find('#add-place-search');
+          var searchBox = new google.maps.places.SearchBox(input[0]);
+          $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input[0]);
+
+          // Create a google Autocomplete for address lookup restricted to
+          // geocode results only (i.e. exclude business results)
+          $scope.googlePlace = new google.maps.places.Autocomplete(input[0], { types : ['geocode'] });
+          // Apply a listener to the Autocomplete so we can update the
+          // input's ngModel with the autocompleted value!
+          google.maps.event.addListener($scope.googlePlace, 'place_changed', function() {
+            $scope.$apply(function() {
+              input.controller('ngModel').$setViewValue(input.val());
+            });
+          });
 
           // Bias the SearchBox results towards current map's viewport.
           $scope.map.addListener('bounds_changed', function() {
