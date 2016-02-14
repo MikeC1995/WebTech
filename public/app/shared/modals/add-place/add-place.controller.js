@@ -19,13 +19,20 @@ modals.controller('addPlaceController', ['$scope', 'tripsFactory', '$state', fun
       to_date: $scope.to_date
     }
 
-    if($scope.from_date > $scope.to_date) {
+    if(!$scope.validate(place)) {
+      // TODO: display pretty error
       alert("From date cannot be after To date!");
       return;
     }
 
     tripsFactory.addPlace(place);
-
     $state.go('trips');
+  }
+
+  $scope.validate = function(place) {
+    if(place.from_date > place.to_date) {
+      return false;
+    }
+    return true;
   }
 }]);
