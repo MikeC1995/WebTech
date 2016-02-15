@@ -9,13 +9,21 @@ module.exports = {
     console.log("GET photos");
   },
   post: function(req, res) {
+    // Store the uploaded file in the uploads folder under a name
+    // of the form: <trip_id>-<place_id>-<timedatestamp>.<extension>
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
         cb(null, './uploads/');
       },
       filename: function (req, file, cb) {
-        var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+        if(req.body.trip_id === undefined) {
+          cb("trip_id");   // upload error
+        } else if(req.body.place_id === undefined) {
+          cb("place_id");   // upload error
+        }
+        var extension = file.originalname.split('.')[file.originalname.split('.').length -1];
+        var filename = req.body.trip_id + "-" + req.body.place_id + "-" + Date.now() + "." + extension;
+        cb(null, filename);
       }
     });
 
@@ -25,11 +33,9 @@ module.exports = {
 
     upload(req, res, function(err) {
       if(err) {
-        console.log("upload error");
-        res.json({error_code:1,err_desc:err});
-        return;
+        return error.BadRequest(res, err);
       }
-      res.json({error_code:0,err_desc:null});
+      return success.Created(res, "photos");
     });
   }
 }

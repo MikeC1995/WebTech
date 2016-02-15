@@ -1,16 +1,20 @@
 <div class="modal-box add-photos" ng-controller="addPhotosController">
   <h2>Add photos to X</h2>
-  <form name="add-photos-form">
-    <div class="drag-drop">
-      <div>
+  <form name="add-photos-form" ng-submit="uploadFiles()">
+    <div class="content">
+      <div class="drag-drop" ng-show="!uploading">
         <img src="/assets/images/icons/black/gallery.png">
         <span>Drag and Drop Photos Here</span>
+        <span class="selected-files-message">Selected {{files.length}} files</span>
+      </div>
+      <div class="progress" ng-show="uploading">
+        <div class="progress-bar" style="width:{{progress}}%">{{progress}}%</div>
       </div>
     </div>
-    <a class="choose-from-file" ngf-select="uploadFiles($files)" multiple accept="image/*">Or choose from file...</a>
+    <a class="choose-from-file" ngf-select="setSelectedFiles($files)" multiple accept="image/*">Or choose from file...</a>
     <div class="buttons">
-      <button type="submit" class="material-button-raised" name="add-photos-form">OK</button>
-      <button ui-sref="trips" class="material-button-flat" name="add-photos-form">CANCEL</button>
+      <button type="submit" class="material-button-raised" name="add-photos-form" ng-disabled="uploading || files.length == 0">UPLOAD</button>
+      <button ui-sref="trips" ng-click="cancel()" class="material-button-flat" name="add-photos-form">CANCEL</button>
     </div>
   </form>
 </div>

@@ -3,13 +3,14 @@
     margin-bottom: 20px;
   }
 
-  .drag-drop {
+  .content {
     position: relative;
     width: 100%;
     height: 300px;
     text-align: center;
 
-    div {
+    // Shown when not uploading
+    .drag-drop {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -24,6 +25,29 @@
       span {
         font-size: 20px;
         font-weight: 300;
+      }
+
+      .selected-files-message {
+        font-style: italic;
+        font-size: 16px;
+      }
+    }
+
+    .progress {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 25px;
+      text-align: right;
+
+      .progress-bar {
+        height: 35px;
+        box-sizing: border-box;
+        padding: 5px 15px;
+        background-color: @accent;
+        color: #fff;
+        border-radius: 3px;
       }
     }
   }

@@ -25,7 +25,13 @@
   cursor: pointer;
   color: #fff;
 
-  &:hover {
+  &:hover:not([disabled]) {
     box-shadow: @shadow2;
+  }
+
+  &:disabled {
+    background-color: @button-disabled;
+    color: #9f9f9f;
+    cursor: default;
   }
 }
