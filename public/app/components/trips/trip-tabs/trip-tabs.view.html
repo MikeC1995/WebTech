@@ -3,7 +3,7 @@
   <!-- When ng-repeat has finished call the rendered() function defined in the
   trip-tabs directive, so that the directive can access the repeated elements.
 ng-init="$last && rendered()"  -->
-  <li class="trip-item" ng-class="{ selected: isSelected($index) }" ng-click="select($index)" ng-repeat="trip in trips()">
+  <li class="trip-item" ng-class="{ selected: isSelected(trip) }" ng-click="select(trip)" ng-repeat="trip in trips()">
     <a href="">{{ trip.name }}</a>
   </li>
   <!-- Add trip image -->

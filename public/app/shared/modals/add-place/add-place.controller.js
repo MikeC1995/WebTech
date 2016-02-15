@@ -9,7 +9,7 @@ modals.controller('addPlaceController', ['$scope', 'tripsFactory', '$state', fun
 
   $scope.submit = function() {
     var place = {
-      trip_id: tripsFactory.getTrips()[tripsFactory.getSelectedTripIndex()]._id,
+      trip_id: tripsFactory.getSelectedTrip()._id,
       location: {
         name: $scope.name,
         lat: $scope.location.lat,

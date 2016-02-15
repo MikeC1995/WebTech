@@ -9,7 +9,7 @@ modals.controller('addPhotosController', ['$scope', 'tripsFactory', 'Upload', fu
       Upload.upload({
         url: '/api/photos',
         data: {
-          file: files[0]
+          photos: files
         }
       }).then(function (response) {
         //$timeout(function () {

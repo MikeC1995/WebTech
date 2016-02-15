@@ -6,7 +6,8 @@ trips.factory('tripsFactory', ['$rootScope', '$http', 'apiFactory', function tri
 
   var trips = []; // a list of trip objects fetched from the server
   var places = []; // a list of place objects fetched from the server
-  var selectedTripIndex = 0;
+  var selectedTrip = {};
+  var selectedPlace = {};
 
   // Initial fetch of trips
   apiFactory.getTrips()
@@ -28,11 +29,25 @@ trips.factory('tripsFactory', ['$rootScope', '$http', 'apiFactory', function tri
 
 
   // PUBLIC METHODS
-  tripsFactory.getSelectedTripIndex = function() {
-    return selectedTripIndex;
+  tripsFactory.getSelectedTrip = function() {
+    return selectedTrip;
   }
-  tripsFactory.setSelectedTripIndex = function(value) {
-    selectedTripIndex = value;
+  tripsFactory.setSelectedTrip = function(trip) {
+    for(var i = 0; i < trips.length; i++) {
+      if(trips[i]._id == trip._id) {
+        selectedTrip = trips[i];
+      }
+    }
+  }
+  tripsFactory.getSelectedPlace = function() {
+    return selectedPlace;
+  }
+  tripsFactory.setSelectedPlace = function(place) {
+    for(var i = 0; i < places.length; i++) {
+      if(places[i]._id == place._id) {
+        selectedPlace = places[i];
+      }
+    }
   }
 
   // If callback is specified, fetches trips from server

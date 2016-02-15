@@ -9,7 +9,6 @@ module.exports = {
     console.log("GET photos");
   },
   post: function(req, res) {
-    console.log("POST");
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
         cb(null, './uploads/');
@@ -22,7 +21,7 @@ module.exports = {
 
     var upload = multer({
         storage: storage
-    }).single('file');
+    }).any();
 
     upload(req, res, function(err) {
       if(err) {
