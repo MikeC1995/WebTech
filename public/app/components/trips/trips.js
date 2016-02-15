@@ -18,5 +18,12 @@ trips.config(function($stateProvider, $urlRouterProvider) {
       views: {
         'modal': { templateUrl:"/app/shared/modals/add-place/add-place.view.html" }
       }
+    })
+    // add photos dialog
+    .state("trips.modal.addPhotos", {
+      url: '/addphotos',
+      views: {
+        'modal': { templateUrl:"/app/shared/modals/add-photos/add-photos.view.html" }
+      }
     });
 });
