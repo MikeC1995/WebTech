@@ -1,6 +1,32 @@
 .gallery {
   box-sizing: border-box;
+
+  .add-photos {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 2px dashed @text-disabled;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+
+    .vert-align-helper {
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    img {
+      width: 40%;
+      height: auto;
+      opacity: 0.5;
+      vertical-align: middle;
+    }
+  }
+
   .thumbnail {
+    display: inline-block;
     overflow: hidden;
     width: 100px;
     height: 100px;
