@@ -12,7 +12,9 @@ trips.controller('placesController', ['$scope', 'tripsFactory', function($scope,
 
   // Set initially selected trip
   tripsFactory.getPlaces(function(places) {
-    tripsFactory.setSelectedPlace($scope.filteredPlaces[$scope.selectedIndex]);
+    if($scope.filteredPlaces.length != 0) {
+      tripsFactory.setSelectedPlace($scope.filteredPlaces[$scope.selectedIndex]);
+    }
   });
 
   // update selected trip when selected radio button changes
@@ -23,7 +25,9 @@ trips.controller('placesController', ['$scope', 'tripsFactory', function($scope,
       tripsFactory.setSelectedPlace(value);
     } else {
       $scope.selectedIndex = 0;
-      tripsFactory.setSelectedPlace($scope.filteredPlaces[$scope.selectedIndex]);
+      if($scope.filteredPlaces.length != 0) {
+        tripsFactory.setSelectedPlace($scope.filteredPlaces[$scope.selectedIndex]);
+      }
     }
   });
 
