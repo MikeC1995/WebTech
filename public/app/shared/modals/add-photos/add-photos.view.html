@@ -1,13 +1,13 @@
-<div class="modal-box add-photos">
+<div class="modal-box add-photos" ng-controller="addPhotosController">
   <h2>Add photos to X</h2>
-  <form>
+  <form enctype="multipart/form-data">
     <div class="drag-drop">
       <div>
         <img src="/assets/images/icons/black/gallery.png">
         <span>Drag and Drop Photos Here</span>
       </div>
     </div>
-    <a class="choose-from-file">Or choose from file</a>
+    <a class="choose-from-file" ngf-select="uploadFiles($files)" multiple accept="image/*">Or choose from file...</a>
     <div class="buttons">
       <button type="submit" class="material-button-raised" name="add-photos-form">OK</button>
       <button ui-sref="trips" class="material-button-flat" name="add-photos-form">CANCEL</button>

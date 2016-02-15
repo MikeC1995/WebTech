@@ -19,6 +19,7 @@
   "dependencies": {
     "angular": "^1.4.9",
     "angular-ui-router": "^0.2.17",
-    "jquery": "^2.2.0"
+    "jquery": "^2.2.0",
+    "ng-file-upload": "^12.0.1"
   }
 }

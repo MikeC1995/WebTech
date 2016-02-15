@@ -20,5 +20,10 @@ module.exports = function(app) {
     .get(places.get)
     .post(places.post);
 
+  var photos = require('./routes/photos.js');
+  router.route('/photos')
+    .get(photos.get)
+    .post(photos.post);
+
   return router;
 }
