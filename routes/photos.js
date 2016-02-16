@@ -3,27 +3,56 @@
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
 var multer = require('multer'); //for handling multipart form data
+var Photo = require('../models/photo.js');
 
 module.exports = {
   get:  function(req, res) {
-    console.log("GET photos");
+    if(req.query.place_id === undefined) {
+      return error.BadRequest(res, 'place_id');
+    }
+    var params = {
+      place_id: req.query.place_id
+    };
+    Photo.find(params, function(err, photos) {
+      console.log(err);
+      if(err) return error.InternalServerError(res);
+      sendUrls(photos);
+    });
+
+    function sendUrls(photos) {
+      var urls = [];
+      for(var i = 0; i < photos.length; i++) {
+        var url = "/uploads/" + photos[i].filename;
+        urls.push(url);
+      }
+      return success.OK(res, urls);
+    }
   },
   post: function(req, res) {
     // Store the uploaded file in the uploads folder under a name
-    // of the form: <trip_id>-<place_id>-<timedatestamp>.<extension>
+    // of the form: <place_id>-<timedatestamp>.<extension>
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
         cb(null, './uploads/');
       },
       filename: function (req, file, cb) {
-        if(req.body.trip_id === undefined) {
-          cb("trip_id");   // upload error
-        } else if(req.body.place_id === undefined) {
+        if(req.body.place_id === undefined) {
           cb("place_id");   // upload error
         }
         var extension = file.originalname.split('.')[file.originalname.split('.').length -1];
-        var filename = req.body.trip_id + "-" + req.body.place_id + "-" + Date.now() + "." + extension;
-        cb(null, filename);
+        var filename = req.body.place_id + "-" + Date.now() + "." + extension;
+
+        // Save the photo reference to DB
+        var p = new Photo({
+          place_id: req.body.place_id,
+          filename: filename
+        });
+        p.save(function(err) {
+          // Error saving to DB
+          if (err) return error.InternalServerError(res);
+          // Success: save the image under filename
+          cb(null, filename);
+        });
       }
     });
 
@@ -32,9 +61,9 @@ module.exports = {
     }).any();
 
     upload(req, res, function(err) {
-      if(err) {
-        return error.BadRequest(res, err);
-      }
+      // Error building filename due to missing params
+      if(err) return error.BadRequest(res, err);
+      // Successfully saved image
       return success.Created(res, "photos");
     });
   }

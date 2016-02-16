@@ -18,7 +18,6 @@ modals.controller('addPhotosController', ['$scope', 'tripsFactory', 'Upload', '$
       $scope.uploadObj = Upload.upload({
         url: '/api/photos',
         data: {
-          trip_id: tripsFactory.getSelectedTrip()._id,
           place_id: tripsFactory.getSelectedPlace()._id,
           photos: $scope.files
         }
