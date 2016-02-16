@@ -6,7 +6,7 @@ app.directive('gallery', function() {
       restrict: 'E',
       replace: 'false',
       scope: {},
-      //controller: 'galleryController',
+      controller: 'galleryController',
       templateUrl: '/app/components/trips/gallery/gallery.view.html',
       link: function(scope, elem, attrs) {
       }

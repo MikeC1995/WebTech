@@ -1,7 +1,7 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.factory('tripsFactory', ['$rootScope', '$http', 'apiFactory', function tripsFactory($rootScope, $http, apiFactory) {
+trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory($rootScope, apiFactory) {
   var tripsFactory = {};
 
   var trips = []; // a list of trip objects fetched from the server

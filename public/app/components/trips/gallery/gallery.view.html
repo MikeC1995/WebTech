@@ -1,9 +1,7 @@
 <div class="gallery">
-  <a ui-sref="trips.modal.addPhotos">
-    <div class="add-photos">
-      <span class="vert-align-helper"></span>
-      <img src="/assets/images/icons/black/plus.png">
-    </div>
-  </a>
-  <div class="thumbnail"></div>
+  <div class="add-photos" ui-sref="trips.modal.addPhotos">
+    <span class="vert-align-helper"></span>
+    <img src="/assets/images/icons/black/plus.png">
+  </div><!-- Necessary comment to remove space between inline element appearing across a line break
+  --><div class="thumbnail" style="background-image: url('{{url}}');" ng-repeat="url in imageUrls"></div>
 </div>
