@@ -13,14 +13,6 @@ trips.directive('tripTabs', function() {
       controller: 'tripTabsController',
       scope: {},
       link: function(scope, elem, attrs) {
-        // called when ng-repeat has finished
-        scope.rendered = function() {
-          elem.children('.trip-item').bind('click', function() {
-            elem.children('.trip-item').removeClass('selected');
-            $(this).addClass('selected');
-          });
-        };
-
         scope.toggleShowInput = function() {
           elem.children('img, form').toggleClass('hidden');
           scope.tripName = '';

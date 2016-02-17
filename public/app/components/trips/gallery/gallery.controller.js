@@ -6,9 +6,12 @@ trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory',
 
   $scope.getSelectedPlace = tripsFactory.getSelectedPlace;
 
+  // TODO: limit 80 to guarantee div filled. However, need to
+  // limit by the size of the gallery and # thumbs that will fit!
   var params = {
     place_id: $scope.getSelectedPlace()._id,
-    timebefore: Date.now()
+    timebefore: Date.now(),
+    limit: 80
   };
   imageFactory.getPhotos(params, function(photos) {
     $scope.photos = photos;

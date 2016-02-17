@@ -1,14 +1,14 @@
 'use strict';
 
 var app = angular.module('app');
-app.directive('gallery', function() {
+app.directive('gallery', function($timeout) {
   return {
       restrict: 'E',
       replace: 'false',
       scope: {},
       controller: 'galleryController',
       templateUrl: '/app/components/trips/gallery/gallery.view.html',
-      link: function(scope, elem, attrs) {
+      link: function($scope, elem, attrs) {
       }
   };
 });

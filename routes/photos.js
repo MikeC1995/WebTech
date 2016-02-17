@@ -14,18 +14,24 @@ module.exports = {
       place_id: req.query.place_id
     };
 
+    // default limit is 50
+    var limit = 50;
+
+    // If specified, limit number of returned results
+    if(req.query.limit !== undefined) {
+      limit = req.query.limit;
+    }
+
+    // One of timebefore or timeafter can be specified, only photos
+    // with a timestamp before/after this date will be returned
     if(req.query.timebefore !== undefined) {
-      console.log("Fetch before " + req.query.timebefore);
       params.timestamp = { $lt: req.query.timebefore };
     } else if(req.query.timeafter !== undefined) {
-      console.log("Fetch after " + req.query.timeafter);
       params.timestamp = { $gt: req.query.timeafter };
-    } else {
-      console.log("Fetch all");
     }
     Photo.find(params)
       .sort({'timestamp': -1})
-      .limit(50)
+      .limit(Number(limit))
       .exec(
         function(err, photos) {
           if(err) return error.InternalServerError(res);

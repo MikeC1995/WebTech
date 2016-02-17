@@ -25,7 +25,7 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     var qstring = '/photos?place_id=' + params.place_id;
     if(params.timebefore) qstring += ('&timebefore=' + params.timebefore);
     if(params.timeafter) qstring += ('&timeafter=' + params.timeafter);
-    console.log(qstring);
+    if(params.limit) qstring += ('&limit=' + params.limit);
     return $http.get(urlBase + qstring);
   }
 
