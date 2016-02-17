@@ -49,7 +49,9 @@ module.exports = {
   },
   post: function(req, res) {
     // Store the uploaded file in the uploads folder under a name
-    // of the form: <place_id>-<timedatestamp>.<extension>
+    // of the form: <place_id>-<timedatestamp>-<originalname>.<extension>
+    // NOTE: the original name is required to ensure uniqueness in filenames!
+    // Very fast uploads means Date.now() doesnt produce a unique filename (at least when running locally)
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
         cb(null, './uploads/');
@@ -60,7 +62,7 @@ module.exports = {
         }
         var timestamp = Date.now();
         var extension = file.originalname.split('.')[file.originalname.split('.').length -1];
-        var filename = req.body.place_id + "-" + timestamp + "." + extension;
+        var filename = req.body.place_id + "-" + timestamp + "-" + file.originalname + "." + extension;
 
         // Save the photo reference to DB
         var p = new Photo({
