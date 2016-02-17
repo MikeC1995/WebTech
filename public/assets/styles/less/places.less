@@ -37,11 +37,22 @@
       background-color: #d32f2f;
     }
 
+    // bold title for selected label
+    input[type="radio"]:checked + label .place-text {
+      font-weight: 600;
+    }
+
     label {
+      cursor: pointer;
       .place-text {
         // Required for proper alignment with nodes
         position: absolute;
         font-size: 16px;
+
+        // bold title for hover on label
+        &:hover {
+          font-weight: 600;
+        }
       }
       .add-place {
 

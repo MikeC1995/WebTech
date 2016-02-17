@@ -1,38 +1,32 @@
 .gallery {
   box-sizing: border-box;
-  max-height: 500px;
-  overflow-y: scroll;
 
-  .add-photos {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    box-sizing: border-box;
-    text-align: center;
-    vertical-align: top;
-    cursor: pointer;
-
-    .vert-align-helper {
-      display: inline-block;
-      height: 100%;
-      vertical-align: middle;
-    }
-
+  .toolbar {
+    height: 20px;
+    padding: 5px 0 15px 0;
     img {
-      width: 40%;
-      height: auto;
+      height: 100%;
+      width: auto;
+      padding-right: 20px;
+      cursor: pointer;
       opacity: 0.5;
-      vertical-align: middle;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
+  .thumbnails {
+    max-height: 500px;
+    overflow-y: scroll;
 
-  .thumbnail {
-    display: inline-block;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    background-position: center center;
-    background-size: cover;
-    vertical-align: top; // prevents vertical gap between image rows
+    .thumbnail {
+      display: inline-block;
+      overflow: hidden;
+      width: 100px;
+      height: 100px;
+      background-position: center center;
+      background-size: cover;
+      vertical-align: top; // prevents vertical gap between image rows
+    }
   }
 }

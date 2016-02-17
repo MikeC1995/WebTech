@@ -1,9 +1,9 @@
 <div class="gallery" when-scrolled="loadMore()">
-  <div class="add-photos" ui-sref="trips.modal.addPhotos">
-    <span class="vert-align-helper"></span>
-    <img src="/assets/images/icons/black/plus.png">
-  </div><!-- Necessary comment to remove space between inline element appearing across a line break
-  --><div class="thumbnail" ng-repeat="photo in photos" style="background-image: url('{{photo.filename}}');">
-  {{url}}
+  <div class="toolbar">
+    <img src="/assets/images/icons/black/plus.png" ui-sref="trips.modal.addPhotos">
+    <img src="/assets/images/icons/black/delete.png">
+  </div>
+  <div class="thumbnails">
+    <div class="thumbnail" ng-repeat="photo in currentPhotos" style="background-image: url('{{photo.filename}}');"></div>
   </div>
 </div>
