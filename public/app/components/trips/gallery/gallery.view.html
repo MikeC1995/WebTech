@@ -1,9 +1,9 @@
-<div class="gallery" when-scrolled="loadMore()">
+<div class="gallery">
   <div class="toolbar">
     <img src="/assets/images/icons/black/plus.png" ui-sref="trips.modal.addPhotos">
     <img src="/assets/images/icons/black/delete.png">
   </div>
-  <div class="thumbnails">
+  <div class="thumbnails" when-scrolled="loadMore()">
     <div class="thumbnail" ng-repeat="photo in currentPhotos" style="background-image: url('{{photo.filename}}');"></div>
   </div>
 </div>

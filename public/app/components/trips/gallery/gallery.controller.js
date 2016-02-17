@@ -12,6 +12,27 @@ trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory',
     return $scope.selectedPlaceId;
   }
 
+  $scope.$on('uploaded-photos', function(event, args) {
+    console.log("uploaded photos broadcast received!");
+    console.log(args.number);
+    if(args.place._id != $scope.selectedPlaceId) {
+      tripsFactory.setSelectedPlace(args.place);
+    }
+    var params = {
+      place_id: args.place._id,
+      limit: args.number
+    };
+    var newest = $scope.photos[args.place._id][0];
+    if(newest !== undefined) {
+      params.timeafter = newest.timestamp;
+    }
+    imageFactory.getPhotos(params, function(photos) {
+      for(var i = 0; i < photos.length; i++) {
+        $scope.photos[args.place._id].unshift(photos[i]);
+      }
+    });
+  });
+
   // watch for a change in the currently selected place
   $scope.$watch(function() {
     return tripsFactory.getSelectedPlace()._id;
@@ -42,6 +63,7 @@ trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory',
 
   // load more images (as the user scrolls)
   $scope.loadMore = function() {
+    console.log("load");
     var place_id = $scope.selectedPlaceId;
     var oldest = $scope.photos[place_id][$scope.photos[place_id].length - 1];
     var params = {

@@ -1,7 +1,9 @@
 'use strict';
 
 var modals = angular.module('modals');
-modals.controller('addPhotosController', ['$scope', 'tripsFactory', 'Upload', '$state', function($scope, tripsFactory, Upload, $state) {
+modals.controller('addPhotosController', ['$rootScope', '$scope', 'tripsFactory', 'Upload', '$state', function($rootScope, $scope, tripsFactory, Upload, $state) {
+  $scope.placeName = tripsFactory.getSelectedPlace().location.name;
+  $scope.tripName = tripsFactory.getSelectedTrip().name;
   $scope.files = [];
   $scope.progress = 0;
   $scope.uploading = false;
@@ -31,6 +33,7 @@ modals.controller('addPhotosController', ['$scope', 'tripsFactory', 'Upload', '$
   }
 
   function success(response) {
+    $rootScope.$broadcast('uploaded-photos', { place: tripsFactory.getSelectedPlace(), number: $scope.files.length });
     $scope.uploading = false;
     $scope.files = [];
     $state.go('trips');
