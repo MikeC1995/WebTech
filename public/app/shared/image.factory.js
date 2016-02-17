@@ -6,23 +6,23 @@ api.factory('imageFactory', ['$rootScope', 'apiFactory', function tripsFactory($
 
   //TODO: cache urls? Currently fetches them every time place changed
 
-  var imageUrls = [];
+  var photos = [];
 
   // If callback is specified, fetches urls from server
   // Otherwise, returns local urls object
-  imageFactory.getImageUrls = function(place_id, callback) {
+  imageFactory.getPhotos = function(params, callback) {
     if(callback !== undefined) {
-      apiFactory.getPhotos(place_id)
+      apiFactory.getPhotos(params)
         .then(function(response) {
-          imageUrls = response.data.data;
-          callback(imageUrls);
+          photos = response.data.data;
+          callback(photos);
         }, function(error) {
           // TODO: handle connection error
           console.log("error");
-          imageUrls = [];
+          photos = [];
         });
     } else {
-      return imageUrls;
+      return photos;
     }
   }
 

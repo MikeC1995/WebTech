@@ -7,11 +7,6 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
   // function bindings
   $scope.trips = tripsFactory.getTrips;    // getter
 
-  // Set initially selected trip
-  tripsFactory.getTrips(function(trips) {
-    tripsFactory.setSelectedTrip(trips[0]);
-  });
-
   // function bindings
   $scope.submit = function() {
     tripsFactory.addTrip($scope.tripName);

@@ -13,18 +13,20 @@ trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory
   apiFactory.getTrips()
     .then(function(response) {
       trips = response.data.data;
+      // initially selected trip
+      if(trips.length > 0) selectedTrip = trips[0];
     }, function(error) {
       // TODO: handle connection error
-      trips = [];
     });
 
   // Initial fetch of places
   apiFactory.getPlaces()
     .then(function(response) {
       places = response.data.data;
+      // initially selected place
+      if(places.length > 0) selectedPlace = places[0];
     }, function(error) {
       // TODO: handle connection error
-      places = [];
     });
 
 

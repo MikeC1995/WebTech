@@ -3,7 +3,8 @@ var Place = require('./place.js');
 
 var photoSchema = new mongoose.Schema({
   place_id: mongoose.Schema.Types.ObjectId,
-  filename: String
+  filename: String,
+  timestamp: Date
 });
 
 // Validate that place_id reference really exists

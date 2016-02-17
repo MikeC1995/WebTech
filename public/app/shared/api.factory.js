@@ -21,8 +21,12 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.post(urlBase + '/trips/places', place);
   }
 
-  apiFactory.getPhotos = function(place_id) {
-    return $http.get(urlBase + '/photos?place_id=' + place_id);
+  apiFactory.getPhotos = function(params) {
+    var qstring = '/photos?place_id=' + params.place_id;
+    if(params.timebefore) qstring += ('&timebefore=' + params.timebefore);
+    if(params.timeafter) qstring += ('&timeafter=' + params.timeafter);
+    console.log(qstring);
+    return $http.get(urlBase + qstring);
   }
 
   return apiFactory;

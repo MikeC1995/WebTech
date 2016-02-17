@@ -13,19 +13,32 @@ module.exports = {
     var params = {
       place_id: req.query.place_id
     };
-    Photo.find(params, function(err, photos) {
-      console.log(err);
-      if(err) return error.InternalServerError(res);
-      sendUrls(photos);
-    });
+
+    if(req.query.timebefore !== undefined) {
+      console.log("Fetch before " + req.query.timebefore);
+      params.timestamp = { $lt: req.query.timebefore };
+    } else if(req.query.timeafter !== undefined) {
+      console.log("Fetch after " + req.query.timeafter);
+      params.timestamp = { $gt: req.query.timeafter };
+    } else {
+      console.log("Fetch all");
+    }
+    Photo.find(params)
+      .sort({'timestamp': -1})
+      .limit(50)
+      .exec(
+        function(err, photos) {
+          if(err) return error.InternalServerError(res);
+          sendUrls(photos);
+        }
+      );
 
     function sendUrls(photos) {
-      var urls = [];
       for(var i = 0; i < photos.length; i++) {
         var url = "/uploads/" + photos[i].filename;
-        urls.push(url);
+        photos[i].filename = url;
       }
-      return success.OK(res, urls);
+      return success.OK(res, photos);
     }
   },
   post: function(req, res) {
@@ -39,13 +52,15 @@ module.exports = {
         if(req.body.place_id === undefined) {
           cb("place_id");   // upload error
         }
+        var timestamp = Date.now();
         var extension = file.originalname.split('.')[file.originalname.split('.').length -1];
-        var filename = req.body.place_id + "-" + Date.now() + "." + extension;
+        var filename = req.body.place_id + "-" + timestamp + "." + extension;
 
         // Save the photo reference to DB
         var p = new Photo({
           place_id: req.body.place_id,
-          filename: filename
+          filename: filename,
+          timestamp: timestamp
         });
         p.save(function(err) {
           // Error saving to DB

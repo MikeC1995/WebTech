@@ -10,13 +10,6 @@ trips.controller('placesController', ['$scope', 'tripsFactory', function($scope,
   $scope.places = tripsFactory.getPlaces;
   $scope.getSelectedTrip = tripsFactory.getSelectedTrip;
 
-  // Set initially selected trip
-  tripsFactory.getPlaces(function(places) {
-    if($scope.filteredPlaces.length != 0) {
-      tripsFactory.setSelectedPlace($scope.filteredPlaces[$scope.selectedIndex]);
-    }
-  });
-
   // update selected trip when selected radio button changes
   $scope.$watch(function() {
     return $scope.filteredPlaces[$scope.selectedIndex];
