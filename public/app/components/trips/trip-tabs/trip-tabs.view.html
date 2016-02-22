@@ -1,10 +1,10 @@
 <ul class="trip-tabs">
   <!-- Trip tabs -->
-  <li class="trip-item" ng-class="{ selected: isSelected(trip) }" ng-click="select(trip)" ng-repeat="trip in trips()">
+  <li class="trip-item" ng-class="{ selected: isSelected(trip) }" ng-click="select(trip)" ng-repeat="trip in trips()"
+      data-context-menu="/app/shared/context-menus/trips-contextmenu.view.html" ng-model="trip">
     <a href="">{{ trip.name }}</a>
   </li>
-  <!-- Add trip image -->
-  <img src="/assets/images/icons/black/add.png" ng-click="toggleShowInput()">
+  <img class="add-trip-icon" src="/assets/images/icons/black/add.png" ng-click="toggleShowInput()">
   <form ng-submit="submit()" class="hidden" ng-blur="toggleShowInput()">
     <input type="text" ng-model="tripName" ng-blur="toggleShowInput()" placeholder="ADD A TRIP"></input>
   </form>

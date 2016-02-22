@@ -6,10 +6,12 @@
   border-radius: 5px;
   overflow: hidden;
 
-  li {
+  .context-item {
     width: 100%;
     box-sizing: border-box;
     padding: 10px 30px 10px 15px;
+    cursor: pointer;
+
 
     &:hover {
       background-color: @context-menu-select;
@@ -26,7 +28,10 @@
     span {
       display: inline-block;
       font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0;
       vertical-align: middle;
+      color: #000;
     }
   }
 }
