@@ -9,7 +9,7 @@ api.factory('imageFactory', ['$rootScope', 'apiFactory', function tripsFactory($
   // If callback is specified, fetches urls from server
   // Otherwise, returns local urls object
   imageFactory.getPhotos = function(params, callback) {
-    if(callback !== undefined) {
+    if(callback !== undefined && params.place_id !== undefined) {
       apiFactory.getPhotos(params)
         .then(function(response) {
           photos = response.data.data;
