@@ -116,5 +116,18 @@ trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory
       });
   };
 
+  // expose apiFactory.deletePlace
+  tripsFactory.deletePlace = function(place) {
+    apiFactory.deletePlace(place)
+      .then(function(data) {
+        apiFactory.getPlaces().then(function(response) {
+          places = response.data.data;
+        });
+      }, function(error) {
+        //TODO handle error
+        alert("Unable to delete place!")
+      });
+  }
+
   return tripsFactory;
 }]);

@@ -4,8 +4,6 @@ var api = angular.module('api');
 api.factory('imageFactory', ['$rootScope', 'apiFactory', function tripsFactory($rootScope, apiFactory) {
   var imageFactory = {};
 
-  //TODO: cache urls? Currently fetches them every time place changed
-
   var photos = [];
 
   // If callback is specified, fetches urls from server
@@ -28,6 +26,7 @@ api.factory('imageFactory', ['$rootScope', 'apiFactory', function tripsFactory($
 
   imageFactory.deletePhotos = function(photos, callback) {
     if(photos.length) {
+      console.log(photos);
       apiFactory.deletePhotos(photos)
         .then(function(response) {
           callback();

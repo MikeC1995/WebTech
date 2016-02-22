@@ -18,7 +18,8 @@ module.exports = function(app) {
   var places = require('./routes/places.js');
   router.route('/trips/places')
     .get(places.get)
-    .post(places.post);
+    .post(places.post)
+    .delete(places.delete);
 
   var photos = require('./routes/photos.js');
   router.route('/photos')

@@ -3,6 +3,8 @@
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
 var Place = require('../models/place.js');
+var Photo = require('../models/photo.js');
+var deleter = require('../helpers/delete.js');
 
 module.exports = {
   get:  function(req, res) {
@@ -36,5 +38,12 @@ module.exports = {
       if (err) return error.InternalServerError(res);
       return success.Created(res, 'Place');
     });
+  },
+  delete: function(req, res) {
+    if(req.query.place_id !== undefined) {
+      deleter.place(res, req.query.place_id);
+    } else {
+      return error.BadRequest(res, "place_id");
+    }
   }
 }

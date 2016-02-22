@@ -4,7 +4,9 @@ var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
 var multer = require('multer'); //for handling multipart form data
 var fs = require('fs');
+var imageurls = require('../helpers/image-urls.js');
 var Photo = require('../models/photo.js');
+var deleter = require('../helpers/delete.js');
 
 module.exports = {
   get:  function(req, res) {
@@ -40,9 +42,10 @@ module.exports = {
         }
       );
 
+    // Client should recieve the urls where it can access the photos, (not the raw filenames)
     function sendUrls(photos) {
       for(var i = 0; i < photos.length; i++) {
-        var url = "/uploads/" + photos[i].filename;
+        var url = imageurls.nameToPath(photos[i].filename);
         photos[i].filename = url;
       }
       return success.OK(res, photos);
@@ -50,7 +53,7 @@ module.exports = {
   },
   post: function(req, res) {
     // Store the uploaded file in the uploads folder under a name
-    // of the form: <place_id>-<timedatestamp>-<originalname>.<extension>
+    // of the form: <place_id>-<timedatestamp>-<originalname>-<timestamp>.<extension>
     // NOTE: the original name is required to ensure uniqueness in filenames!
     // Very fast uploads means Date.now() doesnt produce a unique filename (at least when running locally)
     var storage = multer.diskStorage({
@@ -63,7 +66,8 @@ module.exports = {
         }
         var timestamp = Date.now();
         var extension = file.originalname.split('.')[file.originalname.split('.').length -1];
-        var filename = req.body.place_id + "-" + timestamp + "-" + file.originalname + "." + extension;
+        var originalname = file.originalname.split('.').slice(0, -1)[0].replace(/ /g,''); // file extension + whitespace removed
+        var filename = req.body.place_id + "-" + timestamp + "-" + originalname + "-" + timestamp + "." + extension;
 
         // Save the photo reference to DB
         var p = new Photo({
@@ -92,36 +96,16 @@ module.exports = {
     });
   },
   delete: function(req, res) {
-
-    function deletePhotos(photos, callback) {
-      var i = photos.length;
-      photos.forEach(function(photo) {
-        // Delete from database
-        Photo.find({_id: photo._id}).remove(function(err) {
-          if(err) {
-            callback(err);
-            return;
-          }
-          // Delete from filesystem (TODO: AWS S3)
-          fs.unlink('./' + photo.filename, function(err) {
-            i--;
-            if (err) {
-              callback(err);
-              return;
-            } else if (i <= 0) {
-              callback(null);
-            }
-          });
-        });
-      });
-    }
-
-    deletePhotos(req.body, function(err) {
-      if (err) {
-        return error.InternalServerError(res, 'Unable to delete files.');
-      } else {
-        return success.OK(res);
+    // Photos array should be attached to request as body
+    if(req.body !== undefined) {
+      // Photo filenames on the client are the urls it uses to access them
+      // Must convert these paths to the actual filenames
+      for(var i = 0; i < req.body.length; i++) {
+        req.body[i].filename = imageurls.pathToName(req.body[i].filename);
       }
-    });
+      deleter.photos(res, req.body);
+    } else {
+      return error.BadRequest(res, "body");
+    }
   }
 }

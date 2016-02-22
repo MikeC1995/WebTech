@@ -30,6 +30,6 @@ trips.controller('placesController', ['$scope', 'tripsFactory', function($scope,
   }
 
   $scope.deletePlace = function(place) {
-    console.log(place);
+    tripsFactory.deletePlace(place);
   }
 }]);

@@ -21,6 +21,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.post(urlBase + '/trips/places', place);
   }
 
+  apiFactory.deletePlace = function(place) {
+    return $http.delete(urlBase + '/trips/places?place_id=' + place._id);
+  }
+
   apiFactory.getPhotos = function(params) {
     var qstring = '/photos?place_id=' + params.place_id;
     if(params.timebefore) qstring += ('&timebefore=' + params.timebefore);
