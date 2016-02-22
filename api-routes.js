@@ -25,5 +25,11 @@ module.exports = function(app) {
     .get(photos.get)
     .post(photos.post);
 
+  // Can't use HTTP verb DELETE as body required to specify resources to delete.
+  // This could be too long to specify in the URI itself.
+  // Instead, using a seperate end point with the POST verb.
+  router.route('/photos/delete')
+    .post(photos.delete);
+
   return router;
 }

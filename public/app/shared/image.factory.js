@@ -26,5 +26,17 @@ api.factory('imageFactory', ['$rootScope', 'apiFactory', function tripsFactory($
     }
   }
 
+  imageFactory.deletePhotos = function(photos, callback) {
+    if(photos.length) {
+      apiFactory.deletePhotos(photos)
+        .then(function(response) {
+          callback();
+        }, function(error) {
+          // TODO: handle connection error
+          console.log("error");
+        });
+    }
+  }
+
   return imageFactory;
 }]);

@@ -1,27 +1,59 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory', function($scope, tripsFactory, imageFactory) {
+trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory', '$state', function($scope, tripsFactory, imageFactory, $state) {
   // Remember urls as we load them in this object, avoiding repeat server requests
   $scope.photos = {};
   // The current photos (a property of $scope.photos) used by ng-repeat
   $scope.currentPhotos = [];
-  // The id of the currently selected place, (referring to a property in $scope.photos)
-  $scope.selectedPlaceId = tripsFactory.getSelectedPlace()._id;
-  $scope.getSelectedPlaceId = function() {
-    return $scope.selectedPlaceId;
+  // The list of currently selected photos
+  $scope.selectedPhotos = [];
+
+  // Select/deselect a photo depending on whether it is already selected
+  $scope.toggleSelectPhoto = function(photo) {
+    for(var i = 0; i < $scope.selectedPhotos.length; i++) {
+      if($scope.selectedPhotos[i]._id == photo._id) {
+        $scope.selectedPhotos.splice(i, 1);
+        return;
+      }
+    }
+    $scope.selectedPhotos.push(photo);
   }
 
+  // checks if a given photo is in the selected list
+  $scope.isSelectedPhoto = function(photo) {
+    for(var i = 0; i < $scope.selectedPhotos.length; i++) {
+      if($scope.selectedPhotos[i]._id == photo._id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Delete the currently selected photos
+  $scope.deletePhotos = function() {
+    imageFactory.deletePhotos($scope.selectedPhotos, function() {
+      // Reload *this* ui-view to update gallery
+      // (this resets the selected photos etc as the controller is reloaded)
+      $state.go($state.current, {}, {reload: true});
+    });
+  }
+
+  // The id of the currently selected place, (referring to a property in $scope.photos)
+  $scope.selectedPlaceId = tripsFactory.getSelectedPlace()._id;
+
+  // Event emitted by add-photos modal, indicating that new photos were uploaded
+  // Therefore the gallery needs updating
   $scope.$on('uploaded-photos', function(event, args) {
-    console.log("uploaded photos broadcast received!");
-    console.log(args.number);
+    //If the place to which photos were added is not this one, select that one.
     if(args.place._id != $scope.selectedPlaceId) {
       tripsFactory.setSelectedPlace(args.place);
     }
     var params = {
       place_id: args.place._id,
-      limit: args.number
+      limit: args.number  // fetch the correct number of new images
     };
+    // fetch photos newer than the current newest
     var newest = $scope.photos[args.place._id][0];
     if(newest !== undefined) {
       params.timeafter = newest.timestamp;
@@ -45,7 +77,7 @@ trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory',
     }
   });
 
-  // Load first set of images for a place
+  // Load first set of images for a place. More will be loaded on scroll.
   function loadInitial() {
     // TODO: limit 80 to guarantee div filled. However, need to
     // limit by the size of the gallery and # thumbs that will fit!
@@ -63,7 +95,6 @@ trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory',
 
   // load more images (as the user scrolls)
   $scope.loadMore = function() {
-    console.log("load");
     var place_id = $scope.selectedPlaceId;
     var oldest = $scope.photos[place_id][$scope.photos[place_id].length - 1];
     var params = {

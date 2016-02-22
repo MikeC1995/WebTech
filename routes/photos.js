@@ -3,6 +3,7 @@
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
 var multer = require('multer'); //for handling multipart form data
+var fs = require('fs');
 var Photo = require('../models/photo.js');
 
 module.exports = {
@@ -88,6 +89,39 @@ module.exports = {
       if(err) return error.BadRequest(res, err);
       // Successfully saved image
       return success.Created(res, "photos");
+    });
+  },
+  delete: function(req, res) {
+
+    function deletePhotos(photos, callback) {
+      var i = photos.length;
+      photos.forEach(function(photo) {
+        // Delete from database
+        Photo.find({_id: photo._id}).remove(function(err) {
+          if(err) {
+            callback(err);
+            return;
+          }
+          // Delete from filesystem (TODO: AWS S3)
+          fs.unlink('./' + photo.filename, function(err) {
+            i--;
+            if (err) {
+              callback(err);
+              return;
+            } else if (i <= 0) {
+              callback(null);
+            }
+          });
+        });
+      });
+    }
+
+    deletePhotos(req.body, function(err) {
+      if (err) {
+        return error.InternalServerError(res, 'Unable to delete files.');
+      } else {
+        return success.OK(res);
+      }
     });
   }
 }

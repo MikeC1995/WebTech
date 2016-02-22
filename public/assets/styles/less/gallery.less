@@ -4,15 +4,26 @@
   .toolbar {
     height: 20px;
     padding: 5px 0 15px 0;
+    img:first-of-type {
+      padding-right: 20px;
+    }
     img {
       height: 100%;
       width: auto;
-      padding-right: 20px;
       cursor: pointer;
       opacity: 0.5;
       &:hover {
         opacity: 1;
       }
+    }
+    .selected-msg {
+      float: right;
+      padding-right: 20px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+      font-style: italic;
+      line-height: 30px;
     }
   }
   .thumbnails {
@@ -27,6 +38,12 @@
       background-position: center center;
       background-size: cover;
       vertical-align: top; // prevents vertical gap between image rows
+      cursor: pointer;
+      //margin: 2px;
+    }
+    .selected {
+      box-sizing: border-box;
+      border: 8px solid #fff;
     }
   }
 }
