@@ -28,4 +28,8 @@ trips.controller('placesController', ['$scope', 'tripsFactory', function($scope,
   $scope.isSelected = function(place) {
     return place._id == tripsFactory.getSelectedPlace()._id;
   }
+
+  $scope.deletePlace = function(place) {
+    console.log(place);
+  }
 }]);

@@ -1,7 +1,7 @@
 <div class="gallery">
   <div class="toolbar">
     <img src="/assets/images/icons/black/plus.png" ui-sref="trips.modal.addPhotos">
-    <img ng-click="deletePhotos()" src="/assets/images/icons/black/delete.png">
+    <img ng-click="deletePhotos()" ng-show="selectedPhotos.length > 0" src="/assets/images/icons/black/delete.png">
     <span class="selected-msg">{{selectedPhotos.length}} photos selected</span>
   </div>
   <div class="thumbnails" when-scrolled="loadMore()">
