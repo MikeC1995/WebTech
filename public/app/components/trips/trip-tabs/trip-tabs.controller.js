@@ -22,4 +22,8 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
   $scope.isSelected = function(trip) {
     return trip._id == tripsFactory.getSelectedTrip()._id;
   }
+
+  $scope.deleteTrip = function(trip) {
+    tripsFactory.deleteTrip(trip);
+  }
 }]);

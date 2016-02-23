@@ -103,6 +103,18 @@ trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory
     }
   };
 
+  tripsFactory.deleteTrip = function(trip) {
+    apiFactory.deleteTrip(trip)
+      .then(function(data) {
+        apiFactory.getTrips().then(function(response) {
+          trips = response.data.data;
+        });
+      }, function(error) {
+        // TODO: handle error
+        alert('Unable to delete trip! :(');
+      });
+  }
+
   // expose apiFactory.addPlace
   tripsFactory.addPlace = function(place) {
     apiFactory.addPlace(place)

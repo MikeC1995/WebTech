@@ -3,6 +3,7 @@
 
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
+var Trip = require('../models/trip.js');
 var Photo = require('../models/photo.js');
 var Place = require('../models/place.js');
 var imageurls = require('../helpers/image-urls.js');
@@ -42,7 +43,7 @@ module.exports = {
     // Delete place from db
     Photo.find({place_id: place_id}, function(err, photos) {
       if(err) {
-        return error.InternalServerError(res, "Unable to find place " + place_id);
+        return error.InternalServerError(res);
       } else {
         // delete photos for that place (fs + db reference)..
         deletePhotos(photos);
@@ -65,5 +66,43 @@ module.exports = {
     deletePhotos(photos);
     // This is async, and we return OK immediately (potentially lengthy operation)
     return success.OK(res);
+  },
+  trip : function(res, trip_id) {
+    // Find all the places in this trip
+    Place.find({trip_id: trip_id}, function(err, places) {
+      if(err) {
+        return error.InternalServerError(res);
+      } else {
+
+        for(var i = 0; i < places.length; i++) {
+          // Delete all photos from each place
+          Photo.find({place_id: places[i]._id}, function(err, photos) {
+            if(err) {
+              console.error("Unable to find photos. Error: " + err);
+            } else {
+              // Delete photos for this place, from db + fs
+              deletePhotos(photos);
+            }
+          });
+
+          // Delete the place itself
+          Place.find({_id: places[i]._id}).remove(function(err) {
+            if(err) {
+              console.error("Unable to delete place. Error: " + err);
+            }
+          });
+        }
+
+        // Delete the trip itself
+        Trip.find({_id: trip_id}).remove(function(err) {
+          if(err) {
+            console.error("Unable to delete trip. Error: " + err);
+          }
+        });
+
+        // Above is all async, so we return OK immediately (potentially lengthy operations)
+        return success.OK(res);
+      }
+    });
   }
 }

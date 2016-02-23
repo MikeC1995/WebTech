@@ -3,6 +3,7 @@
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
 var Trip = require('../models/trip.js');
+var deleter = require('../helpers/delete.js');
 
 module.exports = {
   get:  function(req, res) {
@@ -20,5 +21,12 @@ module.exports = {
       if (err) return error.InternalServerError(res);
       return success.Created(res, 'Trip');
     });
+  },
+  delete: function(req, res) {
+    if(req.query.trip_id === undefined) {
+      return error.BadRequest(res, 'trip_id');
+    } else {
+      deleter.trip(res, req.query.trip_id);
+    }
   }
 }
