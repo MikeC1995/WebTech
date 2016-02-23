@@ -1,3 +1,4 @@
+/* Module to send success responses to the client */
 'use strict';
 
 module.exports.OK = function(res, data) {
@@ -17,6 +18,5 @@ module.exports.Created = function(res, what) {
   } else {
     success.message = 'The request has been fulfilled and resulted in a new resource being created.';
   }
-  console.log(JSON.stringify(success));
   res.send(success);
 }

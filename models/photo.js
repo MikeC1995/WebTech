@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+// Models
 var Place = require('./place.js');
 
 var photoSchema = new mongoose.Schema({

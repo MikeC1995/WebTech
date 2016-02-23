@@ -1,12 +1,16 @@
-// Module for preoperly RECURSIVELY deleting data, ensuring no loose ends.
+/* Module to facilitate the recursive deletion of data. */
 'use strict';
 
+// Responses
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
+// Models
 var Trip = require('../models/trip.js');
 var Photo = require('../models/photo.js');
 var Place = require('../models/place.js');
+// Helpers
 var imageurls = require('../helpers/image-urls.js');
+// Dependencies
 var fs = require('fs');
 
 // Async delete a list of photos from filesystem and the database
@@ -39,6 +43,16 @@ function deletePhotos(photos) {
 }
 
 module.exports = {
+  // Delete a list of photos from the database and filesystem.
+  // Items in array 'photos' should match the database representation, (in
+  // particular, the filename attribute should not be the client's url version).
+  photos: function(res, photos) {
+    // delete photos (fs + db reference)
+    deletePhotos(photos);
+    // This is async, and we return OK immediately (potentially lengthy operation)
+    return success.OK(res);
+  },
+  // Deletes a place and its associated photos
   place: function(res, place_id) {
     // Delete place from db
     Photo.find({place_id: place_id}, function(err, photos) {
@@ -61,12 +75,7 @@ module.exports = {
       }
     });
   },
-  photos: function(res, photos) {
-    // delete photos for that place (fs + db reference)
-    deletePhotos(photos);
-    // This is async, and we return OK immediately (potentially lengthy operation)
-    return success.OK(res);
-  },
+  // Delete a trip, all associated places and all associated photos
   trip : function(res, trip_id) {
     // Find all the places in this trip
     Place.find({trip_id: trip_id}, function(err, places) {

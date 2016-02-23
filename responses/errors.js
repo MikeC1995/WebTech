@@ -1,3 +1,4 @@
+/* Module to send error responses to the client */
 'use strict';
 
 module.exports.BadRequest = function(res, missing) {

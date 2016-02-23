@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+// Models
 var Trip = require('./trip.js');
 
 var Location = new mongoose.Schema({
