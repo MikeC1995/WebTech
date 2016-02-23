@@ -5,7 +5,16 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory', function($scop
   $scope.tripName = ""; // the name of the new trip to add
 
   // function bindings
-  $scope.trips = tripsFactory.getTrips;    // getter
+  $scope.trips = tripsFactory.getTrips;
+
+  // set selected trip to the first one when trips are changed (e.g. deleted)
+  $scope.$watch(function() {
+    return $scope.trips()[0];
+  }, function(value) {
+    if(value !== undefined) {
+      tripsFactory.setSelectedTrip(value);
+    }
+  });
 
   // function bindings
   $scope.submit = function() {
