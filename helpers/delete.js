@@ -12,9 +12,9 @@ var Place = require('../models/place.js');
 var imageurls = require('../helpers/image-urls.js');
 // Dependencies
 var fs = require('fs');
+var aws = require('../config/aws.js');
 
 // Async delete a list of photos from filesystem and the database
-// TODO: AWS S3
 function deletePhotos(photos) {
   var i = photos.length - 1;
   if(i == undefined || i == -1) {
@@ -23,20 +23,27 @@ function deletePhotos(photos) {
   }
 
   while(i >= 0) {
-    // Delete photo from filesystem
-    fs.unlink('./uploads/' + photos[i].filename, function(err) {
-      if(err) {
-        // TODO: handle error?
-        console.error("Unable to delete photo from filesystem. Error: " + err);
-        return;
-      }
-    });
-    // Delete photo from database
-    Photo.find({_id: photos[i]._id}).remove(function(err) {
-      if(err) {
-        // TODO: handle error?
-        console.error("Unable to delete photo from database.");
-      }
+    Photo.findById(photos[i]._id, function(err, photo) {
+      // Delete from S3
+      var params = {
+        Bucket: aws.s3bucket,
+        Key: photo.key
+      };
+      aws.s3.deleteObject(params, function(aws_err) {
+        if(aws_err) {
+          //TODO handle error
+          console.log("Error uploading data: ", err);
+        } else {
+          console.log("Successfully deleted data from myBucket/myKey");
+        }
+      });
+
+      photo.remove(function(m_err) {
+        if(m_err) {
+          // TODO: handle error
+          console.error("Unable to delete photo from database.");
+        }
+      });
     });
     i--;
   }
