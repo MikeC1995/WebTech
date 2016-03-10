@@ -23,6 +23,10 @@ var port = process.env.PORT || 8080;
 // serve the website from the public folder on the default route
 app.use('/', express.static('public'));
 
+// STATICALLY SERVE DEPENDENCIES (node_modules) FOR USE BY CLIENT
+// (ie. THIS METHOD HIDES THE SERVER STRUCTURE)
+app.use('/scripts', express.static('node_modules'));
+
 // TEMPORARY FOLDER FOR SERVING USER IMAGES, EMULATING AWS S3 INSTANCE
 // TODO: Migrate to AWS S3
 app.use('/uploads', express.static('uploads'));
