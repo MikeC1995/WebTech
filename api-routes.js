@@ -2,6 +2,7 @@
 
 module.exports = function(app) {
   var express = require('express');
+  var multer = require('multer');
   var router = express.Router();
 
   // Test route
@@ -22,7 +23,10 @@ module.exports = function(app) {
     .post(places.post)
     .delete(places.delete);
 
+  // Use multer middleware to attach 'files' object to request body
   var photos = require('./routes/photos.js');
+  var attach = multer({limits: {fileSize:10*1024*1024}}).any();
+  router.use('/photos', attach);
   router.route('/photos')
     .get(photos.get)
     .post(photos.post);
