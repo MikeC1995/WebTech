@@ -10,7 +10,7 @@
       <span class="place-text">{{ place.location.name }}</span>
     </label>
     <!--<div class="node-content" ng-show="isSelected($index)"></div>-->
-    <gallery class="node-content" ng-show="isSelected(place)"></gallery>
+    <gallery place-id="place._id" class="node-content" ng-show="isSelected(place)"></gallery>
   </div>
   <div class="node">
     <input type="radio"></input>

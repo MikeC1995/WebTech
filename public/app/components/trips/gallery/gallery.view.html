@@ -5,6 +5,6 @@
     <span class="selected-msg">{{selectedPhotos.length}} photos selected</span>
   </div>
   <div class="thumbnails" when-scrolled="loadMore()">
-    <div class="thumbnail" ng-class="{selected: isSelectedPhoto(photo)}" ng-click="toggleSelectPhoto(photo)" ng-repeat="photo in currentPhotos" style="background-image: url('{{photo.url}}');"></div>
+    <div class="thumbnail" ng-class="{selected: isSelectedPhoto(photo)}" ng-click="toggleSelectPhoto(photo)" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}');"></div>
   </div>
 </div>

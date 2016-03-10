@@ -5,7 +5,9 @@ app.directive('gallery', function($timeout) {
   return {
       restrict: 'E',
       replace: 'false',
-      scope: {},
+      scope: {
+        placeId: '&'
+      },
       controller: 'galleryController',
       templateUrl: '/app/components/trips/gallery/gallery.view.html',
       link: function($scope, elem, attrs) {
