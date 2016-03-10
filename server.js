@@ -11,7 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // CONNECT TO DATABASE
-mongoose.connect('mongodb://localhost/webtechdb');
+var mongo_uri = process.env.MONGOLAB_URI || 'mongodb://localhost/webtechdb';
+mongoose.connect(mongo_uri);
 
 // SET NODE ENVIRONMENT
 var env = (process.env.NODE_ENV || "development");
