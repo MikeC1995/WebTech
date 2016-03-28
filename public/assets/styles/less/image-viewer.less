@@ -1,0 +1,84 @@
+#image-viewer {
+  position: relative;
+  width: 100%;
+  height: calc(~"100% - 100px");
+  text-align: left;
+  overflow-y: scroll;
+
+  #thumb {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: top; // prevents vertical gap between image rows
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  #overlay {
+
+    &.closed {
+      display: none;
+    }
+
+    img {
+      z-index: 300;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+
+    #close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 15px;
+      height: 15px;
+    }
+
+    #left {
+      position: absolute;
+      width: 20px;
+      height: auto;
+      left: 10px;
+      top: calc(~"50% - 15px")
+    }
+
+    #right {
+      position: absolute;
+      width: 20px;
+      height: auto;
+      right: 10px;
+      top: calc(~"50% - 10px");
+    }
+
+    #image-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000;
+      opacity: 0.8;
+      z-index: 100;
+    }
+
+    #image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      z-index: 200;
+    }
+  }
+}

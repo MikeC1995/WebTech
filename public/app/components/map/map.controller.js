@@ -2,6 +2,7 @@
 
 var map = angular.module('map');
 map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', function($scope, tripsFactory, imageFactory) {
+  $scope.selectedPhotoIndex = 0;
   $scope.photos = [];
 
   // function bindings
@@ -16,6 +17,7 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     if(value !== undefined) {
       loadInitial();
     }
+    $scope.selectedPhotoIndex = 0;
   });
 
   // return the currently selected place
@@ -100,5 +102,4 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
       }
     });
   }
-
 }]);
