@@ -27,7 +27,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 app.controller('appController', function($scope) {
-  $scope.isSidePanelOpen = true;
+  $scope.isSidePanelOpen = false;
 
   $scope.toggleSidePanelOpen = function() {
     $scope.isSidePanelOpen = !$scope.isSidePanelOpen;

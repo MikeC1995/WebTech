@@ -1,7 +1,7 @@
 'use strict';
 
 var api = angular.module('api');
-api.factory('imageFactory', ['$rootScope', 'apiFactory', function tripsFactory($rootScope, apiFactory) {
+api.factory('imageFactory', ['$rootScope', 'apiFactory', function imageFactory($rootScope, apiFactory) {
   var imageFactory = {};
 
   var photos = [];

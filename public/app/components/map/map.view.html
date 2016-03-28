@@ -1,10 +1,14 @@
 <div id="map-container" ng-controller="mapController">
   <div id="galleryPanel">
     <div id="title">
-      <img src="/assets/images/icons/black/arrow-up.png">
+      <img src="/assets/images/icons/black/arrow-up.png" ng-click="decrementSelectedPlace()">
       <span id="place">{{selectedPlace().location.name}}</span>
       <span id="dates">{{formatDate(selectedPlace().from_date)}} - {{formatDate(selectedPlace().to_date)}}</span>
-      <img src="/assets/images/icons/black/arrow-down.png">
+      <img src="/assets/images/icons/black/arrow-down.png" ng-click="incrementSelectedPlace()">
+    </div>
+
+    <div id="gallery" when-scrolled="loadMore()">
+      <div id="thumb" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}');"></div>
     </div>
   </div>
   <div id="mapPanel"></div>
