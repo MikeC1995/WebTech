@@ -38,9 +38,7 @@ trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory',
       timebefore: Date.now(),
       limit: 80
     };
-    console.log(params);
     imageFactory.getPhotos(params, function(photos) {
-      console.log(photos);
       $scope.photos = photos;
     });
   }

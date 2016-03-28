@@ -26,8 +26,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/");
 });
 
-app.controller('appController', function() {
+app.controller('appController', function($scope) {
+  $scope.isSidePanelOpen = true;
 
+  $scope.toggleSidePanelOpen = function() {
+    $scope.isSidePanelOpen = !$scope.isSidePanelOpen;
+  }
 });
 
 app.value('mapApiKey', 'AIzaSyCP5BKla9RY0aObtlovjVzIBV2XEsfYj48');

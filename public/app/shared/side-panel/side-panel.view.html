@@ -1,10 +1,5 @@
-<div id="side-panel" ng-controller="sidePanelController">
-  <div id="top-bar">
-    <!-- Menu/Back icon. Only appear when in Map state. -->
-    <img id="menu-icon" ng-class="{ hidden: !$state.includes('map') }" src="/assets/images/icons/white/back.png">
-  </div>
-
-  <div id="menu" class="open">
+<div id="side-panel" ng-controller="sidePanelController" ng-class="{ open: isSidePanelOpen }">
+  <div id="menu">
     <img id="profile-picture" src="/assets/images/tmp/profile_picture.jpg">
     <span id="profile-name">Michael Christensen</span>
     <img id="profile-settings-expand" src="/assets/images/icons/white/expand.png">
