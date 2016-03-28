@@ -9,49 +9,79 @@
     float: left;
     font-family: "Open Sans", sans-serif;
     box-sizing: border-box;
-    padding-top: 15px;
+    text-align: center;
 
-    #title {
-      height: 150px;
-      margin: auto;
-      text-align: center;
-
-      * {
-        display: block;
-        margin: auto;
-        padding-bottom: 10px;
-      }
-
-      img {
-        width: 14px;
-        height: auto;
-        opacity: 0.4;
-
-        &:hover {
-          opacity: 1;
-          cursor: pointer;
-        }
-      }
-
-      #place {
-        font-size: 20px;
-      }
+    #title-box {
+      position: relative;
+      padding-top: 30px;
+      height: 75px;
 
       #trip {
+        position: absolute;
+        top: 15px;
+        left: 15px;
         font-size: 12px;
         font-weight: 600;
         letter-spacing: 1px;
-        text-transform: uppercase;
+      }
+
+      #trip-line {
+        position: absolute;
+        height: 4px;
+        width: 100%;
+        background-color: @trip-red;
+        top: 42px;
+      }
+
+      #place {
+        display: inline-block;
+        position: relative;
+        height: 25px;
+        padding-left: 15px;
+        padding-right: 35px;
+        box-sizing: border-box;
+        background-color: #fff;
+        text-align: center;
+
+        span {
+          font-size: 16px;
+          line-height: 25px;
+        }
+
+        img {
+          position: absolute;
+          height: 10px;
+          width: auto;
+          opacity: 0.4;
+
+          &:hover {
+            opacity: 1;
+            cursor: pointer;
+          }
+
+          &#up {
+            top: 3px;
+            right: 15px;
+          }
+
+          &#down {
+            bottom: 3px;
+            right: 15px;
+          }
+        }
       }
 
       #dates {
+        display: block;
         font-size: 12px;
+        padding-top: 5px;
       }
     }
 
     #gallery {
       width: 100%;
-      height: calc(~"100% - 120px");
+      height: calc(~"100% - 35px");
+      text-align: left;
       overflow-y: scroll;
 
       #thumb {

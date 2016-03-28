@@ -1,11 +1,14 @@
 <div id="map-container" ng-controller="mapController">
   <div id="galleryPanel">
-    <div id="title">
-      <img src="/assets/images/icons/black/arrow-up.png" ng-click="decrementSelectedPlace()">
-      <span id="place">{{selectedPlace().location.name}}</span>
-      <span id="dates">{{formatDate(selectedPlace().from_date)}} - {{formatDate(selectedPlace().to_date)}}</span>
+    <div id="title-box">
       <span id="trip">{{selectedTrip().name}}</span>
-      <img src="/assets/images/icons/black/arrow-down.png" ng-click="incrementSelectedPlace()">
+      <div id="trip-line"></div>
+      <div id="place">
+        <span>{{selectedPlace().location.name}}</span>
+        <img id="up" src="/assets/images/icons/black/expand-up.png" ng-click="decrementSelectedPlace()">
+        <img id="down" src="/assets/images/icons/black/expand-down.png" ng-click="incrementSelectedPlace()">
+      </div>
+      <span id="dates">{{formatDate(selectedPlace().from_date)}} - {{formatDate(selectedPlace().to_date)}}</span>
     </div>
 
     <div id="gallery" when-scrolled="loadMore()">
