@@ -1,7 +1,7 @@
 'use strict';
 
 // The root application module for this app
-var app = angular.module('app', ['ui.router', 'trips', 'modals', 'ngContextMenu']);
+var app = angular.module('app', ['ui.router', 'map', 'trips', 'modals', 'ngContextMenu']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
