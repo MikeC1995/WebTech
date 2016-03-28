@@ -35,9 +35,16 @@ trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory
     return selectedTrip;
   }
   tripsFactory.setSelectedTrip = function(trip) {
+    // update selected trip
     for(var i = 0; i < trips.length; i++) {
       if(trips[i]._id == trip._id) {
         selectedTrip = trips[i];
+      }
+    }
+    // select the first place on this trip
+    for(var i = 0; i < places.length; i++) {
+      if(places[i].trip_id == selectedTrip._id) {
+        selectedPlace = places[i];
       }
     }
   }
@@ -45,9 +52,16 @@ trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory
     return selectedPlace;
   }
   tripsFactory.setSelectedPlace = function(place) {
+    // update selected place
     for(var i = 0; i < places.length; i++) {
       if(places[i]._id == place._id) {
         selectedPlace = places[i];
+      }
+    }
+    // set the selected trip to that which contains the newly selected place
+    for(var i = 0; i < trips.length; i++) {
+      if(trips[i]._id == selectedPlace.trip_id) {
+        selectedTrip = trips[i];
       }
     }
   }
