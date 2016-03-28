@@ -13,9 +13,12 @@
 
     <div id="gallery" when-scrolled="loadMore()">
       <div id="thumb" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}');"></div>
+
+      <img id="close" src="/assets/images/icons/white/close.png">
+      <img id="left" src="/assets/images/icons/white/arrow-left.png">
+      <img id="right" src="/assets/images/icons/white/arrow-right.png">
       <div id="image-cover"></div>
-      <div id="image" style="background-image: url('/assets/images/tmp/tmp.jpg')">
-      </div>
+      <div id="image" style="background-image: url('/assets/images/tmp/tmp.jpg')"></div>
     </div>
   </div>
   <div id="mapPanel"></div>
