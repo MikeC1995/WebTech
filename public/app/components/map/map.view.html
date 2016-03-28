@@ -2,8 +2,8 @@
   <div id="galleryPanel">
     <div id="title">
       <img src="/assets/images/icons/black/arrow-up.png">
-      <span id="place">Amsterdam, Netherlands</span>
-      <span id="dates">13/08/2015 - 20/08/2015</span>
+      <span id="place">{{selectedPlace().location.name}}</span>
+      <span id="dates">{{formatDate(selectedPlace().from_date)}} - {{formatDate(selectedPlace().to_date)}}</span>
       <img src="/assets/images/icons/black/arrow-down.png">
     </div>
   </div>
