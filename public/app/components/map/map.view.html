@@ -4,6 +4,7 @@
       <img src="/assets/images/icons/black/arrow-up.png" ng-click="decrementSelectedPlace()">
       <span id="place">{{selectedPlace().location.name}}</span>
       <span id="dates">{{formatDate(selectedPlace().from_date)}} - {{formatDate(selectedPlace().to_date)}}</span>
+      <span id="trip">{{selectedTrip().name}}</span>
       <img src="/assets/images/icons/black/arrow-down.png" ng-click="incrementSelectedPlace()">
     </div>
 

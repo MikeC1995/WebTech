@@ -23,6 +23,11 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     return tripsFactory.getSelectedPlace();
   }
 
+  // return the currently selected place
+  $scope.selectedTrip = function() {
+    return tripsFactory.getSelectedTrip();
+  }
+
   $scope.incrementSelectedPlace = function() {
     var ps = $scope.places();
     var idx = -1;
