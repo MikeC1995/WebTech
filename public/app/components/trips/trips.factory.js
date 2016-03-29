@@ -103,7 +103,9 @@ trips.factory('tripsFactory', ['$rootScope', 'apiFactory', function tripsFactory
   tripsFactory.addTrip = function(tripName) {
     if (tripName) {
       var trip = {
-        name: tripName.toUpperCase()
+        name: tripName.toUpperCase(),
+        // if run out of trip colours, will default to black
+        colour: $rootScope.defaultTripColours[trips.length] || '#000'
       };
       apiFactory.addTrip(trip)
         .then(function(data) {

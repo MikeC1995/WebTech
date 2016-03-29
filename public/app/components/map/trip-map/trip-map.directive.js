@@ -60,8 +60,8 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
               map: $scope.map,
               icon: {
                 url: '/assets/images/icons/marker.png',
-                scaledSize: new google.maps.Size(30, 30),
-                anchor: new google.maps.Point(15, 15) //anchor is the center of the marker
+                scaledSize: new google.maps.Size(20, 20),
+                anchor: new google.maps.Point(10, 10) //anchor is the center of the marker
               }
             });
             $scope.markers.push(marker);
@@ -93,7 +93,6 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
 
             // draw connections between places
             if(sortedPlaces[i].length >= 2) {
-              console.log(tripIds[i].colour);
               for(var j = 1; j < sortedPlaces[i].length; j++) {
                 var connector = new google.maps.Polyline({
                   path: [{lat: sortedPlaces[i][j-1].location.lat,

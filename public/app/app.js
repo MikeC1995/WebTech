@@ -26,12 +26,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/");
 });
 
-app.controller('appController', function($scope) {
+app.controller('appController', ['$rootScope', '$scope', function($rootScope, $scope) {
   $scope.isSidePanelOpen = false;
 
   $scope.toggleSidePanelOpen = function() {
     $scope.isSidePanelOpen = !$scope.isSidePanelOpen;
   }
-});
+
+  $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f'];
+}]);
 
 app.value('mapApiKey', 'AIzaSyCP5BKla9RY0aObtlovjVzIBV2XEsfYj48');
