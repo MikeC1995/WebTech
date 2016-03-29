@@ -93,6 +93,7 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
 
             // draw connections between places
             if(sortedPlaces[i].length >= 2) {
+              console.log(tripIds[i].colour);
               for(var j = 1; j < sortedPlaces[i].length; j++) {
                 var connector = new google.maps.Polyline({
                   path: [{lat: sortedPlaces[i][j-1].location.lat,
@@ -100,7 +101,7 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
                          {lat: sortedPlaces[i][j].location.lat,
                           lng: sortedPlaces[i][j].location.lng }],
                   geodesic: true,
-                  strokeColor: '#FF0000',
+                  strokeColor: $scope.trips[i].colour,
                   strokeOpacity: 1,
                   strokeWeight: 4
                 });

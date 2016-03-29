@@ -2,7 +2,7 @@
   <div id="galleryPanel" ng-click="showthumbs()">
     <div id="title-box">
       <span id="trip">{{selectedTrip().name}}</span>
-      <div id="trip-line"></div>
+      <div id="trip-line" ng-style="tripColor()"></div>
       <div id="place">
         <span>{{selectedPlace().location.name}}</span>
         <img id="up" src="/assets/images/icons/black/expand-up.png" ng-click="decrementSelectedPlace()">

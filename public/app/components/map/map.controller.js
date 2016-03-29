@@ -20,6 +20,12 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     $scope.selectedPhotoIndex = 0;
   });
 
+  $scope.tripColor = function() {
+    return {
+      'background-color': $scope.selectedTrip().colour
+    }
+  }
+
   // return the currently selected place
   $scope.selectedPlace = function() {
     return tripsFactory.getSelectedPlace();
