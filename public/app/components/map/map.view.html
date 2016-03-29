@@ -1,5 +1,5 @@
 <div id="map-container" ng-controller="mapController">
-  <div id="galleryPanel">
+  <div id="galleryPanel" ng-click="showthumbs()">
     <div id="title-box">
       <span id="trip">{{selectedTrip().name}}</span>
       <div id="trip-line"></div>
@@ -15,5 +15,5 @@
 
 
   </div>
-  <div trip-map id="mapPanel"></div>
+  <div trip-map id="mapPanel" get-trips-fn="trips" get-places-fn="places"></div>
 </div>
