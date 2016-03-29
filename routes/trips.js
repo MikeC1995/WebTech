@@ -16,7 +16,10 @@ module.exports = {
     if(req.body.name === undefined) {
       return error.BadRequest(res, 'name');
     }
-    var t = new Trip({ name: req.body.name });
+    if(req.body.colour === undefined) {
+      return error.BadRequest(res, 'colour');
+    }
+    var t = new Trip({ name: req.body.name, colour: req.body.colour });
     t.save(function(err) {
       if (err) return error.InternalServerError(res);
       return success.Created(res, 'Trip');
