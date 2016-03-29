@@ -30,12 +30,13 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
           $scope.map = new google.maps.Map(document.getElementById($scope.mapId), {
             zoom: 4,
             center: {lat: 49.198353, lng: 9.767022},
-            disableDefaultUI: true
+            disableDefaultUI: true,
+            zoomControl: true
           });
 
           $scope.places = $scope.getPlaces();
           $scope.trips = $scope.getTrips();
-          
+
           // Watch for changes on the bound trips + places
           // NB: called in initialize as 'google' object must be defined
           $scope.$watch(function() { return $scope.getPlaces().length; }, function(_new, old) {
