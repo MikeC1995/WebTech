@@ -68,6 +68,24 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     tripsFactory.setSelectedPlace(ps[idx]);
   }
 
+  $scope.nextPhoto = function() {
+    $scope.selectedPhotoIndex += 1;
+    if($scope.selectedPhotoIndex > $scope.photos.length - 1) {
+      $scope.selectedPhotoIndex = 0;
+      $scope.incrementSelectedPlace();
+      loadInitial();
+    }
+  }
+  $scope.prevPhoto = function() {
+    $scope.selectedPhotoIndex -= 1;
+    if($scope.selectedPhotoIndex < 0) {
+      $scope.decrementSelectedPlace();
+      loadInitial(function() {
+        $scope.selectedPhotoIndex = $scope.photos.length - 1;
+      });
+    }
+  }
+
   // format and ISO date into dd/mm/yyyy
   $scope.formatDate = function(iso_date) {
     var date = new Date(iso_date);
@@ -75,7 +93,7 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
   }
 
   // Load first set of images for a place. More will be loaded on scroll.
-  function loadInitial() {
+  function loadInitial(cb) {
     // TODO: limit 80 to guarantee div filled. However, need to
     // limit by the size of the gallery and # thumbs that will fit!
     var params = {
@@ -85,6 +103,9 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     };
     imageFactory.getPhotos(params, function(photos) {
       $scope.photos = photos;
+      if(cb !== undefined) {
+        cb();
+      }
     });
   }
 
