@@ -1,11 +1,11 @@
 <div class="places-component">
-  <div class="connector" style="background-color: {{ getSelectedTrip().colour }};"></div>
-  <div class="node" ng-repeat="place in filteredPlaces = (places() | filter:{ trip_id: getSelectedTrip()._id } | orderBy:'from_date':false)">
-    <!-- ng-repeat creates its own child scope so must bind input to "selected" on the parent scope -->
+  <div class="connector" style="background-color: {{ trip().colour }};"></div>
+  <div class="node" ng-repeat="place in filteredPlaces = (places | filter:{ trip_id: trip()._id } | orderBy:'from_date':false)">
+    <!-- ng-repeat creates its own child scope so must bind input to variable on the parent scope -->
     <input type="radio" id="nub-{{$index}}" name="places-radio" ng-model="$parent.selectedIndex" value="{{$index}}"></input>
     <label for="nub-{{$index}}" data-context-menu="/app/shared/context-menus/places-contextmenu.view.html" ng-model="place">
-      <span class="nub-outer" style="border-color: {{ getSelectedTrip().colour }};">
-        <div class="nub-select" style="background-color: {{ getSelectedTrip().colour }};"></div>
+      <span class="nub-outer" style="border-color: {{ trip().colour }};">
+        <div class="nub-select" style="background-color: {{ trip().colour }};"></div>
       </span>
       <span class="place-text">{{ place.location.name }}</span>
     </label>

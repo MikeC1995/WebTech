@@ -6,7 +6,7 @@ app.directive('gallery', function($timeout) {
       restrict: 'E',
       replace: 'false',
       scope: {
-        placeId: '&'
+        placeId: '&placeId'
       },
       controller: 'galleryController',
       templateUrl: '/app/components/trips/gallery/gallery.view.html',

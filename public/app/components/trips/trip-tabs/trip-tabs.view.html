@@ -1,6 +1,6 @@
 <ul class="trip-tabs">
   <!-- Trip tabs -->
-  <li class="trip-item" ng-class="{ selected: isSelected(trip) }" ng-click="select(trip)" ng-repeat="trip in trips()"
+  <li class="trip-item" ng-class="{ selected: isSelected(trip) }" ng-click="select(trip)" ng-repeat="trip in trips"
       data-context-menu="/app/shared/context-menus/trips-contextmenu.view.html" ng-model="trip">
     <a href="">{{ trip.name }}</a>
   </li>

@@ -11,7 +11,10 @@ trips.directive('tripTabs', function() {
       replace: 'true',
       templateUrl: '/app/components/trips/trip-tabs/trip-tabs.view.html',
       controller: 'tripTabsController',
-      scope: {},
+      scope: {
+        trips: '=trips',
+        selectedTrip: '=selectedTrip'
+      },
       link: function(scope, elem, attrs) {
         scope.toggleShowInput = function() {
           elem.children('img, form').toggleClass('hidden');

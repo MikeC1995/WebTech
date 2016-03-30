@@ -6,11 +6,12 @@ app.directive('places', function() {
       restrict: 'E',
       replace: 'true',
       scope: {
-        currentTrip: '&currentTrip'
+        places: '=places',
+        trip: '&trip'
       },
       controller: 'placesController',
       templateUrl: '/app/components/trips/places/places.view.html',
-      link: function(scope, elem, attrs) {
+      link: function($scope, elem, attrs) {
       }
   };
 });

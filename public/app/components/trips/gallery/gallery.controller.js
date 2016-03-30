@@ -1,14 +1,12 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('galleryController', ['$scope', 'tripsFactory', 'imageFactory', '$state', function($scope, tripsFactory, imageFactory, $state) {
-  // The place this gallery controller instance is associated with is given by $scope.placeId()
-
+trips.controller('galleryController', ['$scope', 'imageFactory', '$state', function($scope, imageFactory, $state) {
   // The list of cached photos (properties: url and key) for this place gallery
   $scope.photos = [];
-
   // The list of currently selected photos
   $scope.selectedPhotos = [];
+
   // Select/deselect a photo depending on whether it is already selected
   $scope.toggleSelectPhoto = function(photo) {
     for(var i = 0; i < $scope.selectedPhotos.length; i++) {
