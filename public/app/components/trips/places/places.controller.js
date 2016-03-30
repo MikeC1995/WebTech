@@ -1,26 +1,49 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('placesController', ['$scope', 'tripsFactory', 'tripsFactory2', function($scope, tripsFactory, tripsFactory2) {
-  $scope.selectedIndex = 0; // the currently selected radio button
-  $scope.filteredPlaces = [];
+trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
+
+  $scope.places = []; // full places list
+  $scope.filteredPlaces = []; // places filtered according to current trip
+
+  // Initial fetch of places
+  $rootScope.$on('places.updated', function() {
+    tripDataFactory.getPlaces().then(function(places) {
+      $scope.places = places;
+      $scope.$apply();
+    }, function() {
+      console.error("Unable to get places");
+    });
+  });
+
+  // Update selected place when radio selection changed
+  $scope.selectedIndex = -1;
+  $scope.$watch('selectedIndex', function(n, o) {
+    if($scope.filteredPlaces.length != 0) {
+      $scope.selected.setPlace($scope.filteredPlaces[n]);
+    }
+  });
+
+  // Select first place when the trip is changed
+  $scope.$watch(function() {
+    return $scope.selected.getTrip()._id;
+  }, function(n, o) {
+    $scope.selectedIndex = 0;
+  });
 
   // check if a place is selected by index
   $scope.isSelected = function(place) {
-    if($scope.selectedIndex > $scope.filteredPlaces.length - 1) {
-      $scope.selectedIndex = 0;
-    }
-    return place._id == $scope.filteredPlaces[$scope.selectedIndex]._id;
-  }
-
-  $scope.print = function() {
-    console.log($scope.places);
+    return place._id == $scope.selected.getPlace()._id
   }
 
   $scope.deletePlace = function(place) {
-    tripsFactory2.deletePlace(place)
+    tripDataFactory.deletePlace(place)
       .then(function(places) {
         $scope.places = places;
+        $scope.selectedIndex = 0;
+        if($scope.filteredPlaces.length != 0) {
+          $scope.selected.setPlace($scope.filteredPlaces[$scope.selectedIndex]);
+        }
         $scope.$apply();
         console.log("Deleted!");
       }, function() {

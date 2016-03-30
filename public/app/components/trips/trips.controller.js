@@ -1,9 +1,9 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('tripsController', ['$scope', 'tripsFactory2', function($scope, tripsFactory2) {
-  // The currently selected trip
-  $scope.selectedTrip = {};
+trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
+
+  $scope.selected = new tripDataFactory.Selected();
 
   // Local copies
   $scope.trips = [];
@@ -14,24 +14,26 @@ trips.controller('tripsController', ['$scope', 'tripsFactory2', function($scope,
 
   // Initialise
   function updateTrips() {
-    tripsFactory2.getTrips.then(function(trips) {
+    tripDataFactory.getTrips().then(function(trips) {
       $scope.trips = trips;
-      $scope.selectedTrip = trips[0];
+      $scope.selected.setTrip(trips[0]);
+      $scope.$apply();
     }, function(err) {
       console.error("Error on trips promise");
     });
   }
 
   function updatePlaces() {
-    tripsFactory2.getPlaces.then(function(places) {
+    tripDataFactory.getPlaces().then(function(places) {
       $scope.places = places;
-      console.log(places);
+      $scope.$apply();
     }, function(err) {
       console.error("Error on places promise");
     });
   }
-  updateTrips();
-  updatePlaces();
+
+  $rootScope.$on("trips.updated", updateTrips);
+  $rootScope.$on("places.updated", updatePlaces);
 
 
 }]);

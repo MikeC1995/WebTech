@@ -12,8 +12,7 @@ trips.directive('tripTabs', function() {
       templateUrl: '/app/components/trips/trip-tabs/trip-tabs.view.html',
       controller: 'tripTabsController',
       scope: {
-        trips: '=trips',
-        selectedTrip: '=selectedTrip'
+        selected: '=selected'
       },
       link: function(scope, elem, attrs) {
         scope.toggleShowInput = function() {

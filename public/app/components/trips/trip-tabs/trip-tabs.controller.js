@@ -1,21 +1,31 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('tripTabsController', ['$scope', 'tripsFactory2', function($scope, tripsFactory2) {
+trips.controller('tripTabsController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
   $scope.tripName = ""; // the name of the new trip to add
+
+  $scope.trips = [];
+  $rootScope.$on('trips.updated', function() {
+    tripDataFactory.getTrips().then(function(trips) {
+      $scope.trips = trips;
+      $scope.$apply();
+    }, function() {
+      console.error("Couldnt get trips");
+    });
+  });
 
   // Checks if a trip tab is selected
   $scope.isSelected = function(trip) {
-    return trip._id == $scope.selectedTrip._id;
+    return trip._id == $scope.selected.getTrip()._id;
   }
 
   // Select a trip tab
   $scope.select = function(trip) {
-    $scope.selectedTrip = trip;
+    $scope.selected.setTrip(trip);
   }
 
   $scope.deleteTrip = function(trip) {
-    tripsFactory2.deleteTrip(trip)
+    tripDataFactory.deleteTrip(trip)
       .then(function(trips) {
         $scope.trips = trips;
         $scope.$apply();
@@ -26,7 +36,7 @@ trips.controller('tripTabsController', ['$scope', 'tripsFactory2', function($sco
   }
 
   $scope.submit = function() {
-    tripsFactory2.addTrip($scope.tripName)
+    tripDataFactory.addTrip($scope.tripName)
       .then(function(trips) {
         $scope.trips = trips;
         $scope.$apply();

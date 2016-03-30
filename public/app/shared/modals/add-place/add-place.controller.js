@@ -1,7 +1,7 @@
 'use strict';
 
 var modals = angular.module('modals');
-modals.controller('addPlaceController', ['$scope', 'tripsFactory2', '$state', function($scope, tripsFactory2, $state) {
+modals.controller('addPlaceController', ['$scope', 'tripDataFactory', '$state', '$window', function($scope, tripDataFactory, $state, $window) {
   $scope.name = '';
   $scope.location = {};
   $scope.from_date = '';
@@ -9,7 +9,7 @@ modals.controller('addPlaceController', ['$scope', 'tripsFactory2', '$state', fu
 
   $scope.submit = function() {
     var place = {
-      trip_id: $scope.data().trip()._id,  // attached as attribute to modal directive
+      trip_id: $scope.$parent.selected.getTrip()._id,  // attached as attribute to modal directive
       location: {
         name: $scope.name,
         lat: $scope.location.lat,
@@ -25,7 +25,7 @@ modals.controller('addPlaceController', ['$scope', 'tripsFactory2', '$state', fu
       return;
     }
 
-    tripsFactory2.addPlace(place).then(function(places) {
+    tripDataFactory.addPlace(place).then(function(places) {
       console.log("Successfully added place!");
       $state.go('trips');
     }, function() {

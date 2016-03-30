@@ -1,19 +1,19 @@
 <div id="map-container" ng-controller="mapController">
   <div id="galleryPanel" ng-click="showthumbs()">
     <div id="title-box">
-      <span id="trip">{{selectedTrip().name}}</span>
+      <span id="trip">{{selected.getTrip().name}}</span>
       <div id="trip-line" ng-style="tripColor()"></div>
       <div id="place">
-        <span>{{selectedPlace().location.name}}</span>
+        <span>{{selected.getPlace().location.name}}</span>
         <img id="up" src="/assets/images/icons/black/expand-up.png" ng-click="decrementSelectedPlace()">
         <img id="down" src="/assets/images/icons/black/expand-down.png" ng-click="incrementSelectedPlace()">
       </div>
-      <span id="dates">{{formatDate(selectedPlace().from_date)}} - {{formatDate(selectedPlace().to_date)}}</span>
+      <span id="dates">{{formatDate(selected.getPlace().from_date)}} - {{formatDate(selected.getPlace().to_date)}}</span>
     </div>
 
     <image-viewer></image-viewer>
 
 
   </div>
-  <div trip-map id="mapPanel" get-trips-fn="trips" get-places-fn="places"></div>
+  <div trip-map id="mapPanel" get-trips-fn="getTrips" get-places-fn="getPlaces"></div>
 </div>

@@ -1,18 +1,46 @@
 'use strict';
 
 var map = angular.module('map');
-map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', function($scope, tripsFactory, imageFactory) {
+map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'imageFactory', function($rootScope, $scope, tripDataFactory, imageFactory) {
+  $scope.selected = new tripDataFactory.Selected();
+
+  // Local copies
+  $scope.trips = [];
+  $scope.places = [];
+  // Getters
+  $scope.getTrips = function() { return $scope.trips; }
+  $scope.getPlaces = function() { return $scope.places; }
+
+  // Initialise
+  function updateTrips() {
+    tripDataFactory.getTrips().then(function(trips) {
+      $scope.trips = trips;
+      $scope.selected.setTrip(trips[0]);
+      $scope.$apply();
+    }, function(err) {
+      console.error("Error on trips promise");
+    });
+  }
+
+  function updatePlaces() {
+    tripDataFactory.getPlaces().then(function(places) {
+      $scope.places = places;
+      $scope.selected.setPlace(places[0]);
+      $scope.$apply();
+    }, function(err) {
+      console.error("Error on places promise");
+    });
+  }
+
+  $rootScope.$on("trips.updated", updateTrips);
+  $rootScope.$on("places.updated", updatePlaces);
+
   $scope.selectedPhotoIndex = 0;
   $scope.photos = [];
 
-  // function bindings
-  $scope.trips = tripsFactory.getTrips;
-  $scope.places = tripsFactory.getPlaces;
-  $scope.getSelectedTrip = tripsFactory.getSelectedTrip;
-
   // update photos when selected place changes
   $scope.$watch(function() {
-    return tripsFactory.getSelectedPlace();
+    return $scope.selected.getPlace()._id;
   }, function(value) {
     if(value !== undefined) {
       loadInitial();
@@ -22,25 +50,15 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
 
   $scope.tripColor = function() {
     return {
-      'background-color': $scope.selectedTrip().colour
+      'background-color': $scope.selected.getTrip().colour
     }
   }
 
-  // return the currently selected place
-  $scope.selectedPlace = function() {
-    return tripsFactory.getSelectedPlace();
-  }
-
-  // return the currently selected place
-  $scope.selectedTrip = function() {
-    return tripsFactory.getSelectedTrip();
-  }
-
   $scope.incrementSelectedPlace = function() {
-    var ps = $scope.places();
+    var ps = $scope.places;
     var idx = -1;
     for(var i = 0; i < ps.length; i++) {
-      if(ps[i]._id == $scope.selectedPlace()._id) {
+      if(ps[i]._id == $scope.selected.getPlace()._id) {
         idx = i;
       }
     }
@@ -52,14 +70,14 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
       idx += 1;
     }
 
-    tripsFactory.setSelectedPlace(ps[idx]);
+    $scope.selected.setPlace(ps[idx]);
   }
 
   $scope.decrementSelectedPlace = function() {
-    var ps = $scope.places();
+    var ps = $scope.places;
     var idx = -1;
     for(var i = 0; i < ps.length; i++) {
-      if(ps[i]._id == $scope.selectedPlace()._id) {
+      if(ps[i]._id == $scope.selected.getPlace()._id) {
         idx = i;
       }
     }
@@ -71,7 +89,7 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
       idx -= 1;
     }
 
-    tripsFactory.setSelectedPlace(ps[idx]);
+    $scope.selected.setPlace(ps[idx]);
   }
 
   $scope.nextPhoto = function() {
@@ -79,16 +97,13 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     if($scope.selectedPhotoIndex > $scope.photos.length - 1) {
       $scope.selectedPhotoIndex = 0;
       $scope.incrementSelectedPlace();
-      loadInitial();
     }
   }
   $scope.prevPhoto = function() {
     $scope.selectedPhotoIndex -= 1;
     if($scope.selectedPhotoIndex < 0) {
+      $scope.selectedPhotoIndex = 0;
       $scope.decrementSelectedPlace();
-      loadInitial(function() {
-        $scope.selectedPhotoIndex = $scope.photos.length - 1;
-      });
     }
   }
 
@@ -103,7 +118,7 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
     // TODO: limit 80 to guarantee div filled. However, need to
     // limit by the size of the gallery and # thumbs that will fit!
     var params = {
-      place_id: $scope.selectedPlace()._id,
+      place_id: $scope.selected.getPlace()._id,
       timebefore: Date.now(),
       limit: 80
     };
@@ -117,7 +132,7 @@ map.controller('mapController', ['$scope', 'tripsFactory', 'imageFactory', funct
 
   // load more images (as the user scrolls)
   $scope.loadMore = function() {
-    var place_id = $scope.selectedPlace()._id;
+    var place_id = $scope.selected.getPlace()._id;
     var oldest = $scope.photos[$scope.photos.length - 1];
     var params = {
       place_id: place_id,

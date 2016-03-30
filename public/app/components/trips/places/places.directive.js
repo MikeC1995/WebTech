@@ -6,8 +6,7 @@ app.directive('places', function() {
       restrict: 'E',
       replace: 'true',
       scope: {
-        places: '=places',
-        trip: '&trip'
+        selected: '=selected'
       },
       controller: 'placesController',
       templateUrl: '/app/components/trips/places/places.view.html',
