@@ -45,32 +45,37 @@
       position: absolute;
     }
 
-    .add-trip-icon {
-      // parent line-height: 20px, img vertical-align: middle to vert center
-      vertical-align: middle;
-      height: 20px;
-      width: auto;
-      cursor: pointer;
-      opacity: 0.5;
-      &:hover {
-        opacity: 1;
-      }
-    }
     form {
       display: inline;
+      position: relative;
+      left: -10px;
+
+      .add-trip-icon {
+        // parent line-height: 20px, img vertical-align: middle to vert center
+        position: relative;
+        left: 25px;
+        vertical-align: middle;
+        height: 15px;
+        width: auto;
+        cursor: pointer;
+        opacity: 0.5;
+      }
       input {
-        height: 25px;
+        height: 30px;
         box-sizing: border-box;
-        padding: 5px 5px;
+        padding: 5px 5px 5px 30px;
         font-family: 'Open Sans', sans-serif;
         font-size: 15px;
         text-transform: uppercase;
         border: none;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid @text-disabled;
         &:focus {
           outline: none;
+          border-color: @accent;
+          border-width: 2px;
         }
       }
+
     }
   }
 }

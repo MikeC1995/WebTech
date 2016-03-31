@@ -4,8 +4,9 @@
       data-context-menu="/app/shared/context-menus/trips-contextmenu.view.html" ng-model="trip">
     <a href="">{{ trip.name }}</a>
   </li>
-  <img class="add-trip-icon" src="/assets/images/icons/black/add.png" ng-click="toggleShowInput()">
-  <form ng-submit="submit()" class="hidden" ng-blur="toggleShowInput()">
-    <input type="text" ng-model="tripName" ng-blur="toggleShowInput()" placeholder="ADD A TRIP"></input>
+
+  <form ng-submit="submit()">
+    <img class="add-trip-icon" src="/assets/images/icons/black/add.png">
+    <input type="text" ng-model="tripName" placeholder="ADD A TRIP"></input>
   </form>
 </ul>

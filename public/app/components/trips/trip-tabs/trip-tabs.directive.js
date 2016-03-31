@@ -15,10 +15,6 @@ trips.directive('tripTabs', function() {
         selected: '=selected'
       },
       link: function(scope, elem, attrs) {
-        scope.toggleShowInput = function() {
-          elem.children('img, form').toggleClass('hidden');
-          scope.tripName = '';
-        }
       }
   };
 });
