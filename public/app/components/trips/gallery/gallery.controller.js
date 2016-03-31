@@ -34,7 +34,7 @@ trips.controller('galleryController', ['$scope', 'imageFactory', '$state', funct
     var params = {
       place_id: $scope.placeId(),
       timebefore: Date.now(),
-      limit: 80
+      limit: 120
     };
     imageFactory.getPhotos(params, function(photos) {
       $scope.photos = photos;
