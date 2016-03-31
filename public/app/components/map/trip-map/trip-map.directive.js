@@ -37,6 +37,13 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
         $rootScope.$on("trips.updated", function() { update().then(updateMapDrawings); });
         $rootScope.$on("places.updated", function() { update().then(updateMapDrawings); });
 
+        function computeMarkerSize() {
+          var maxMarkerSize = 30;
+          var markerSize = Math.round(Math.pow(2, $scope.map.getZoom()));
+          if(markerSize > maxMarkerSize) markerSize = maxMarkerSize;
+          return markerSize;
+        }
+
         // Loads google map script
         loadGoogleMapAPI.then(function () {
             $scope.initialize();
@@ -52,6 +59,7 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
             zoomControl: true
           });
 
+          // pan map when location changes
           $scope.$watch(function() {
             return $scope.selected.getPlace()._id;
           }, function() {
@@ -59,6 +67,19 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
             if(place && place.lat && place.lng) {
               $scope.map.panTo($scope.selected.getPlace().location);
             }
+          });
+
+          // update marker sizes when zoom changes
+          google.maps.event.addListener($scope.map, 'zoom_changed', function() {
+            var markerSize = computeMarkerSize();
+            $scope.markers.forEach(function(marker) {
+              //change the size of the icon
+              marker.setIcon({
+                anchor: new google.maps.Point(markerSize/2, markerSize/2),  // anchor
+                scaledSize: new google.maps.Size(markerSize, markerSize), //scaleSize
+                url: marker.getIcon().url //url
+              });
+            });
           });
 
           update().then(updateMapDrawings);
@@ -79,13 +100,15 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
               }
             }
             if(trip === undefined) return;
+
+            var markerSize = computeMarkerSize();
             var marker = new google.maps.Marker({
               position: {lat: $scope.places[p].location.lat, lng: $scope.places[p].location.lng},
               map: $scope.map,
               icon: {
                 url: '/assets/images/icons/marker-' + trip.colour.slice(1) + '.png',
-                scaledSize: new google.maps.Size(20, 20),
-                anchor: new google.maps.Point(10, 10) //anchor is the center of the marker
+                scaledSize: new google.maps.Size(markerSize, markerSize),
+                anchor: new google.maps.Point(markerSize/2, markerSize/2) //anchor is the center of the marker
               },
               tripmap_place: $scope.places[p]   // non-googlemaps property for internal use
             });
