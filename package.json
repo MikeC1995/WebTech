@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Mike Christensen's COMS32500 Web Tech Project Server",
   "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -40,6 +41,5 @@
     "mocha": "^2.4.5",
     "should": "^8.2.1",
     "supertest": "^1.1.0"
-  },
-  "postinstall": "./node_modules/bower/bin/bower install"
+  }
 }
