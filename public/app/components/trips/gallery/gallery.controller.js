@@ -70,6 +70,7 @@ trips.controller('galleryController', ['$scope', 'imageFactory', '$state', funct
   // Therefore the gallery needs updating
   $scope.$on('uploaded-photos', function(event, args) {
     //If the place to which photos were added is not this one, ignore
+    console.log($scope.placeId());
     if(args.place._id != $scope.placeId()) {
       return;
     }

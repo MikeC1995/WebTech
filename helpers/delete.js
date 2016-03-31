@@ -13,40 +13,49 @@ var imageurls = require('../helpers/image-urls.js');
 // Dependencies
 var fs = require('fs');
 var aws = require('../config/aws.js');
+// async module allows multiple async calls to be made in parallel, and action to
+// be made when all of them have resolved. See: https://github.com/caolan/async#parallel
+var _async = require('async');
 
 // Async delete a list of photos from filesystem and the database
-function deletePhotos(photos) {
-  var i = photos.length - 1;
-  if(i == undefined || i == -1) {
-    // No photos - do nothing
-    return;
-  }
-
-  while(i >= 0) {
-    Photo.findById(photos[i]._id, function(err, photo) {
-      // Delete from S3
-      var params = {
-        Bucket: aws.s3bucket,
-        Key: photo.key
-      };
-      aws.s3.deleteObject(params, function(aws_err) {
-        if(aws_err) {
-          //TODO handle error
-          console.log("Error uploading data: ", err);
-        } else {
-          console.log("Successfully deleted data from myBucket/myKey");
-        }
-      });
-
-      photo.remove(function(m_err) {
-        if(m_err) {
-          // TODO: handle error
-          console.error("Unable to delete photo from database.");
-        }
+function deletePhotos(photos, resolve, reject) {
+  var calls = [];
+  photos.forEach(function(_photo) {
+    calls.push(function(callback) {
+      Photo.findById(_photo._id, function(err, photo) {
+        // Delete from S3
+        var params = {
+          Bucket: aws.s3bucket,
+          Key: photo.key
+        };
+        aws.s3.deleteObject(params, function(aws_err) {
+          if(aws_err) {
+            callback(aws_err);
+            console.log("Error uploading data: ", err);
+          } else {
+            // Successfully deleted from S3
+            console.log("Successfully deleted data from myBucket/myKey");
+            photo.remove(function(m_err) {
+              if(m_err) {
+                callback(m_err);
+                console.error("Unable to delete photo from database.");
+              } else {
+                console.log("Successfully deleted photo from database");
+                callback(null);
+              }
+            });
+          }
+        });
       });
     });
-    i--;
-  }
+  });
+  _async.parallel(calls, function(err, results) {
+    if(err) {
+      reject();
+    } else {
+      resolve();
+    }
+  });
 }
 
 module.exports = {
@@ -55,9 +64,14 @@ module.exports = {
   // particular, the filename attribute should not be the client's url version).
   photos: function(res, photos) {
     // delete photos (fs + db reference)
-    deletePhotos(photos);
-    // This is async, and we return OK immediately (potentially lengthy operation)
-    return success.OK(res);
+    var deletePhotosPromise = new Promise(function(resolve, reject) {
+      deletePhotos(photos, resolve, reject);
+    });
+    deletePhotosPromise.then(function() {
+      return success.OK(res);
+    }, function() {
+      return error.InternalServerError(res, "Unable to delete photos");
+    });
   },
   // Deletes a place and its associated photos
   place: function(res, place_id) {
@@ -67,18 +81,22 @@ module.exports = {
         return error.InternalServerError(res);
       } else {
         // delete photos for that place (fs + db reference)..
-        deletePhotos(photos);
-        //...and the place itself.
-        Place.find({_id: place_id}).remove(function(err) {
-          if(err) {
-            // TODO: handle error
-            console.error("Unable to delete place from database.");
-          }
+        var deletePhotosPromise = new Promise(function(resolve, reject) {
+          deletePhotos(photos, resolve, reject);
         });
-
-        // Methods above are async, and we return OK immediately
-        // regardless of their success (potentially lengthy operations!)
-        return success.OK(res);
+        deletePhotosPromise.then(function() {
+          //...and the place itself.
+          Place.find({_id: place_id}).remove(function(err) {
+            if(err) {
+              console.error("Unable to delete place from database.");
+              return error.InternalServerError(res, "Unable to delete place from database");
+            } else {
+              return success.OK(res);
+            }
+          });
+        }, function() {
+          return error.InternalServerError(res, "Unable to delete photos from place");
+        });
       }
     });
   },
@@ -90,34 +108,54 @@ module.exports = {
         return error.InternalServerError(res);
       } else {
 
-        for(var i = 0; i < places.length; i++) {
-          // Delete all photos from each place
-          Photo.find({place_id: places[i]._id}, function(err, photos) {
-            if(err) {
-              console.error("Unable to find photos. Error: " + err);
-            } else {
-              // Delete photos for this place, from db + fs
-              deletePhotos(photos);
-            }
+        var calls = [];
+        places.forEach(function(_place) {
+          calls.push(function(callback) {
+            // Delete all photos from each place
+            Photo.find({place_id: _place._id}, function(err, photos) {
+              if(err) {
+                console.error("Unable to find photos. Error: " + err);
+                callback(err);
+              } else {
+                // Delete photos for this place, from db + fs
+                var deletePhotosPromise = new Promise(function(resolve, reject) {
+                  deletePhotos(photos, resolve, reject);
+                });
+                deletePhotosPromise.then(function() {
+                  // Delete the place itself
+                  Place.find({_id: _place._id}).remove(function(err) {
+                    if(err) {
+                      console.error("Unable to delete place. Error: " + err);
+                      callback(err);
+                    } else {
+                      // Successfully deleted this place and photos from db + S3!
+                      callback(null);
+                    }
+                  });
+                }, function() {
+                  console.error("Unable to delete photos");
+                  callback(true);
+                });
+              }
+            });
           });
-
-          // Delete the place itself
-          Place.find({_id: places[i]._id}).remove(function(err) {
-            if(err) {
-              console.error("Unable to delete place. Error: " + err);
-            }
-          });
-        }
-
-        // Delete the trip itself
-        Trip.find({_id: trip_id}).remove(function(err) {
-          if(err) {
-            console.error("Unable to delete trip. Error: " + err);
-          }
         });
 
-        // Above is all async, so we return OK immediately (potentially lengthy operations)
-        return success.OK(res);
+        _async.parallel(calls, function(err, results) {
+          if(err) {
+            return error.InternalServerError(res, "Unable to delete trip");
+          } else {
+            // Delete the trip itself
+            Trip.find({_id: trip_id}).remove(function(err) {
+              if(err) {
+                console.error("Unable to delete trip.");
+                return error.InternalServerError(res, "Unable to delete trip");
+              } else {
+                return success.OK(res);
+              }
+            });
+          }
+        });
       }
     });
   }

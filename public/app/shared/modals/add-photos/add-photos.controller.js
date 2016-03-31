@@ -1,9 +1,9 @@
 'use strict';
 
 var modals = angular.module('modals');
-modals.controller('addPhotosController', ['$rootScope', '$scope', 'tripsFactory', 'Upload', '$state', function($rootScope, $scope, tripsFactory, Upload, $state) {
-  $scope.placeName = tripsFactory.getSelectedPlace().location.name;
-  $scope.tripName = tripsFactory.getSelectedTrip().name;
+modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$state', function($rootScope, $scope, Upload, $state) {
+  $scope.placeName = $scope.$parent.selected.getPlace().location.name;
+  $scope.tripName = $scope.$parent.selected.getPlace().name;
   $scope.files = [];
   $scope.progress = 0;
   $scope.uploading = false;
@@ -20,7 +20,7 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'tripsFactory'
       $scope.uploadObj = Upload.upload({
         url: '/api/photos',
         data: {
-          place_id: tripsFactory.getSelectedPlace()._id,
+          place_id: $scope.$parent.selected.getPlace()._id,
           photos: $scope.files
         }
       });
@@ -33,7 +33,7 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'tripsFactory'
   }
 
   function success(response) {
-    $rootScope.$broadcast('uploaded-photos', { place: tripsFactory.getSelectedPlace(), number: $scope.files.length });
+    $rootScope.$broadcast('uploaded-photos', { place: $scope.$parent.selected.getPlace(), number: $scope.files.length });
     $scope.uploading = false;
     $scope.files = [];
     $state.go('trips');

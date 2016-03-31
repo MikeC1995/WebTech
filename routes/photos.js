@@ -58,8 +58,6 @@ module.exports = {
     }
   },
   post: function(req, res) {
-    // TODO: returns OK immediately (uploads are async)... instead wait until all done
-
     // Upload each file to AWS S3 and store filename in db
     for(var i = 0; i < req.files.length; i++) {
       var file = req.files[i];
@@ -76,30 +74,30 @@ module.exports = {
         Key: filename,
         Body: file.buffer
       };
-      aws.s3.putObject(params, function (err) {
+      aws.s3.putObject(params, function (err, data) {
         if (err) {
           // TODO return error to client
           console.log("Error uploading data: ", err);
         } else {
           console.log("Successfully uploaded data to myBucket/myKey");
+          // Save the photo reference to DB
+          var p = new Photo({
+            place_id: req.body.place_id,
+            key: filename,
+            timestamp: timestamp
+          });
+          p.save(function(err) {
+            if (err) {
+              // Error saving to DB
+              return error.InternalServerError(res, "Error saving to database.")
+            } else {
+              // Success!
+              return success.Created(res, "photos");
+            }
+          });
         }
       });
-
-      // Save the photo reference to DB
-      var p = new Photo({
-        place_id: req.body.place_id,
-        key: filename,
-        timestamp: timestamp
-      });
-      p.save(function(err) {
-        // Error saving to DB
-        // TODO return error to client
-        if (err) console.log("Error saving to DB: ", err);
-      });
     }
-
-    // TODO return success when all async operations complete
-    return success.Created(res, "photos");
   },
   delete: function(req, res) {
     // Photos array should be attached to request as body
