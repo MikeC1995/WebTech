@@ -5,7 +5,7 @@
   </div>
   <div id="thumb" ng-click="selectPhoto($index)" ng-class="{ 'selected': selectedPhotoIndex == $index }" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}'), url('/assets/images/icons/spin.gif');"></div>
 
-  <div id="overlay" ng-class="{ 'closed': closed }">
+  <div id="overlay" ng-class="{ 'closed': closed || photos.length == 0 }">
     <img id="close" ng-click="close()" src="/assets/images/icons/white/close.png">
     <img id="left" ng-click="prevPhoto()" src="/assets/images/icons/white/arrow-left.png">
     <img id="right" ng-click="nextPhoto()" src="/assets/images/icons/white/arrow-right.png">
