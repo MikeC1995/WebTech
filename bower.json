@@ -1,0 +1,15 @@
+{
+  "name": "WebTechServer",
+  "description": "Mike Christensen's COMS32500 Web Tech Project Server",
+  "main": "server.js",
+  "authors": [
+    "Mike Christensen"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/MikeC1995/WebTech",
+  "moduleType": [],
+  "private": true,
+  "dependencies": {
+    "angular-animate": "~1.5.3"
+  }
+}

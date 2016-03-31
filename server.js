@@ -25,7 +25,8 @@ app.use('/', express.static('public'));
 
 // STATICALLY SERVE DEPENDENCIES (node_modules) FOR USE BY CLIENT
 // (ie. THIS METHOD HIDES THE SERVER STRUCTURE)
-app.use('/scripts', express.static('node_modules'));
+app.use('/npm_scripts', express.static('node_modules'));
+app.use('/bower_scripts', express.static('bower_components'));
 
 // TEMPORARY FOLDER FOR SERVING USER IMAGES, EMULATING AWS S3 INSTANCE
 // TODO: Migrate to AWS S3
