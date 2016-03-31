@@ -1,3 +1,16 @@
+[ui-view="modal"].ng-enter {
+  animation: modal-in 0.8s forwards;
+  .modal-box {
+    animation: modal-in 0.8s forwards;
+  }
+}
+[ui-view="modal"].ng-leave {
+  animation: modal-out 0.8s forwards;
+  .modal-box {
+    animation: modal-out 0.8s forwards;
+  }
+}
+
 .modal-backdrop {
   box-sizing: border-box;
   position: fixed;

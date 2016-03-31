@@ -55,7 +55,10 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
           $scope.$watch(function() {
             return $scope.selected.getPlace()._id;
           }, function() {
-            $scope.map.panTo($scope.selected.getPlace().location);
+            var place = $scope.selected.getPlace().location;
+            if(place.lat && place.lng) {
+              $scope.map.panTo($scope.selected.getPlace().location);
+            }
           });
 
           update().then(updateMapDrawings);
