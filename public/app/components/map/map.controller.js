@@ -73,6 +73,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     }
 
     $scope.selected.setPlace(ps[idx]);
+    $scope.$apply();
   }
 
   $scope.decrementSelectedPlace = function() {
@@ -92,6 +93,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     }
 
     $scope.selected.setPlace(ps[idx]);
+    $scope.$apply();
   }
 
   $scope.nextPhoto = function() {
@@ -99,6 +101,8 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     if($scope.selectedPhotoIndex > $scope.photos.length - 1) {
       $scope.selectedPhotoIndex = 0;
       $scope.incrementSelectedPlace();
+    } else {
+      $scope.$apply();
     }
   }
   $scope.prevPhoto = function() {
@@ -106,6 +110,8 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     if($scope.selectedPhotoIndex < 0) {
       $scope.selectedPhotoIndex = 0;
       $scope.decrementSelectedPlace();
+    } else {
+      $scope.$apply();
     }
   }
 
