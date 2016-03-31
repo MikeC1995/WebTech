@@ -75,6 +75,10 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
               },
               tripmap_place: $scope.places[p]   // non-googlemaps property for internal use
             });
+            marker.addListener('click', function() {
+              $scope.selected.setPlace(this.tripmap_place);
+              $scope.$apply();
+            });
             $scope.markers.push(marker);
           }
 
