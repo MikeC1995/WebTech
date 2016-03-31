@@ -56,11 +56,20 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
 
           // ADD THE MARKERS
           for(var p = 0; p < $scope.places.length; p++) {
+            // Get the trip associated with the place
+            var trip;
+            for(var t = 0; t < $scope.trips.length; t++) {
+              if($scope.places[p].trip_id == $scope.trips[t]._id) {
+                trip = $scope.trips[t];
+                break;
+              }
+            }
+            if(trip === undefined) return;
             var marker = new google.maps.Marker({
               position: {lat: $scope.places[p].location.lat, lng: $scope.places[p].location.lng},
               map: $scope.map,
               icon: {
-                url: '/assets/images/icons/marker.png',
+                url: '/assets/images/icons/marker-' + trip.colour.slice(1) + '.png',
                 scaledSize: new google.maps.Size(20, 20),
                 anchor: new google.maps.Point(10, 10) //anchor is the center of the marker
               },
