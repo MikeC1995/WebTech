@@ -52,6 +52,12 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
             zoomControl: true
           });
 
+          $scope.$watch(function() {
+            return $scope.selected.getPlace()._id;
+          }, function() {
+            $scope.map.panTo($scope.selected.getPlace().location);
+          });
+
           update().then(updateMapDrawings);
         }
 
