@@ -36,10 +36,4 @@ trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', 
   updatePlaces();
   $rootScope.$on("trips.updated", updateTrips);
   $rootScope.$on("places.updated", updatePlaces);
-
-  $scope.keydown = function(e) {
-    if(e == 27) { // esc key
-      $state.go('trips');
-    }
-  }
 }]);

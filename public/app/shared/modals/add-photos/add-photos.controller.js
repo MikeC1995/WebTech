@@ -9,6 +9,16 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$st
   $scope.uploading = false;
   $scope.uploadObj = {};
 
+  $scope.keydown = function(e) {
+    console.log(e);
+    if(e == 27) { // esc key
+      $scope.cancel();
+      $state.go('trips');
+    } else if(e == 13) { // enter
+      $scope.uploadFiles();
+    }
+  }
+
   $scope.setSelectedFiles = function (files) {
     $scope.files = files;
   }

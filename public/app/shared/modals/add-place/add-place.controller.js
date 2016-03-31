@@ -7,6 +7,12 @@ modals.controller('addPlaceController', ['$scope', 'tripDataFactory', '$state', 
   $scope.from_date = '';
   $scope.to_date = '';
 
+  $scope.keydown = function(e) {
+    if(e == 27) { // esc key
+      $state.go('trips');
+    }
+  }
+
   $scope.submit = function() {
     var place = {
       trip_id: $scope.$parent.selected.getTrip()._id,  // attached as attribute to modal directive
