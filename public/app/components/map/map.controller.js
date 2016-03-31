@@ -109,6 +109,26 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     }
   }
 
+  $scope.keydown = function(keycode) {
+    switch(keycode) {
+      case 13:  //enter
+        $scope.selectPhoto($scope.selectedPhotoIndex);
+        break;
+      case 37:  // left
+        $scope.prevPhoto();
+        break;
+      case 39:  // right
+        $scope.nextPhoto();
+        break;
+      case 38:  // up
+        $scope.decrementSelectedPlace();
+        break;
+      case 40:  // down
+        $scope.incrementSelectedPlace();
+        break;
+    }
+  }
+
   // format and ISO date into dd/mm/yyyy
   $scope.formatDate = function(iso_date) {
     var date = new Date(iso_date);

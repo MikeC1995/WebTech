@@ -1,5 +1,5 @@
 <div id="image-viewer" when-scrolled="loadMore()">
-  <div id="thumb" ng-click="selectPhoto($index)" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}');"></div>
+  <div id="thumb" ng-click="selectPhoto($index)" ng-class="{ 'selected': selectedPhotoIndex == $index }" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}');"></div>
 
   <div id="overlay" ng-class="{ 'closed': closed }">
     <img id="close" ng-click="close()" src="/assets/images/icons/white/close.png">

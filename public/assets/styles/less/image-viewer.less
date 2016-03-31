@@ -13,6 +13,11 @@
     background-size: cover;
     vertical-align: top; // prevents vertical gap between image rows
 
+    &.selected {
+      box-sizing: border-box;
+      border-bottom: solid 8px @accent;
+    }
+
     &:hover {
       cursor: pointer;
     }
