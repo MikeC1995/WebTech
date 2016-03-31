@@ -4,6 +4,18 @@ var map = angular.module('map');
 map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'imageFactory', function($rootScope, $scope, tripDataFactory, imageFactory) {
   $scope.selected = new tripDataFactory.Selected();
 
+  // https://coderwall.com/p/ngisma/safe-apply-in-angular-js
+  $scope.safeApply = function(fn) {
+    var phase = this.$root.$$phase;
+    if(phase == '$apply' || phase == '$digest') {
+      if(fn && (typeof(fn) === 'function')) {
+        fn();
+      }
+    } else {
+      this.$apply(fn);
+    }
+  };
+
   // Local copies
   $scope.trips = [];
   $scope.places = [];
@@ -16,7 +28,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     tripDataFactory.getTrips().then(function(trips) {
       $scope.trips = trips;
       $scope.selected.setTrip(trips[0]);
-      $scope.$apply();
+      $scope.safeApply();
     }, function(err) {
       console.error("Error on trips promise");
     });
@@ -26,7 +38,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     tripDataFactory.getPlaces().then(function(places) {
       $scope.places = places;
       $scope.selected.setPlace(places[0]);
-      $scope.$apply();
+      $scope.safeApply();
     }, function(err) {
       console.error("Error on places promise");
     });
@@ -73,7 +85,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     }
 
     $scope.selected.setPlace(ps[idx]);
-    $scope.$apply();
+    $scope.safeApply();
   }
 
   $scope.decrementSelectedPlace = function() {
@@ -93,7 +105,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     }
 
     $scope.selected.setPlace(ps[idx]);
-    $scope.$apply();
+    $scope.safeApply();
   }
 
   $scope.nextPhoto = function() {
@@ -102,7 +114,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
       $scope.selectedPhotoIndex = 0;
       $scope.incrementSelectedPlace();
     } else {
-      $scope.$apply();
+      $scope.safeApply();
     }
   }
   $scope.prevPhoto = function() {
@@ -111,7 +123,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
       $scope.selectedPhotoIndex = 0;
       $scope.decrementSelectedPlace();
     } else {
-      $scope.$apply();
+      $scope.safeApply();
     }
   }
 
