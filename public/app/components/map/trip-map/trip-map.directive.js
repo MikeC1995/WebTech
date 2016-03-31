@@ -24,7 +24,6 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
                 $scope.places = places;
                 $scope.selected.setPlace(places[0]);
                 $scope.$apply();
-                console.log("updated lengths: " + $scope.trips.length + ", " + $scope.places.length);
                 resolve();
               }, function(err) {
                 reject();
@@ -35,8 +34,8 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
           });
         }
 
-        $rootScope.$on("trips.updated", function() { console.log("bcast trip"); update().then(updateMapDrawings); });
-        $rootScope.$on("places.updated", function() { console.log("bcast place"); update().then(updateMapDrawings); });
+        $rootScope.$on("trips.updated", function() { update().then(updateMapDrawings); });
+        $rootScope.$on("places.updated", function() { update().then(updateMapDrawings); });
 
         // Loads google map script
         loadGoogleMapAPI.then(function () {
@@ -59,7 +58,6 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
         // redraw all the markers and connectors on the map
         function updateMapDrawings() {
           clearMapDrawings();
-          console.log("pre-draw lengths: " + $scope.trips.length + ", " + $scope.places.length);
 
           // ADD THE MARKERS
           for(var p = 0; p < $scope.places.length; p++) {
@@ -92,17 +90,10 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
           // ADD THE CONNECTORS
           var tripIds = []; // array of trip ids
           var sortedPlaces = [];  // array of same length where each entry is an array of places for that trip
-          console.log("pre-error lengths: " + $scope.trips.length + ", " + $scope.places.length);
           for(var t = 0; t < $scope.trips.length; t++) {
             tripIds.push($scope.trips[t]._id);
             sortedPlaces.push([]);
           }
-          console.log("tripIds");
-          console.log(tripIds);
-          console.log("places");
-          console.log($scope.places);
-          console.log("sortedPlaces");
-          console.log(sortedPlaces);
           for(var i = 0; i < $scope.places.length; i++) {
             sortedPlaces[tripIds.indexOf($scope.places[i].trip_id)].push($scope.places[i]);
           }
