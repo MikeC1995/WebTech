@@ -4,6 +4,9 @@
     <img ng-click="deletePhotos()" ng-show="selectedPhotos.length > 0" src="/assets/images/icons/black/delete.png">
     <span class="selected-msg">{{selectedPhotos.length}} photos selected</span>
   </div>
+  <div id="empty" ng-show="photos.length == 0">
+    <img src="/assets/images/icons/empty/arrow-prompt.png">
+  </div>
   <div class="thumbnails" when-scrolled="loadMore()">
     <div class="thumbnail" ng-class="{selected: isSelectedPhoto(photo)}" ng-click="toggleSelectPhoto(photo)"
         ng-repeat="photo in photos" style="background-image: url('{{photo.url}}'), url('/assets/images/icons/spin.gif');"></div>
