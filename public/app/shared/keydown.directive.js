@@ -10,6 +10,7 @@ app.directive('keydown', function () {
     link: function ($scope, element, attrs) {
       $scope.keydown = $scope.keydown();
 
+      element.trigger('focus');
       element.bind("keydown", function (event) {
         $scope.$apply(function () {
           $scope.keydown(event.which);

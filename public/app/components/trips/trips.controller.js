@@ -1,7 +1,7 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
+trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', '$state', function($rootScope, $scope, tripDataFactory, $state) {
 
   $scope.selected = new tripDataFactory.Selected();
 
@@ -36,4 +36,10 @@ trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', 
   updatePlaces();
   $rootScope.$on("trips.updated", updateTrips);
   $rootScope.$on("places.updated", updatePlaces);
+
+  $scope.keydown = function(e) {
+    if(e == 27) { // esc key
+      $state.go('trips');
+    }
+  }
 }]);
