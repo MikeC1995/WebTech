@@ -4,9 +4,10 @@
   <form name="add-photos-form" ng-submit="uploadFiles()">
     <div class="content">
       <div class="drag-drop" ng-show="!uploading" ngf-drop="setSelectedFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true" accept="image/*">
-        <img src="/assets/images/icons/black/gallery.png">
-        <span>Drag and Drop Photos Here</span>
-        <span class="selected-files-message">Selected {{files.length}} files</span>
+        <img  ng-show="files.length == 0" src="/assets/images/icons/black/gallery.png">
+        <span ng-show="files.length == 0">Drag and Drop Photos Here</span>
+        <span ng-show="files.length != 0" id="selected-files-number">{{files.length}}</span><br>
+        <span ng-show="files.length != 0" id="selected-files-message">files selected</span>
       </div>
       <div class="progress" ng-show="uploading">
         <div class="progress-bar" style="width:{{progress}}%">{{progress}}%</div>
