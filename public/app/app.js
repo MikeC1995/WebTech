@@ -32,6 +32,10 @@ app.controller('appController', ['$rootScope', '$scope', function($rootScope, $s
   $scope.toggleSidePanelOpen = function() {
     $scope.isSidePanelOpen = !$scope.isSidePanelOpen;
   }
+  $scope.closeSidePanel = function() {
+    $scope.isSidePanelOpen = false;
+  }
+  $rootScope.$on('$stateChangeSuccess', $scope.closeSidePanel);
 
   $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f'];
 }]);
