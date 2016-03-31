@@ -6,15 +6,17 @@ trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory',
   $scope.places = []; // full places list
   $scope.filteredPlaces = []; // places filtered according to current trip
 
-  // Initial fetch of places
-  $rootScope.$on('places.updated', function() {
+  // Fetching and updating places
+  function updatePlaces() {
     tripDataFactory.getPlaces().then(function(places) {
       $scope.places = places;
       $scope.$apply();
-    }, function() {
-      console.error("Unable to get places");
+    }, function(err) {
+      console.error("Error on places promise");
     });
-  });
+  }
+  updatePlaces();
+  $rootScope.$on('places.updated', updatePlaces);
 
   // Update selected place when radio selection changed
   $scope.selectedIndex = -1;
@@ -24,10 +26,18 @@ trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory',
     }
   });
 
-  // Select first place when the trip is changed
+  // Select first place when the places are changed
+  // (Caused by e.g. change of trip, or add/remove place)
   $scope.$watch(function() {
-    return $scope.selected.getTrip()._id;
+    if($scope.filteredPlaces.length == 0) {
+      return -1;
+    } else {
+      return $scope.filteredPlaces[0]._id;
+    }
   }, function(n, o) {
+    if($scope.filteredPlaces.length > 0) {
+      $scope.selected.setPlace($scope.filteredPlaces[0]);
+    }
     $scope.selectedIndex = 0;
   });
 

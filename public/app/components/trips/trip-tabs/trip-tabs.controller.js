@@ -5,14 +5,18 @@ trips.controller('tripTabsController', ['$rootScope', '$scope', 'tripDataFactory
   $scope.tripName = ""; // the name of the new trip to add
 
   $scope.trips = [];
-  $rootScope.$on('trips.updated', function() {
+
+  // Fetching and updating trips
+  function updateTrips() {
     tripDataFactory.getTrips().then(function(trips) {
       $scope.trips = trips;
       $scope.$apply();
-    }, function() {
-      console.error("Couldnt get trips");
+    }, function(err) {
+      console.error("Error on trips promise");
     });
-  });
+  }
+  updateTrips();
+  $rootScope.$on('trips.updated', updateTrips);
 
   // Checks if a trip tab is selected
   $scope.isSelected = function(trip) {

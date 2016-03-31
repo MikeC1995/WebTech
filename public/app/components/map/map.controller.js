@@ -32,6 +32,8 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     });
   }
 
+  updateTrips();
+  updatePlaces();
   $rootScope.$on("trips.updated", updateTrips);
   $rootScope.$on("places.updated", updatePlaces);
 

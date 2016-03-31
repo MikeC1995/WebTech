@@ -32,8 +32,8 @@ trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', 
     });
   }
 
+  updateTrips();
+  updatePlaces();
   $rootScope.$on("trips.updated", updateTrips);
   $rootScope.$on("places.updated", updatePlaces);
-
-
 }]);

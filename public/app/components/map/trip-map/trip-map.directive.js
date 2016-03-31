@@ -7,7 +7,8 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
       scope: {
         mapId: '@id', // id of directive instance to register map to
         getTripsFn: '&getTripsFn',
-        getPlacesFn: '&getPlacesFn'
+        getPlacesFn: '&getPlacesFn',
+        selected: '=selected'
       },
       link: function($scope, elem, attrs) {
         // getTripsFn and getPlacesFn are getter functions which return the actual
@@ -62,7 +63,8 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
                 url: '/assets/images/icons/marker.png',
                 scaledSize: new google.maps.Size(20, 20),
                 anchor: new google.maps.Point(10, 10) //anchor is the center of the marker
-              }
+              },
+              tripmap_place: $scope.places[p]   // non-googlemaps property for internal use
             });
             $scope.markers.push(marker);
           }
@@ -122,6 +124,18 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
           }
           $scope.connectors = [];
         }
+
+        // pan map when selected place changes
+        $scope.$watch(function() {
+          return $scope.selected.getPlace()._id;
+        }, function(value) {
+          for(var i = 0; i < $scope.markers.length; i++) {
+            if($scope.markers[i].tripmap_place._id == value) {
+              $scope.map.panTo($scope.markers[i].position);
+              return;
+            }
+          }
+        });
       }
   };
 }]);
