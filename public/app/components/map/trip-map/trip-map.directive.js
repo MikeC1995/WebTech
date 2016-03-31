@@ -1,24 +1,42 @@
 'use strict';
 
 var map = angular.module('map');
-map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
+map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', function(loadGoogleMapAPI, tripDataFactory, $rootScope) {
   return {
       restrict: 'A',
       scope: {
         mapId: '@id', // id of directive instance to register map to
-        getTripsFn: '&getTripsFn',
-        getPlacesFn: '&getPlacesFn',
         selected: '=selected'
       },
       link: function($scope, elem, attrs) {
-        // getTripsFn and getPlacesFn are getter functions which return the actual
-        // getTrips/getPlaces functions themselves
-        $scope.getTrips = $scope.getTripsFn();
-        $scope.getPlaces = $scope.getPlacesFn();
         $scope.trips = [];
         $scope.places = [];
         $scope.markers = [];
         $scope.connectors = [];
+
+        // Initialise
+        function update() {
+          return new Promise(function(resolve, reject) {
+            tripDataFactory.getTrips().then(function(trips) {
+              $scope.trips = trips;
+              $scope.selected.setTrip(trips[0]);
+              tripDataFactory.getPlaces().then(function(places) {
+                $scope.places = places;
+                $scope.selected.setPlace(places[0]);
+                $scope.$apply();
+                console.log("updated lengths: " + $scope.trips.length + ", " + $scope.places.length);
+                resolve();
+              }, function(err) {
+                reject();
+              });
+            }, function(err) {
+              reject();
+            });
+          });
+        }
+
+        $rootScope.$on("trips.updated", function() { console.log("bcast trip"); update().then(updateMapDrawings); });
+        $rootScope.$on("places.updated", function() { console.log("bcast place"); update().then(updateMapDrawings); });
 
         // Loads google map script
         loadGoogleMapAPI.then(function () {
@@ -35,24 +53,13 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
             zoomControl: true
           });
 
-          $scope.places = $scope.getPlaces();
-          $scope.trips = $scope.getTrips();
-
-          // Watch for changes on the bound trips + places
-          // NB: called in initialize as 'google' object must be defined
-          $scope.$watch(function() { return $scope.getPlaces().length; }, function(_new, old) {
-            $scope.places = $scope.getPlaces();
-            updateMapDrawings();
-          });
-          $scope.$watch(function() { return $scope.getTrips().length; }, function(_new, old) {
-            $scope.trips = $scope.getTrips();
-            updateMapDrawings();
-          });
+          update().then(updateMapDrawings);
         }
 
         // redraw all the markers and connectors on the map
         function updateMapDrawings() {
           clearMapDrawings();
+          console.log("pre-draw lengths: " + $scope.trips.length + ", " + $scope.places.length);
 
           // ADD THE MARKERS
           for(var p = 0; p < $scope.places.length; p++) {
@@ -85,10 +92,17 @@ map.directive('tripMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) {
           // ADD THE CONNECTORS
           var tripIds = []; // array of trip ids
           var sortedPlaces = [];  // array of same length where each entry is an array of places for that trip
+          console.log("pre-error lengths: " + $scope.trips.length + ", " + $scope.places.length);
           for(var t = 0; t < $scope.trips.length; t++) {
             tripIds.push($scope.trips[t]._id);
             sortedPlaces.push([]);
           }
+          console.log("tripIds");
+          console.log(tripIds);
+          console.log("places");
+          console.log($scope.places);
+          console.log("sortedPlaces");
+          console.log(sortedPlaces);
           for(var i = 0; i < $scope.places.length; i++) {
             sortedPlaces[tripIds.indexOf($scope.places[i].trip_id)].push($scope.places[i]);
           }

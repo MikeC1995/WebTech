@@ -155,12 +155,20 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
         .then(function(data) {
           apiFactory.getTrips().then(function(response) {
             trips = response.data.data;
-            resolve(trips);
-            broadcast("trips");
+            // Must update places too as deleting a trip will affect these
+            apiFactory.getPlaces().then(function(response) {
+              places = response.data.data;
+              resolve(trips);
+              broadcast("trips");
+              broadcast("places");
+            }, function(error) {
+              console.error('Unable to delete trip!');
+              reject();
+            });
           });
         }, function(error) {
           // TODO: handle error
-          console.error('Unable to delete trip! :(');
+          console.error('Unable to delete trip!');
           reject();
         });
     });
