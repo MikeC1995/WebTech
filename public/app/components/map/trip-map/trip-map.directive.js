@@ -38,7 +38,7 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
         $rootScope.$on("places.updated", function() { update().then(updateMapDrawings); });
 
         function computeMarkerSize() {
-          var maxMarkerSize = 30;
+          var maxMarkerSize = 20;
           var markerSize = Math.round(Math.pow(2, $scope.map.getZoom()));
           if(markerSize > maxMarkerSize) markerSize = maxMarkerSize;
           return markerSize;
@@ -62,11 +62,11 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
           // pan map when location changes
           $scope.$watch(function() {
             return $scope.selected.getPlace()._id;
-          }, function() {
-            var place = $scope.selected.getPlace().location;
-            if(place && place.lat && place.lng) {
-              $scope.map.panTo($scope.selected.getPlace().location);
-            }
+          }, function(new_place_id, old_place_id) {
+              var place = $scope.selected.getPlace().location;
+              if(place && place.lat && place.lng) {
+                $scope.map.panTo($scope.selected.getPlace().location);
+              }
           });
 
           // update marker sizes when zoom changes
@@ -112,9 +112,58 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
               },
               tripmap_place: $scope.places[p]   // non-googlemaps property for internal use
             });
+
+            var infoWindowContent = "";
+            var infowindow = new google.maps.InfoWindow({
+              content: infoWindowContent
+            });
+
+            // Set selected place on click
             marker.addListener('click', function() {
               $scope.selected.setPlace(this.tripmap_place);
               $scope.$apply();
+            });
+
+            // Enlarge marker on mouseover
+            marker.addListener('mouseover', function() {
+              var markerSize = computeMarkerSize() + 8;
+              this.setIcon({
+                anchor: new google.maps.Point(markerSize/2, markerSize/2),  // anchor
+                scaledSize: new google.maps.Size(markerSize, markerSize), //scaleSize
+                url: this.getIcon().url //url
+              });
+              var trip;
+              for(var i = 0; i < $scope.trips.length; i++) {
+                if($scope.trips[i]._id == this.tripmap_place.trip_id) {
+                  trip = $scope.trips[i];
+                }
+              }
+              if(!trips) return;
+
+              // format and ISO date into dd/mm/yyyy
+              function formatDate(iso_date) {
+                var date = new Date(iso_date);
+                return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+              }
+              var infoWindowContent =
+                '<div class="map-infowindow"> \
+                  <span class="placename">' + this.tripmap_place.location.name + '</span> \
+                  <span class="tripname">' + trip.name + '</span> \
+                  <span class="dates">' + formatDate(this.tripmap_place.from_date) + ' - ' + formatDate(this.tripmap_place.to_date) + '</span> \
+                </div>';
+              infowindow.setContent(infoWindowContent);
+              infowindow.open($scope.map, this);
+            });
+
+            // Reset marker size on mouseout
+            marker.addListener('mouseout', function() {
+              var markerSize = computeMarkerSize();
+              this.setIcon({
+                anchor: new google.maps.Point(markerSize/2, markerSize/2),  // anchor
+                scaledSize: new google.maps.Size(markerSize, markerSize), //scaleSize
+                url: this.getIcon().url //url
+              });
+              infowindow.close();
             });
             $scope.markers.push(marker);
           }
@@ -174,18 +223,6 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
           }
           $scope.connectors = [];
         }
-
-        // pan map when selected place changes
-        $scope.$watch(function() {
-          return $scope.selected.getPlace()._id;
-        }, function(value) {
-          for(var i = 0; i < $scope.markers.length; i++) {
-            if($scope.markers[i].tripmap_place._id == value) {
-              $scope.map.panTo($scope.markers[i].position);
-              return;
-            }
-          }
-        });
       }
   };
 }]);
