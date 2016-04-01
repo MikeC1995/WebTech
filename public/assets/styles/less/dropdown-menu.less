@@ -1,0 +1,32 @@
+.dropdown-menu {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  z-index: 1000;
+  padding: 10px;
+
+  &:hover .dropdown-content, .dropdown-content:hover {
+    display: block;
+    cursor: pointer;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 160px;
+    background-color: #fff;
+    box-shadow: @shadow3;
+    border-radius: 5px;
+
+    span {
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: @context-menu-select;
+      }
+    }
+  }
+}

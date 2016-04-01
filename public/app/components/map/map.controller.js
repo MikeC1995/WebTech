@@ -68,6 +68,11 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     }
   }
 
+  $scope.select = function(trip) {
+    $scope.selected.setTrip(trip);
+    $scope.safeApply();
+  }
+
   $scope.incrementSelectedPlace = function() {
     var ps = $scope.places;
     var idx = -1;

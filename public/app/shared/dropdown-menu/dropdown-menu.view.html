@@ -1,0 +1,6 @@
+<div class="dropdown-menu">
+  <span>{{selectedItem.name}}</span>
+  <div class="dropdown-content">
+    <span ng-repeat="item in items()" ng-click="select(item)">{{ item.name }}</span>
+  </div>
+</div>
