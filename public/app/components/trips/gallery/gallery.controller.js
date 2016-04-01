@@ -17,6 +17,13 @@ trips.controller('galleryController', ['$scope', 'imageFactory', '$state', funct
     }
     $scope.selectedPhotos.push(photo);
   }
+  $scope.selectAll = function() {
+    $scope.selectedPhotos = $scope.photos;
+  }
+  $scope.deselectAll = function() {
+    $scope.selectedPhotos = [];
+  }
+
   // checks if a given photo is in the selected list
   $scope.isSelectedPhoto = function(photo) {
     for(var i = 0; i < $scope.selectedPhotos.length; i++) {
