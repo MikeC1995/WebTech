@@ -20,8 +20,11 @@ var env = (process.env.NODE_ENV || "development");
 var port = process.env.PORT || 8080;
 
 // REGISTER WEBSITE ROUTING, PREFIXED WITH "/"
-// serve the website from the public folder on the default route
-app.use('/', express.static('public'));
+// serve the landing page from the default route
+//app.use('/', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/landing'));
+// serve the website from the public folder on the /demo route
+
 
 // STATICALLY SERVE DEPENDENCIES (node_modules) FOR USE BY CLIENT
 // (ie. THIS METHOD HIDES THE SERVER STRUCTURE)

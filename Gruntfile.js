@@ -16,14 +16,16 @@ module.exports = function(grunt) {
           strictUnits: true
         },
         files: {
-          "public/assets/styles/css/app.css": "public/assets/styles/less/app.less" // destination file and source file
+          // destination file and source file
+          "public/assets/styles/css/app.css": "public/assets/styles/less/app.less",
+          "landing/assets/styles/css/app.css": "landing/assets/styles/less/app.less"
         }
       }
     },
     // FILE WATCHING
     watch: {
       styles: {
-        files: ['public/assets/styles/less/**/*.less'], // which files to watch
+        files: ['public/assets/styles/less/**/*.less', 'landing/assets/styles/less/**/*.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true
