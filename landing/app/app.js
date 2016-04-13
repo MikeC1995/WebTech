@@ -9,7 +9,7 @@ app.controller('appController', ['$rootScope', '$scope', function($rootScope, $s
       e.preventDefault();
       var target = this.hash;
       $('html, body').stop().animate({
-        'scrollTop':  $(target).offset().top
+        'scrollTop':  $(target).offset().top - 80
       }, 900, 'swing', function () {
         window.location.hash = target;
       });
