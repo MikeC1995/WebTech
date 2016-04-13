@@ -1,0 +1,66 @@
+#sign-up {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 80px;
+  background-color: @primary-dark;
+  text-align: center;
+
+  h2 {
+    font-family: "Comfortaa", sans-serif;
+    font-size: 40px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  h3 {
+    font-family: "Comfortaa", sans-serif;
+    font-size: 25px;
+    font-weight: 200;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  form {
+    input[type="text"], input[type="email"] {
+      width: 50%;
+      box-sizing: border-box;
+      padding: 15px;
+      margin: 20px 0;
+      font-family: "Comfortaa", sans-serif;
+      font-size: 22px;
+      color: #fff;
+      background-color: @primary-light;
+      border: none;
+      border-radius: 5px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      border: none;
+      border-radius: 8px;
+      background-color: #fff;
+      height: 60px;
+      width: 50%;
+      margin: 20px auto 0 auto;
+      box-shadow: @shadow1;
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: @shadow2;
+      }
+      &:focus {
+        outline: none;
+      }
+      span {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-style: normal;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 50px;
+        color: @primary-dark;
+      }
+    }
+  }
+}
