@@ -1,13 +1,18 @@
 .content {
+  position: relative;
   width: 100%;
   box-sizing: border-box;
   padding: 50px;
+  h2 {
+    font-family: "Pacifico", cursive;
+    font-size: 36px;
+  }
 }
 
 #intro {
   text-align: center;
   h2 {
-    font-family: 'Comfortaa', sans-serif;
+    font-family: "Comfortaa", sans-serif;
     font-size: 40px;
     margin-bottom: 10px;
   }
@@ -19,7 +24,7 @@
   }
   #canvas-container {
     position: relative;
-    width: 60%;
+    width: 50%;
     height: auto;
     margin: auto;
 
@@ -72,19 +77,14 @@
 
 #how-it-works {
   text-align: center;
-  h2 {
-    font-family: "Pacifico", cursive;
-    font-size: 40px;
-    margin-bottom: 20px;
-  }
   ul {
     display: inline-block;
     list-style-type: none;
     overflow: visible;
     li {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       float: left;
       border-radius: 50%;
       background-color: @primary-dark;
@@ -99,7 +99,7 @@
         color: #fff;
       }
       span.number {
-        line-height: 200px;
+        line-height: 180px;
         font-family: "Open Sans", sans-serif;
         font-size: 100px;
         color: #fff;
@@ -107,5 +107,56 @@
         top: 100%;
       }
     }
+  }
+}
+
+.layout1 {
+  display: table-row;
+  .content-text {
+    display: table-cell;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 50px 50px 50px 100px;
+    p {
+      font-family: "Comfortaa", sans-serif;
+      font-size: 26px;
+      line-height: 150%;
+    }
+  }
+  .content-image {
+    display: table-cell;
+    width: 50%;
+    height: 100%;
+  }
+}
+
+#sharing-experiences {
+  .content-text {
+    text-align: right;
+  }
+  .content-image {
+    background: url("/assets/images/sharing.png") center no-repeat;
+    background-size: contain;
+  }
+}
+
+#for-friends {
+  .content-text {
+    text-align: left;
+  }
+  .content-image {
+    background: url("/assets/images/collaborative.png") no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
+
+#discover {
+  .content-text {
+    text-align: right;
+  }
+  .content-image {
+    background: url("/assets/images/discover.png") center no-repeat;
+    background-size: contain;
   }
 }
