@@ -1,7 +1,18 @@
 'use strict';
 
 // The root application module for this app
-var app = angular.module('landing', ['ui.router', 'ngAnimate']);
+var app = angular.module('landing', []);
 app.controller('appController', ['$rootScope', '$scope', function($rootScope, $scope) {
-    console.log("hello!");
+  // Smooth scrolling
+  $(document).ready(function() {
+    $('a[href^="#"]').on('click', function(e) {
+      e.preventDefault();
+      var target = this.hash;
+      $('html, body').stop().animate({
+        'scrollTop':  $(target).offset().top
+      }, 900, 'swing', function () {
+        window.location.hash = target;
+      });
+    });
+  });
 }]);

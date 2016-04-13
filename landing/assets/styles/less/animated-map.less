@@ -1,0 +1,51 @@
+#animated-map {
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin: auto;
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 200;
+  }
+
+  img#map {
+    width: 100%;
+    height: auto;
+    z-index: 100;
+  }
+  img.place {
+    position: absolute;
+    width: 8%;
+    height: auto;
+    z-index: 300;
+    opacity: 0;
+    &.draw {
+      transition: opacity 0.3s ease-out;
+      opacity: 1;
+    }
+  }
+  img#london {
+    top: 35%;
+    left: 20%;
+    opacity: 1;
+  }
+  img#paris {
+    top: 50%;
+    left: 27%;
+  }
+  img#berlin {
+    top: 40%;
+    left: 45%;
+  }
+  img#budapest {
+    top: 55%;
+    left: 60%;
+  }
+  img#croatia {
+    top: 70%;
+    left: 55%;
+  }
+}
