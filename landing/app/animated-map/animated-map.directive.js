@@ -26,14 +26,8 @@ app.directive('animatedMap', function() {
         checkAnimations();
       });
 
-      function isInViewport() {
-        var rect = elem[0].getBoundingClientRect();
-        return (
-          rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-          rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
-        );
+      function isScrolledPast() {
+        return $(window).scrollTop() > (elem.offset().top - 80);
       }
 
       // If animation not yet happened, invoke it and then add 'drawn' class
@@ -42,7 +36,7 @@ app.directive('animatedMap', function() {
         if($(canvasContainer).hasClass('drawn')) {
           return;
         }
-        if(isInViewport()) {
+        if(isScrolledPast()) {
           redraw();
           $(canvasContainer).addClass('drawn');
         }
