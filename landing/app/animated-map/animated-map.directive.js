@@ -39,7 +39,9 @@ app.directive('animatedMap', function() {
       // If animation not yet happened, invoke it and then add 'drawn' class
       // to canvasContainer to prevent re-animating
       function checkAnimations() {
-        if($(canvasContainer).hasClass('drawn')) return;
+        if($(canvasContainer).hasClass('drawn')) {
+          return;
+        }
         if(isInViewport()) {
           redraw();
           $(canvasContainer).addClass('drawn');
@@ -51,7 +53,6 @@ app.directive('animatedMap', function() {
 				canvas.width = $(canvasContainer).width();
 				canvas.height = $(canvasContainer).height();
         iconRadius = (0.1 * canvas.width)/2;
-        t = 1;
 				drawLines();
 			}
 
@@ -96,15 +97,17 @@ app.directive('animatedMap', function() {
         }
 
         context.beginPath();
-        context.moveTo(points[t-1].x,points[t-1].y);
-        context.lineTo(points[t].x,points[t].y);
-        context.stroke();
-        // id property is appended to points[t] if this is the last line segment of the animation
-        if(points[t].id) {
-          // add draw class to the image element so that it animates into view
-          var elem = $('#' + points[t].id);
-          elem.addClass('draw');
+        if(points[t-1] && points[t])  {
+          context.moveTo(points[t-1].x,points[t-1].y);
+          context.lineTo(points[t].x,points[t].y);
+          // id property is appended to points[t] if this is the last line segment of the animation
+          if(points[t].id) {
+            // add draw class to the image element so that it animates into view
+            var elem = $('#' + points[t].id);
+            elem.addClass('draw');
+          }
         }
+        context.stroke();
         t++;
       }
 
@@ -130,6 +133,7 @@ app.directive('animatedMap', function() {
         }
         context.lineWidth = 10;
         context.strokeStyle = '#d12e2e';
+        t = 1;
         animate();
       }
     }
