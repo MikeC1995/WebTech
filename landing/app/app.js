@@ -15,4 +15,8 @@ app.controller('appController', ['$rootScope', '$scope', function($rootScope, $s
       });
     });
   });
+
+  $scope.toggleNav = function() {
+    $('nav ul').toggleClass('open');
+  }
 }]);

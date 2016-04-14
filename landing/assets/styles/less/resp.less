@@ -1,0 +1,246 @@
+@media only screen and (max-width: 1280px) {
+  #rows {
+    width: calc(~"100% - 20px");
+    .row-layout {
+      h2 {
+        font-size: 26px;
+      }
+      .content-text {
+        padding: 30px 30px 30px 80px;
+        p {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  nav {
+    padding: 0 30px;
+    img {
+      left: 30px;
+    }
+    ul li a {
+      padding: 0 15px;
+    }
+  }
+
+  header {
+    img {
+      width: 200px;
+    }
+    .anchor {
+      &#anchor1 {
+        width: 150px;
+        top: 220px;
+        left: calc(~"50% - 150px - 65px");
+        transform-origin: 145px 140px;
+      }
+      &#anchor2 {
+        width: 150px;
+        top: 205px;
+        left: calc(~"50% + 65px");
+        transform-origin: 5px 115px;
+      }
+      &#anchor3 {
+        width: 150px;
+        top: 380px;
+        left: calc(~"50% - 150px - 55px");
+        transform-origin: 145px 50px;
+      }
+      &#anchor4 {
+        width: 150px;
+        top: 320px;
+        left: calc(~"50% + 85px");
+        transform-origin: 4px 57px;
+      }
+    }
+  }
+
+  #how-it-works ul li {
+    width: 120px;
+    height: 120px;
+    margin: 10px 20px;
+    span:not(.number) {
+      font-size: 16px;
+    }
+    span.number {
+      line-height: 120px;
+      font-size: 70px;
+    }
+  }
+
+  #sign-up {
+    padding: 30px 15px;
+    form {
+      input[type="text"], input[type="email"] {
+        width: 95%;
+      }
+      button {
+        width: 95%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  nav {
+    padding: 0 10px;
+    #menu {
+      display: block;
+      position: absolute;
+      height: 32px;
+      width: auto;
+      top: calc(~"50% - 16px");
+      left: 35px;
+    }
+    ul:not(.open) {
+      display: none;
+    }
+    ul.open {
+      display: block;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      right: 0;
+      float: none;
+      text-align: center;
+      li {
+        float: none;
+        width: 100%;
+        background-color: #fff;
+        &:hover {
+          background-color: @primary-dark;
+          a {
+            color: #fff;
+          }
+        }
+        a {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  #intro #animated-map {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  nav {
+    height: 50px;
+
+    #logo {
+      height: 20px;
+      top: calc(~"50% - 10px");
+      left: 50px;
+    }
+
+    #menu {
+      height: 20px;
+      width: auto;
+      top: calc(~"50% - 10px");
+      left: 15px;
+    }
+
+    ul.open {
+      top: 50px;
+      li a {
+        height: 50px;
+        padding: 0 10px;
+        font-size: 12px;
+        line-height: 50px;
+      }
+    }
+  }
+
+  header {
+    padding-top: 80px;
+    img {
+      width: 30%;
+      height: auto;
+    }
+    .anchor {
+      display: none;
+    }
+  }
+
+  #rows {
+    width: 95%;
+    .row-layout {
+      h2 {
+        font-size: 26px;
+      }
+      .content-text {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        p {
+          font-size: 16px;
+          line-height: 150%;
+        }
+      }
+      .content-image {
+        display: none;
+      }
+    }
+  }
+
+
+  #demo {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    div {
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      h2 {
+        font-size: 20px;
+      }
+      a {
+        height: 40px;
+        margin: 10px auto 0 auto;
+        &:hover {
+          span {
+            color: #fff;
+          }
+        }
+        span {
+          font-size: 12px;
+          line-height: 40px;
+        }
+      }
+    }
+  }
+
+  #sign-up {
+    padding: 15px;
+    h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    form {
+      input[type="text"], input[type="email"] {
+        padding: 15px;
+        margin: 10px 0;
+        font-size: 16px;
+      }
+      button span {
+        font-size: 16px;
+      }
+    }
+  }
+
+
+}

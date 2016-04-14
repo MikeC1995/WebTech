@@ -13,8 +13,9 @@
 
   <body ng-app="landing" ng-controller="appController">
     <nav>
-      <img src="/assets/images/logo.png">
-      <ul>
+      <img id="logo" src="/assets/images/logo.png">
+      <img id="menu" src="/assets/images/icons/menu.png" ng-click="toggleNav()">
+      <ul ng-click="toggleNav()">
         <li><a href="#home">HOME</a></li>
         <li><a href="#how-it-works">HOW IT WORKS</a></li>
         <li><a href="/">DEMO</a></li>
@@ -26,11 +27,10 @@
       <h2>Welcome to</h2>
       <img src="/assets/images/logo-white.png">
       <img id="globe" src="/assets/images/globe.png">
-      <img id="anchor1" src="/assets/images/anchor1.png">
-      <img id="anchor2" src="/assets/images/anchor2.png">
-      <img id="anchor3" src="/assets/images/anchor3.png">
-      <img id="anchor4" src="/assets/images/anchor4.png">
-
+      <img class="anchor" id="anchor1" src="/assets/images/anchor1.png">
+      <img class="anchor" id="anchor2" src="/assets/images/anchor2.png">
+      <img class="anchor" id="anchor3" src="/assets/images/anchor3.png">
+      <img class="anchor" id="anchor4" src="/assets/images/anchor4.png">
       <a href="#sign-up" class="button"><span>SIGN UP</span></a>
     </header>
 
@@ -39,10 +39,11 @@
       <h3>Put your memories on the map.</h3>
       <animated-map></animated-map>
     </div>
+
     <div class="content" id="how-it-works">
       <h2>How it works</h2>
       <ul class="clearfix">
-        <li><span>Create a trip</span><span class="number">1</span></li>
+        <li><span>Name your trip</span><span class="number">1</span></li>
         <li><span>Add places</span><span class="number">2</span></li>
         <li><span>Add photos</span><span class="number">3</span></li>
         <li><span>Relive your experiences!</span><span class="number">4</span></li>
