@@ -87,28 +87,34 @@ header {
     transform-origin: 10px 215px;
     animation-delay: 0.2s;
   }
+  #anchor3 {
+    position: absolute;
+    width: 285px;
+    height: auto;
+    top: 435px;
+    left: calc(~"50% - 285px - 80px");
+    animation: wobble 1s linear infinite;
+    transform-origin: 277px 94px;
+    animation-delay: 0.2s;
+  }
+  #anchor4 {
+    position: absolute;
+    width: 285px;
+    height: auto;
+    top: 350px;
+    left: calc(~"50% + 130px");
+    animation: wobble 1s linear infinite;
+    transform-origin: 8px 108px;
+    animation-delay: 0.35s;
+  }
 
   a {
     display: block;
     width: 150px;
     height: 40px;
     margin: 20px auto 0 auto;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: @shadow1;
-    text-decoration: none;
-
-    &:hover {
-      box-shadow: @shadow2;
-      cursor: pointer;
-    }
     span {
-      font-family: "Comfortaa", sans-serif;
-      font-size: 18px;
-      font-weight: 600;
       line-height: 40px;
-      color: @primary-dark;
-      letter-spacing: 2px;
     }
   }
 }

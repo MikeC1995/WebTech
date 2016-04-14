@@ -50,7 +50,7 @@ app.directive('animatedMap', function() {
 			function redraw() {
 				canvas.width = $(canvasContainer).width();
 				canvas.height = $(canvasContainer).height();
-        iconRadius = (0.08 * canvas.width)/2;
+        iconRadius = (0.1 * canvas.width)/2;
         t = 1;
 				drawLines();
 			}

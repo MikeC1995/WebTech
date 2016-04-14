@@ -18,3 +18,22 @@ h2,h3,h4,h5,h6 {
 .clearfix {
   overflow: auto;
 }
+
+.button {
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: @shadow1;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: @shadow2;
+    cursor: pointer;
+  }
+  span {
+    font-family: "Comfortaa", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: @primary-dark;
+    letter-spacing: 2px;
+  }
+}
