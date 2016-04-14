@@ -17,7 +17,7 @@ mongoose.connect(mongo_uri);
 // SET NODE ENVIRONMENT
 var env = (process.env.NODE_ENV || "development");
 // SET PORT NUMBER
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8081;
 
 // SERVE THE ANGULAR APP
 app.use('/', express.static(__dirname + '/public'));
