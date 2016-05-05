@@ -13,6 +13,9 @@
     <meta name="og:description" property="og:description" content="Mike Christensen | COMS32500 WebTech Project" />
     <meta name="og:url" property="og:url" content=""/>-->
 
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="/assets/images/icons/favicon.ico">
+
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/styles/css/app.css">
   </head>
@@ -21,7 +24,7 @@
     <div id="top-bar">
       <!-- Menu/Back icon. Only appear when in Map state. -->
       <img id="menu-icon" ng-click="toggleSidePanelOpen()" ng-src="{{ !isSidePanelOpen && '/assets/images/icons/white/menu.png' || '/assets/images/icons/white/back.png' }}">
-      <span>TripMappr</span>
+      <img id="logo" src="/assets/images/logo-white.png">
     </div>
     <side-panel></side-panel>
     <div ui-view id="content-panel" ng-click="closeSidePanel()">
