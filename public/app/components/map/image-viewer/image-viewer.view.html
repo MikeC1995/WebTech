@@ -1,6 +1,6 @@
 <div id="image-viewer" when-scrolled="loadMore()">
   <div id="empty" ng-show="photos.length == 0">
-    <img src="/assets/images/icons/empty/sad-face.png">
+    <img src="/assets/images/icons/empty/camera-screen.png">
     <span><strong>No photos yet.</strong><br><br>Add some memories from the <a ui-sref="trips">trip manager</a></span>
   </div>
   <div id="thumb" ng-click="selectPhoto($index)" ng-class="{ 'selected': selectedPhotoIndex == $index }" ng-repeat="photo in photos" style="background-image: url('{{photo.url}}'), url('/assets/images/icons/spin.gif');"></div>
