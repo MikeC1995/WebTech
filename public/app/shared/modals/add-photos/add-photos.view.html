@@ -1,7 +1,7 @@
 <div class="modal-box add-photos" ng-controller="addPhotosController">
   <h2>Add photos</h2>
   <span class="subtitle">Adding to <span>{{placeName}}</span> on <span>{{tripName}}</span></span>
-  <form name="add-photos-form" ng-submit="uploadFiles()" keydown="keydown" tabindex="0">
+  <form name="add-photos-form" ng-submit="uploadFiles()" tabindex="0">
     <div class="content">
       <div class="drag-drop" ng-show="!uploading" ngf-drop="setSelectedFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true" accept="image/*">
         <img  ng-show="files.length == 0" src="/assets/images/icons/black/gallery.png">

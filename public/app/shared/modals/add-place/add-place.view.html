@@ -1,6 +1,6 @@
 <div class="modal-box add-place" ng-controller="addPlaceController">
   <h2>Add a Place</h2>
-  <form ng-submit="submit()" name="addPlaceForm" keydown="keydown" tabindex="0">
+  <form ng-submit="submit()" name="addPlaceForm" tabindex="0">
     <input id="add-place-search" type="text" placeholder="Where did you go?" ng-model="name" required></input>
     <div add-place-map ng-model="location" id="add-place-map" class="map"></div>
     <input type="date" placeholder="From" ng-model="from_date" required></input>
