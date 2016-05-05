@@ -13,6 +13,77 @@
 
     #title-box {
       position: relative;
+      padding-top: 15px;
+      height: 75px;
+      padding-bottom: 60px;
+
+      #trip {
+        display: block;
+        margin: 0 auto 15px auto;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-align: center;
+        width: 200px;
+      }
+
+      #places {
+        position: relative;
+        width: 100%;
+        border-top: 4px solid;
+
+        .place {
+          float: left;
+          width: 33.3%;
+
+          &.selected {
+            span {
+              font-size: 16px;
+              font-weight: 600;
+            }
+          }
+
+          &:hover {
+            span {
+              font-weight: 600;
+            }
+            cursor: pointer;
+          }
+
+          .place-nub {
+            position: relative;
+            margin: -15px auto 0 auto;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-style: solid;
+            border-width: 4px;
+            border-radius: 50%;
+
+            .place-nub-select {
+              position: absolute;
+              width: 50%;
+              height: 50%;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              border-radius: 50%;
+            }
+          }
+          span {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+
+    /*
+    #title-box {
+      position: relative;
       padding-top: 35px;
       height: 75px;
 
@@ -76,7 +147,7 @@
         font-size: 12px;
         padding-top: 5px;
       }
-    }
+    }*/
   }
 
   #mapPanel {

@@ -2,15 +2,32 @@
   <!-- Must give a div a tabindex so that it can receive focus for keydown event  -->
   <div id="galleryPanel" ng-click="showthumbs()" keydown="keydown" tabindex="0">
     <div id="title-box">
-      <!--<span id="trip">{{selected.getTrip().name}}</span>-->
       <dropdown-menu id="trip" items="trips" callback="select"></dropdown-menu>
+      <div id="places" ng-style="{'border-color': tripColor()}">
+        <div class="place" ng-click="decrementSelectedPlace()">
+          <div class="place-nub" ng-style="{'border-color': tripColor()}"></div>
+          <span class="place-label">{{getPlaceByNubIdx(0).location.name}}</span>
+        </div>
+        <div class="place selected">
+          <div class="place-nub" ng-style="{'border-color': tripColor()}">
+            <div class="place-nub-select"  ng-style="{'background-color': tripColor()}"></div>
+          </div>
+          <span class="place-label">{{getPlaceByNubIdx(1).location.name}}</span>
+        </div>
+        <div class="place" ng-click="incrementSelectedPlace()">
+          <div class="place-nub" ng-style="{'border-color': tripColor()}"></div>
+          <span class="place-label">{{getPlaceByNubIdx(2).location.name}}</span>
+        </div>
+      </div>
+
+      <!--<dropdown-menu id="trip" items="trips" callback="select"></dropdown-menu>
       <div id="trip-line" ng-style="tripColor()"></div>
       <div id="place">
         <span>{{selected.getPlace().location.name}}</span>
         <img id="up" src="/assets/images/icons/black/expand-up.png" ng-click="decrementSelectedPlace()">
         <img id="down" src="/assets/images/icons/black/expand-down.png" ng-click="incrementSelectedPlace()">
       </div>
-      <span id="dates">{{formatDate(selected.getPlace().from_date)}} - {{formatDate(selected.getPlace().to_date)}}</span>
+      <span id="dates">{{formatDate(selected.getPlace().from_date)}} - {{formatDate(selected.getPlace().to_date)}}</span>-->
     </div>
 
     <image-viewer></image-viewer>
