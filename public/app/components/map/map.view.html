@@ -3,7 +3,7 @@
   <div id="galleryPanel" ng-click="showthumbs()" keydown="keydown" tabindex="0">
     <div id="title-box">
       <dropdown-menu id="trip" items="trips" callback="select"></dropdown-menu>
-      <div id="places" ng-style="{'border-color': tripColor()}">
+      <div id="places" class="clearfix" ng-style="{'border-color': tripColor()}">
         <div class="place" ng-click="decrementSelectedPlace()">
           <div class="place-nub" ng-style="{'border-color': tripColor()}"></div>
           <span class="place-label">{{getPlaceByNubIdx(0).location.name}}</span>
@@ -19,6 +19,7 @@
           <span class="place-label">{{getPlaceByNubIdx(2).location.name}}</span>
         </div>
       </div>
+      <span id="dates">{{formatDate(selected.getPlace().from_date)}} - {{formatDate(selected.getPlace().to_date)}}</span>
 
       <!--<dropdown-menu id="trip" items="trips" callback="select"></dropdown-menu>
       <div id="trip-line" ng-style="tripColor()"></div>
