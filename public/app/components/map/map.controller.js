@@ -3,7 +3,6 @@
 var map = angular.module('map');
 map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'imageFactory', function($rootScope, $scope, tripDataFactory, imageFactory) {
   $scope.selected = new tripDataFactory.Selected();
-  $scope.selectedTrip = $scope.selected.getTrip();  // the model for the dropdown
 
   // https://coderwall.com/p/ngisma/safe-apply-in-angular-js
   $scope.safeApply = function(fn) {
@@ -66,28 +65,6 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
   $scope.tripColor = function() {
     return $scope.selected.getTrip().colour;
   }
-
-  // Watch for change of the dropdown model, and update trip accordingly
-  /*$scope.$watch(function() {
-    return $scope.selectedTrip._id;
-  }, function(value) {
-    for(var t = 0; t < $scope.trips.length; t++) {
-      if($scope.trips[t]._id == value) {
-        //$scope.selected.setTrip($scope.trips[t]);
-        $scope.safeApply();
-      }
-    }
-  });*/
-
-  $scope.$watch(function() {
-    return $scope.selected.getTrip()._id;
-  }, function(value) {
-    for(var t = 0; t < $scope.trips.length; t++) {
-      if($scope.trips[t]._id == value) {
-        $scope.selectedTrip = $scope.trips[t];
-      }
-    }
-  });
 
   $scope.incrementSelectedPlace = function() {
     var p = getAdjacentPlaceInTrip($scope.selected.getPlace(), 1);
