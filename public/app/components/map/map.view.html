@@ -2,7 +2,7 @@
   <!-- Must give a div a tabindex so that it can receive focus for keydown event  -->
   <div id="galleryPanel" ng-click="showthumbs()" keydown="keydown" tabindex="0">
     <div id="title-box">
-      <dropdown-menu id="trip" items="trips" ng-model="selectedTrip"></dropdown-menu>
+      <dropdown-menu id="trip" items="trips" get="selected.getTrip" set="selected.setTrip"></dropdown-menu>
       <div id="places" class="clearfix" ng-style="{'border-color': tripColor()}">
         <div class="place" ng-click="decrementSelectedPlace()">
           <div class="place-nub" ng-style="{'border-color': tripColor()}"></div>

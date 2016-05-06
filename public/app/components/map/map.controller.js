@@ -68,24 +68,22 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
   }
 
   // Watch for change of the dropdown model, and update trip accordingly
-  $scope.$watch(function() {
+  /*$scope.$watch(function() {
     return $scope.selectedTrip._id;
   }, function(value) {
     for(var t = 0; t < $scope.trips.length; t++) {
       if($scope.trips[t]._id == value) {
-        $scope.selected.setTrip($scope.trips[t]);
+        //$scope.selected.setTrip($scope.trips[t]);
         $scope.safeApply();
       }
     }
-  });
+  });*/
 
   $scope.$watch(function() {
     return $scope.selected.getTrip()._id;
   }, function(value) {
-    console.log(value);
     for(var t = 0; t < $scope.trips.length; t++) {
       if($scope.trips[t]._id == value) {
-        console.log("set");
         $scope.selectedTrip = $scope.trips[t];
       }
     }
