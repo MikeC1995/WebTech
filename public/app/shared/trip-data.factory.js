@@ -55,6 +55,30 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
         }
       }
     }
+
+    // compute the index of the adjacent place thats in the *same* trip
+    // inc = 1 for next, -1 for previous place.
+    this.getAdjacentPlace = function(place, inc) {
+      if(!trips || !places) { return; }
+      if(inc > 1) inc = 1;
+      if(inc < 1) inc = -1;
+
+      for(var i = 0; i < places.length; i++) {
+        if(places[i]._id == place._id) {
+          var adjIdx = i;
+          do {
+            adjIdx += inc;
+            if(adjIdx < 0) {
+              adjIdx = places.length - 1;
+            } else if(adjIdx > places.length - 1) {
+              adjIdx = 0;
+            }
+          } while(places[adjIdx].trip_id != places[i].trip_id);
+          return places[adjIdx];
+        }
+      }
+      return {};
+    }
   }
 
   tripDataFactory.getTrips = function() {

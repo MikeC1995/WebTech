@@ -67,38 +67,15 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
   }
 
   $scope.incrementSelectedPlace = function() {
-    var p = getAdjacentPlaceInTrip($scope.selected.getPlace(), 1);
+    var p = $scope.selected.getAdjacentPlace($scope.selected.getPlace(), 1);
     $scope.selected.setPlace(p);
     $scope.safeApply();
   }
 
   $scope.decrementSelectedPlace = function() {
-    var p = getAdjacentPlaceInTrip($scope.selected.getPlace(), -1);
+    var p = $scope.selected.getAdjacentPlace($scope.selected.getPlace(), -1);
     $scope.selected.setPlace(p);
     $scope.safeApply();
-  }
-
-  // compute the index of the adjacent place thats in the *same* trip
-  // inc = 1 for next, -1 for previous place.
-  function getAdjacentPlaceInTrip(place, inc) {
-    if(inc > 1) inc = 1;
-    if(inc < 1) inc = -1;
-
-    for(var i = 0; i < $scope.places.length; i++) {
-      if($scope.places[i]._id == place._id) {
-        var adjIdx = i;
-        do {
-          adjIdx += inc;
-          if(adjIdx < 0) {
-            adjIdx = $scope.places.length - 1;
-          } else if(adjIdx > $scope.places.length - 1) {
-            adjIdx = 0;
-          }
-        } while($scope.places[adjIdx].trip_id != $scope.places[i].trip_id);
-        return $scope.places[adjIdx];
-      }
-    }
-    return {};
   }
 
   // return the place to display in one of the top three nubs, indexed by 0,1,2
@@ -107,9 +84,9 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
       return $scope.selected.getPlace();
     } else {
       if(idx == 2) {
-        return getAdjacentPlaceInTrip($scope.selected.getPlace(), 1);
+        return $scope.selected.getAdjacentPlace($scope.selected.getPlace(), 1);
       } else {
-        return getAdjacentPlaceInTrip($scope.selected.getPlace(), -1);
+        return $scope.selected.getAdjacentPlace($scope.selected.getPlace(), -1);
       }
     }
   }
