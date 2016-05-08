@@ -23,6 +23,11 @@ function deletePhotos(photos, resolve, reject) {
   photos.forEach(function(_photo) {
     calls.push(function(callback) {
       Photo.findById(_photo._id, function(err, photo) {
+        if(err) {
+          console.log("Error deleteing photos " + err);
+          return callback(err);
+        }
+
         // Delete from S3
         var params = {
           Bucket: aws.s3bucket,
@@ -31,7 +36,7 @@ function deletePhotos(photos, resolve, reject) {
         aws.s3.deleteObject(params, function(aws_err) {
           if(aws_err) {
             callback(aws_err);
-            console.log("Error uploading data: ", err);
+            console.log("Error deleting S3 data: ", err);
           } else {
             // Successfully deleted from S3
             console.log("Successfully deleted data from myBucket/myKey");
