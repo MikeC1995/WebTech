@@ -2,81 +2,90 @@
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
   line-height: 25px;
   box-sizing: border-box;
-  padding: 30px;
 
-  .dialogs {
-    position: absolute;
+  #heading {
+    position: fixed;
+    top: 50px;
     width: 100%;
-    height: 100%;
-    top:0;
-    left: 0;
-  }
+    height: 100px;
+    padding: 30px;
+    background-color: #fff;
+    z-index: 500;
 
-  h1 {
-    padding-bottom: 15px;
-  }
-
-  .trip-tabs {
-    padding: 10px 0;
-
-    .trip-item {
-      display: inline;
-      padding-right: 20px;
-      position: relative;
-      letter-spacing: 1px;
-      font-size: 15px;
-      color: #444;
-
-      &:hover {
-        font-weight: 600;
-        color: #000;
-      }
-
-      &.selected {
-        font-weight: 600;
-        color: #000;
-      }
-    }
-
-    .hidden {
-      visibility: hidden;
+    .dialogs {
       position: absolute;
+      width: 100%;
+      height: 100%;
+      top:0;
+      left: 0;
     }
 
-    form {
-      display: inline;
-      position: relative;
-      left: -10px;
+    .trip-tabs {
+      height: 50px;
+      width: calc(~"100% - 60px");
+      margin-top: 50px;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
 
-      .add-trip-icon {
-        // parent line-height: 20px, img vertical-align: middle to vert center
+      .trip-item {
+        display: inline;
+        padding-right: 20px;
         position: relative;
-        left: 25px;
-        vertical-align: middle;
-        height: 15px;
-        width: auto;
-        cursor: pointer;
-        opacity: 0.5;
-      }
-      input {
-        height: 30px;
-        box-sizing: border-box;
-        padding: 5px 5px 5px 30px;
-        font-family: 'Open Sans', sans-serif;
+        letter-spacing: 1px;
         font-size: 15px;
-        text-transform: uppercase;
-        border: none;
-        border-bottom: 1px solid @text-disabled;
-        &:focus {
-          outline: none;
-          border-color: @accent;
-          border-width: 2px;
+        color: #444;
+
+        &:hover {
+          font-weight: 600;
+          color: #000;
+        }
+
+        &.selected {
+          font-weight: 600;
+          color: #000;
         }
       }
 
+      .hidden {
+        visibility: hidden;
+        position: absolute;
+      }
+
+      form {
+        display: inline;
+        position: relative;
+        left: -10px;
+
+        .add-trip-icon {
+          // parent line-height: 20px, img vertical-align: middle to vert center
+          position: relative;
+          left: 25px;
+          vertical-align: middle;
+          height: 15px;
+          width: auto;
+          cursor: pointer;
+          opacity: 0.5;
+        }
+        input {
+          height: 30px;
+          box-sizing: border-box;
+          padding: 5px 5px 5px 30px;
+          font-family: 'Open Sans', sans-serif;
+          font-size: 15px;
+          text-transform: uppercase;
+          border: none;
+          border-bottom: 1px solid @text-disabled;
+          &:focus {
+            outline: none;
+            border-color: @accent;
+            border-width: 2px;
+          }
+        }
+
+      }
     }
   }
 }

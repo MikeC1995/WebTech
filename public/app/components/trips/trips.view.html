@@ -1,9 +1,12 @@
 <div id="trips-container" ng-controller="tripsController">
-  <h1>Your Trips</h1>
-
-  <trip-tabs selected="selected"></trip-tabs>
-  <places selected="selected"></places>
+  <div id="heading">
+    <h1>Your Trips</h1>
+    <trip-tabs selected="selected"></trip-tabs>
+  </div>
+  <div id="scroll-wrap">
+    <places selected="selected"></places>
+  </div>
 
   <!-- modal dialog view -->
-  <div ui-view="modal" autoscroll="false"></div>
+  <div class="modal" ui-view="modal" autoscroll="false"></div>
 </div>
