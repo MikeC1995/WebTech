@@ -56,7 +56,7 @@ modals.directive('addPlaceMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) 
               $scope.map.fitBounds(place.geometry.viewport);
             } else {
               $scope.map.setCenter(place.geometry.location);
-              $scope.map.setZoom(17);  // Why 17? Because it looks good.
+              $scope.map.setZoom(17);
             }
             marker.setIcon(/** @type {google.maps.Icon} */({
               url: place.icon,

@@ -16,6 +16,11 @@ html, body {
    clear: both;
 }
 
+// google autocomplete default z-index isn't high enough when displayed in modal
+.pac-container {
+  z-index: 10000 !important;
+}
+
 h1 {
   font-size: 40px;
   font-weight: 300;
