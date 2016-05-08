@@ -20,6 +20,8 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
   // Local copies
   $scope.trips = [];
   $scope.places = [];
+  $scope.selectedPlaceIndex = 0;
+
   // Getters
   $scope.getTrips = function() { return $scope.trips; }
   $scope.getPlaces = function() { return $scope.places; }
@@ -53,10 +55,18 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
   $scope.selectedPhotoIndex = 0;
   $scope.photos = [];
 
-  // update photos when selected place changes
+  // update photos and selected index when selected place changes
   $scope.$watch(function() {
     return $scope.selected.getPlace()._id;
   }, function(value) {
+    var filtered = $scope.places.filter(function(place) {
+      return place.trip_id == $scope.selected.getPlace().trip_id;
+    });
+    for(var i = 0; i < filtered.length; i++) {
+      if(filtered[i]._id == value) {
+        $scope.selectedPlaceIndex = i;
+      }
+    }
     $scope.photos = [];
     if(value !== undefined) {
       loadInitial();
@@ -66,6 +76,11 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
 
   $scope.tripColor = function() {
     return $scope.selected.getTrip().colour;
+  }
+
+  $scope.selectPlace = function(place) {
+    $scope.selected.setPlace(place);
+    $scope.safeApply();
   }
 
   $scope.incrementSelectedPlace = function() {
@@ -78,19 +93,6 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
     var p = $scope.selected.getAdjacentPlace($scope.selected.getPlace(), -1);
     $scope.selected.setPlace(p);
     $scope.safeApply();
-  }
-
-  // return the place to display in one of the top three nubs, indexed by 0,1,2
-  $scope.getPlaceByNubIdx = function(idx) {
-    if(idx == 1) {
-      return $scope.selected.getPlace();
-    } else {
-      if(idx == 2) {
-        return $scope.selected.getAdjacentPlace($scope.selected.getPlace(), 1);
-      } else {
-        return $scope.selected.getAdjacentPlace($scope.selected.getPlace(), -1);
-      }
-    }
   }
 
   $scope.nextPhoto = function() {

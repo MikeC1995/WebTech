@@ -31,20 +31,34 @@
         width: 100%;
         border-top: 4px solid;
         margin-bottom: 10px;
+        white-space: nowrap;
 
         .place {
-          float: left;
+          display: inline-block;
           width: 33.3%;
+          height: 100%;
+          box-sizing: border-box;
+          padding: 0 10px;
+          vertical-align: top;
+          transition: transform .3s ease-out;
 
+          &:not(.selected) {
+            .place-nub .place-nub-select {
+              display: none;
+            }
+          }
           &.selected {
-            span {
+            .place-nub .place-nub-select {
+              display: block;
+            }
+            .place-label {
               font-size: 16px;
               font-weight: 600;
             }
           }
 
           &:hover {
-            span {
+            .place-label {
               font-weight: 600;
             }
             cursor: pointer;
@@ -70,20 +84,21 @@
               border-radius: 50%;
             }
           }
-          span {
+          .place-label {
             display: block;
             margin-top: 10px;
             font-size: 14px;
             font-weight: 400;
+            white-space: normal;
+          }
+          .place-dates {
+            display: block;
+            margin: auto;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 400;
           }
         }
-      }
-
-      #dates {
-        display: block;
-        margin: auto;
-        font-size: 14px;
-        font-style: italic;
       }
     }
   }

@@ -3,23 +3,7 @@
   <div id="galleryPanel" ng-click="showthumbs()" keydown="keydown" tabindex="0">
     <div id="title-box">
       <dropdown-menu id="trip" items="trips" get="selected.getTrip" set="selected.setTrip"></dropdown-menu>
-      <div id="places" class="clearfix" ng-style="{'border-color': tripColor()}">
-        <div class="place" ng-click="decrementSelectedPlace()">
-          <div class="place-nub" ng-style="{'border-color': tripColor()}"></div>
-          <span class="place-label">{{getPlaceByNubIdx(0).location.name}}</span>
-        </div>
-        <div class="place selected">
-          <div class="place-nub" ng-style="{'border-color': tripColor()}">
-            <div class="place-nub-select"  ng-style="{'background-color': tripColor()}"></div>
-          </div>
-          <span class="place-label">{{getPlaceByNubIdx(1).location.name}}</span>
-        </div>
-        <div class="place" ng-click="incrementSelectedPlace()">
-          <div class="place-nub" ng-style="{'border-color': tripColor()}"></div>
-          <span class="place-label">{{getPlaceByNubIdx(2).location.name}}</span>
-        </div>
-      </div>
-      <span id="dates">{{formatDate(selected.getPlace().from_date)}} - {{formatDate(selected.getPlace().to_date)}}</span>
+      <places-navigator></places-navigator>
     </div>
 
     <image-viewer></image-viewer>

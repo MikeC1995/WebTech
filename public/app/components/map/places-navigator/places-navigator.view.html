@@ -1,0 +1,11 @@
+<div id="places" class="clearfix" ng-style="{'border-color': tripColor()}">
+  <div class="place" ng-class="{'selected' : $index == selectedPlaceIndex }"
+       ng-repeat="place in filteredPlaces = (places | filter:{ trip_id: selected.getTrip()._id } | orderBy:'from_date':false)" ng-click="selectPlace(place)"
+       ng-style="{'transform': transform }">
+    <div class="place-nub" ng-style="{'border-color': tripColor()}">
+      <div class="place-nub-select"  ng-style="{'background-color': tripColor()}"></div>
+    </div>
+    <span class="place-label">{{place.location.name}}</span>
+    <span class="place-dates">{{formatDate(place.from_date)}} - {{formatDate(place.to_date)}}</span>
+  </div>
+</div>
