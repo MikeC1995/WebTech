@@ -1,5 +1,5 @@
 <div id="image-viewer" when-scrolled="loadMore()">
-  <div id="empty" ng-show="photos.length == 0">
+  <div id="empty" ng-show="photos.length == 0 && !isLoadingPhotos()">
     <img src="/assets/images/icons/empty/camera-screen.png">
     <span><strong>No photos yet.</strong><br><br>Add some memories from the <a ui-sref="trips">trip manager</a></span>
   </div>

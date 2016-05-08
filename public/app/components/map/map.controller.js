@@ -57,6 +57,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
   $scope.$watch(function() {
     return $scope.selected.getPlace()._id;
   }, function(value) {
+    $scope.photos = [];
     if(value !== undefined) {
       loadInitial();
     }
