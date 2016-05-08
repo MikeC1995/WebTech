@@ -97,6 +97,29 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     });
   }
 
+  // sort an array of places (from various trips) by their trip and by their from_date
+  function sortPlacesByDate(places) {
+    var sorted = [];
+    // get list of trip_ids
+    var trip_ids = [];
+    for(var p = 0; p < places.length; p++) {
+      if(trip_ids.indexOf(places[p].trip_id) == -1) {
+        trip_ids.push(places[p].trip_id);
+      }
+    }
+    // filter places by trip and sort by date before pushing chunk to sorted list
+    for(var t = 0; t < trip_ids.length; t++) {
+      var filtered = places.filter(function(place) {
+        return place.trip_id == trip_ids[t];
+      });
+      filtered.sort(function(a,b) {
+        return new Date(a.from_date) - new Date(b.from_date);
+      });
+      sorted.push.apply(sorted, filtered);
+    }
+    return sorted;
+  }
+
   tripDataFactory.getPlaces = function() {
     return new Promise(function(resolve, reject) {
       if(places) {
@@ -104,7 +127,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       } else {
         apiFactory.getPlaces()
           .then(function(response) {
-            places = response.data.data;
+            places = sortPlacesByDate(response.data.data);
             resolve(places);
           }, function() {
             reject();
@@ -119,7 +142,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       apiFactory.addPlace(place)
         .then(function(data) {
           apiFactory.getPlaces().then(function(response) {
-            places = response.data.data;
+            places = sortPlacesByDate(response.data.data);
             resolve(places);
             broadcast("places");
           });
@@ -136,7 +159,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       apiFactory.deletePlace(place)
         .then(function(data) {
           apiFactory.getPlaces().then(function(response) {
-            places = response.data.data;
+            places = sortPlacesByDate(response.data.data);
             resolve(places);
             broadcast("places");
           });
@@ -181,7 +204,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
             trips = response.data.data;
             // Must update places too as deleting a trip will affect these
             apiFactory.getPlaces().then(function(response) {
-              places = response.data.data;
+              places = sortPlacesByDate(response.data.data);
               resolve(trips);
               broadcast("trips");
               broadcast("places");
@@ -205,7 +228,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       trips = response.data.data;
       apiFactory.getPlaces()
         .then(function(response) {
-          places = response.data.data;
+          places = sortPlacesByDate(response.data.data);
           broadcast("trips");
           broadcast("places");
         }, onErr);

@@ -6,6 +6,7 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
 
   // https://coderwall.com/p/ngisma/safe-apply-in-angular-js
   $scope.safeApply = function(fn) {
+    if(!this.$root) return;
     var phase = this.$root.$$phase;
     if(phase == '$apply' || phase == '$digest') {
       if(fn && (typeof(fn) === 'function')) {
