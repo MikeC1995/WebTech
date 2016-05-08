@@ -77,7 +77,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
           return places[adjIdx];
         }
       }
-      return {};
+      return null;
     }
   }
 

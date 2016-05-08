@@ -11,9 +11,17 @@ app.service('loadGoogleMapAPI', ['$window', '$q', 'mapApiKey', function ( $windo
     document.body.appendChild(script);
   }
 
-  // Script loaded callback, send resolve
+  // Map script loaded callback
   $window.initMap = function () {
-    deferred.resolve();
+    // Once google maps loaded, add the script tag to the DOM to load the
+    // Custom Marker class (which requires 'google')
+    var script= document.createElement('script');
+    script.type= 'text/javascript';
+    script.onload = function() {
+      deferred.resolve(); // when Custom Marker loaded, resolve
+    };
+    script.src= '/app/components/map/trip-map/custom-marker.js';
+    document.getElementsByTagName('head')[0].appendChild(script);4
   }
 
   loadScript();
