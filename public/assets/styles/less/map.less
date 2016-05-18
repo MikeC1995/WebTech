@@ -43,6 +43,11 @@
           vertical-align: top;
           transition: transform .3s ease-out;
 
+          // style if there are < 3 places
+          &.few {
+            width: 50%;
+          }
+
           &:not(.selected) {
             .place-nub .place-nub-select {
               display: none;
