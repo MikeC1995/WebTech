@@ -1,7 +1,7 @@
 <div id="map-container" ng-controller="mapController">
   <!-- Must give a div a tabindex so that it can receive focus for keydown event  -->
   <div id="galleryPanel" ng-click="showthumbs()" keydown="keydown" tabindex="0">
-    <div id="title-box">
+    <div id="title-box" ng-show="trips.length > 0">
       <dropdown-menu id="trip" items="trips" get="selected.getTrip" set="selected.setTrip"></dropdown-menu>
       <places-navigator></places-navigator>
     </div>
