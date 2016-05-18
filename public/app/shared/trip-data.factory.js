@@ -154,6 +154,23 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     });
   };
 
+  tripDataFactory.updatePlace = function(place) {
+    return new Promise(function(resolve, reject) {
+      apiFactory.updatePlace(place)
+        .then(function(data) {
+          apiFactory.getPlaces().then(function(response) {
+            places = sortPlacesByDate(response.data.data);
+            resolve(places);
+            broadcast("places");
+          });
+        }, function(error) {
+          //TODO handle error
+          console.error('Unable to add place!');
+          reject();
+        });
+    });
+  };
+
   tripDataFactory.deletePlace = function(place) {
     return new Promise(function(resolve, reject) {
       apiFactory.deletePlace(place)

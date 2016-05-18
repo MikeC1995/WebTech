@@ -1,7 +1,7 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
+trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory', '$state', function($rootScope, $scope, tripDataFactory, $state) {
   // Expose utility methods
   $scope.formatDate = Utilities.formatDate;
 
@@ -61,5 +61,9 @@ trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory',
       }, function() {
         console.error("Unable to delete !");
       });
+  }
+
+  $scope.editPlace = function(place) {
+    $state.go('trips.modal.addPlace', {place: place});
   }
 }]);

@@ -14,6 +14,9 @@ trips.config(function($stateProvider, $urlRouterProvider) {
     })
     // add place dialog
     .state("trips.modal.addPlace", {
+      params: {
+        place: null
+      },
       views: {
         'modal': { templateUrl:"/app/shared/modals/add-place/add-place.view.html" }
       }

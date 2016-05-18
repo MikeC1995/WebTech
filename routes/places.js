@@ -45,5 +45,21 @@ module.exports = {
     } else {
       return error.BadRequest(res, "place_id");
     }
+  },
+  put: function(req, res) {
+    if(req.body.trip_id === undefined) {
+      return error.BadRequest(res, 'trip_id');
+    } else if(req.body.location === undefined) {  // TODO: children of Location
+      return error.BadRequest(res, 'location');
+    } else if(req.body.from_date === undefined) {
+      return error.BadRequest(res, 'from_date');
+    } else if(req.body.to_date === undefined) {
+      return error.BadRequest(res, 'to_date');
+    }
+    Place.findOneAndUpdate({ _id: req.body._id }, req.body,
+                           { upsert: false }, function(err, place) {
+      if (err) return error.InternalServerError(res);
+      return success.Created(res, 'Place');
+    });
   }
 }

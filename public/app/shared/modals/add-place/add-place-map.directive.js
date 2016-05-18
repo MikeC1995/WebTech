@@ -42,10 +42,21 @@ modals.directive('addPlaceMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) 
             anchorPoint: new google.maps.Point(0, -29)
           });
 
+          // update map location when model changed
+          model.$render = function() {
+            if(model.$viewValue && model.$viewValue.lat && model.$viewValue.lng) {
+              $scope.map.setCenter(new google.maps.LatLng(model.$viewValue));
+              $scope.map.setZoom(14);
+              marker.setPosition(new google.maps.LatLng(model.$viewValue));
+              marker.setVisible(true);
+            }
+          }
+
           // When a place is selected
           autocomplete.addListener('place_changed', function() {
             marker.setVisible(false);
             var place = autocomplete.getPlace();
+            if(!place) { return; }
             if (!place.geometry) {
               window.alert("Autocomplete's returned place contains no geometry");
               return;
@@ -56,15 +67,8 @@ modals.directive('addPlaceMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) 
               $scope.map.fitBounds(place.geometry.viewport);
             } else {
               $scope.map.setCenter(place.geometry.location);
-              $scope.map.setZoom(17);
+              $scope.map.setZoom(14);
             }
-            marker.setIcon(/** @type {google.maps.Icon} */({
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(35, 35)
-            }));
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 
@@ -80,6 +84,8 @@ modals.directive('addPlaceMap', ['loadGoogleMapAPI', function(loadGoogleMapAPI) 
               });
             });
           });
+
+          google.maps.event.trigger(autocomplete, "place_changed");
         }
       }
   };
