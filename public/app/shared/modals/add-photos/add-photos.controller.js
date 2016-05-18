@@ -3,7 +3,7 @@
 var modals = angular.module('modals');
 modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$state', function($rootScope, $scope, Upload, $state) {
   $scope.placeName = $scope.$parent.selected.getPlace().location.name;
-  $scope.tripName = $scope.$parent.selected.getPlace().name;
+  $scope.tripName = $scope.$parent.selected.getTrip().name;
   $scope.files = [];
   $scope.progress = 0;
   $scope.uploading = false; // indicates images uploading
