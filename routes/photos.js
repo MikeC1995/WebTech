@@ -8,6 +8,9 @@ var Photo = require('../models/photo.js');
 var deleter = require('../helpers/delete.js');
 var aws = require('../config/aws.js');
 var _async = require('async');
+var gm = require('gm').subClass({
+    imageMagick: true
+});
 
 module.exports = {
   get:  function(req, res) {
@@ -47,10 +50,11 @@ module.exports = {
     function sendUrls(photos) {
       var response = [];
       for(var i = 0; i < photos.length; i++) {
-        var params = { Bucket: aws.s3bucket, Key: photos[i].key };
-        var url = aws.s3.getSignedUrl('getObject', params);
+        var url = aws.s3.getSignedUrl('getObject', { Bucket: aws.imagesBucket, Key: photos[i].key });
+        var thumbUrl = aws.s3.getSignedUrl('getObject', { Bucket: aws.thumbnailsBucket, Key: "resized-" + photos[i].key });
         var photo = {
           url: url,
+          thumbUrl: thumbUrl,
           _id: photos[i]._id
         }
         response.push(photo);
@@ -71,7 +75,7 @@ module.exports = {
 
         // Save to S3
         var params = {
-          Bucket: aws.s3bucket,
+          Bucket: aws.imagesBucket,
           Key: filename,
           Body: file.buffer
         };

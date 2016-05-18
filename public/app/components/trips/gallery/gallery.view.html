@@ -11,6 +11,6 @@
   </div>
   <div class="thumbnails" when-scrolled="loadMore()">
     <div class="thumbnail" ng-class="{selected: isSelectedPhoto(photo)}" ng-click="toggleSelectPhoto(photo)"
-        ng-repeat="photo in photos" style="background-image: url('{{photo.url}}'), url('/assets/images/icons/spin.gif');"></div>
+        ng-repeat="photo in photos" style="background-image: url('{{photo.thumbUrl}}'), url('/assets/images/icons/spin.gif');"></div>
   </div>
 </div>

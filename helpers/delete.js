@@ -30,13 +30,13 @@ function deletePhotos(photos, resolve, reject) {
 
         // Delete from S3
         var params = {
-          Bucket: aws.s3bucket,
+          Bucket: aws.imagesBucket,
           Key: photo.key
         };
         aws.s3.deleteObject(params, function(aws_err) {
           if(aws_err) {
             callback(aws_err);
-            console.log("Error deleting S3 data: ", err);
+            console.log("Error deleting S3 data: ", aws_err);
           } else {
             // Successfully deleted from S3
             console.log("Successfully deleted data from myBucket/myKey");
