@@ -3,7 +3,7 @@
   <span class="subtitle">Adding to <span>{{placeName}}</span> on <span>{{tripName}}</span></span>
   <form name="add-photos-form" ng-submit="uploadFiles()" tabindex="0">
     <div class="content">
-      <div class="drag-drop" ng-show="!uploading" ngf-drop="setSelectedFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true" accept="image/*">
+      <div class="drag-drop" ng-show="!uploading && !processing" ngf-drop="setSelectedFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true" accept="image/*">
         <img  ng-show="files.length == 0" src="/assets/images/icons/black/gallery.png">
         <span ng-show="files.length == 0">Drag and Drop Photos Here</span>
         <span ng-show="files.length != 0" id="selected-files-number">{{files.length}}</span><br>
@@ -12,11 +12,15 @@
       <div class="progress" ng-show="uploading">
         <div class="progress-bar" style="width:{{progress}}%">{{progress}}%</div>
       </div>
+      <div class="process" ng-show="processing">
+        <img src="/assets/images/icons/spin.gif">
+        <span>Processing...</span>
+      </div>
     </div>
     <a class="choose-from-file" ng-show="!uploading" ngf-select="setSelectedFiles($files)" multiple accept="image/*">Or choose from file...</a>
     <div class="buttons">
-      <button type="submit" class="material-button-raised" name="add-photos-form" ng-disabled="uploading || files.length == 0">UPLOAD</button>
-      <button ui-sref="trips" ng-click="cancel()" class="material-button-flat" name="add-photos-form">CANCEL</button>
+      <button type="submit" class="material-button-raised" name="add-photos-form" ng-disabled="uploading || processing || files.length == 0">UPLOAD</button>
+      <button ui-sref="trips" ng-click="cancel()" class="material-button-flat" ng-disabled="processing" name="add-photos-form">CANCEL</button>
     </div>
   </form>
 </div>

@@ -6,8 +6,9 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$st
   $scope.tripName = $scope.$parent.selected.getPlace().name;
   $scope.files = [];
   $scope.progress = 0;
-  $scope.uploading = false;
+  $scope.uploading = false; // indicates images uploading
   $scope.uploadObj = {};
+  $scope.processing = false;  // indicates server processing the images
 
   $scope.setSelectedFiles = function (files) {
     $scope.files = files;
@@ -35,6 +36,7 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$st
   function success(response) {
     $rootScope.$broadcast('uploaded-photos', { place: $scope.$parent.selected.getPlace(), number: $scope.files.length });
     $scope.uploading = false;
+    $scope.processing = false;
     $scope.files = [];
     $state.go('trips');
     alert("Successfully uploaded photos!");
@@ -42,6 +44,7 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$st
 
   function error(response) {
     $scope.uploading = false;
+    $scope.processing = false;
     $scope.files = [];
     // TODO this is called when cancelled too.
     // TODO pretty error
@@ -50,5 +53,9 @@ modals.controller('addPhotosController', ['$rootScope', '$scope', 'Upload', '$st
 
   function progress(evt) {
     $scope.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+    if(Math.round($scope.progress) == 100) {
+      $scope.uploading = false;
+      $scope.processing = true;
+    }
   }
 }]);
