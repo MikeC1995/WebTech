@@ -15,7 +15,8 @@ module.exports = function(app) {
   router.route('/trips')
     .get(trips.get)
     .post(trips.post)
-    .delete(trips.delete);
+    .delete(trips.delete)
+    .put(trips.put);
 
   var places = require('./routes/places.js');
   router.route('/trips/places')

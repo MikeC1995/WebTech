@@ -31,5 +31,19 @@ module.exports = {
     } else {
       deleter.trip(res, req.query.trip_id);
     }
+  },
+  put: function(req, res) {
+    if(req.body.trip_id === undefined) {
+      return error.BadRequest(res, 'trip_id');
+    }
+    if(req.body.name === undefined) {
+      return error.BadRequest(res, 'name');
+    }
+    // Rename trip
+    Trip.findOneAndUpdate({ _id: req.body.trip_id }, { name: req.body.name },
+                          { upsert: false }, function(err, trip) {
+        if (err) return error.InternalServerError(res);
+        return success.OK(res);
+    });
   }
 }
