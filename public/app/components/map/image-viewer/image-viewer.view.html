@@ -10,6 +10,6 @@
     <img id="left" ng-click="prevPhoto()" src="/assets/images/icons/white/arrow-left.png">
     <img id="right" ng-click="nextPhoto()" src="/assets/images/icons/white/arrow-right.png">
     <div id="image-cover"></div>
-    <div id="image" style="background-image: url('{{photos[selectedPhotoIndex].url}}');"></div>
+    <div id="image" style="background-image: url('{{photos[selectedPhotoIndex].url}}'), url('{{photos[selectedPhotoIndex].thumbUrl}}');"></div>
   </div>
 </div>
