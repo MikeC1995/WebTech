@@ -221,6 +221,23 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     });
   }
 
+  tripDataFactory.updateTrip = function(trip) {
+    trip.name = trip.name.toUpperCase();
+    return new Promise(function(resolve, reject) {
+      apiFactory.updateTrip(trip).then(function() {
+          apiFactory.getTrips().then(function(response) {
+            trips = response.data.data;
+            resolve(trips);
+            broadcast("trips");
+          });
+        }, function(error) {
+          // TODO: handle error
+          console.error('Unable to delete trip!');
+          reject();
+        });
+    });
+  }
+
   // Initialise factory and return tripDataFactory if successful
   function onErr() { console.error("Unable to initialise tripDataFactory");}
   apiFactory.getTrips()

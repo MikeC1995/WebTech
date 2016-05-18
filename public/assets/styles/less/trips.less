@@ -57,22 +57,27 @@
       form {
         display: inline;
         position: relative;
-        left: -10px;
 
-        .add-trip-icon {
-          // parent line-height: 20px, img vertical-align: middle to vert center
-          position: relative;
-          left: 25px;
-          vertical-align: middle;
-          height: 15px;
-          width: auto;
-          cursor: pointer;
-          opacity: 0.5;
+        &[name="addTripForm"] {
+          .add-trip-icon {
+            // parent line-height: 20px, img vertical-align: middle to vert center
+            position: relative;
+            left: 25px;
+            vertical-align: middle;
+            height: 15px;
+            width: auto;
+            cursor: pointer;
+            opacity: 0.5;
+          }
+          input {
+            padding-left: 30px;
+          }
         }
+
         input {
           height: 30px;
           box-sizing: border-box;
-          padding: 5px 5px 5px 30px;
+          padding: 5px;
           font-family: 'Open Sans', sans-serif;
           font-size: 15px;
           text-transform: uppercase;

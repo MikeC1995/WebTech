@@ -2,11 +2,14 @@
   <!-- Trip tabs -->
   <li class="trip-item" ng-class="{ selected: isSelected(trip) }" ng-click="select(trip)" ng-repeat="trip in trips"
       data-context-menu="/app/shared/context-menus/trips-contextmenu.view.html" ng-model="trip">
-    <a href="">{{ trip.name }}</a>
+    <a href="" ng-hide="renameOpen(trip)">{{ trip.name }}</a>
+    <form name="renameTripForm" ng-submit="updateTrip(trip)" ng-show="renameOpen(trip)" >
+      <input type="text" ng-model="trip.name" placeholder="ENTER A NEW NAME" ng-blur="stopRenaming()" required></input>
+    </form>
   </li>
 
-  <form ng-submit="submit()">
+  <form name="addTripForm" ng-submit="addNewTrip()">
     <img class="add-trip-icon" src="/assets/images/icons/black/add.png">
-    <input type="text" ng-model="tripName" placeholder="ADD A TRIP"></input>
+    <input type="text" ng-model="newTripName" placeholder="ADD A TRIP" required></input>
   </form>
 </ul>

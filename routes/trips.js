@@ -33,14 +33,17 @@ module.exports = {
     }
   },
   put: function(req, res) {
-    if(req.body.trip_id === undefined) {
+    if(req.body._id === undefined) {
       return error.BadRequest(res, 'trip_id');
     }
     if(req.body.name === undefined) {
       return error.BadRequest(res, 'name');
     }
+    if(req.body.colour === undefined) {
+      return error.BadRequest(res, 'colour');
+    }
     // Rename trip
-    Trip.findOneAndUpdate({ _id: req.body.trip_id }, { name: req.body.name },
+    Trip.findOneAndUpdate({ _id: req.body._id }, req.body,
                           { upsert: false }, function(err, trip) {
         if (err) return error.InternalServerError(res);
         return success.OK(res);

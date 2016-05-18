@@ -2,9 +2,11 @@
 
 var trips = angular.module('trips');
 trips.controller('tripTabsController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
-  $scope.tripName = ""; // the name of the new trip to add
+  $scope.newTripName = ""; // the name of the new trip to add
 
   $scope.trips = [];
+
+  $scope.tripToRename = {};
 
   // Fetching and updating trips
   function updateTrips() {
@@ -39,8 +41,8 @@ trips.controller('tripTabsController', ['$rootScope', '$scope', 'tripDataFactory
       });
   }
 
-  $scope.submit = function() {
-    tripDataFactory.addTrip($scope.tripName)
+  $scope.addNewTrip = function() {
+    tripDataFactory.addTrip($scope.newTripName)
       .then(function(trips) {
         $scope.trips = trips;
         $scope.$apply();
@@ -48,7 +50,33 @@ trips.controller('tripTabsController', ['$rootScope', '$scope', 'tripDataFactory
       }, function() {
         console.error("Unable to add trip!");
       });
-    $scope.tripName = '';
+    $scope.newTripName = '';
+  }
+
+  $scope.stopRenaming = function () {
+    $scope.tripToRename = {};
+  }
+  $scope.editName = function(trip) {
+    $scope.tripToRename = trip;
+  }
+
+  $scope.renameOpen = function(trip) {
+    if($scope.tripToRename._id == trip._id) {
+      return true;
+    }
+    return false;
+  }
+
+  $scope.updateTrip = function(trip) {
+    tripDataFactory.updateTrip(trip)
+      .then(function(trips) {
+        $scope.trips = trips;
+        $scope.$apply();
+        $scope.stopRenaming();
+        console.log("Renamed!");
+      }, function() {
+        console.error("Unable to rename!");
+      });
   }
 
 }]);

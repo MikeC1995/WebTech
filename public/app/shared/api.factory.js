@@ -17,6 +17,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.delete(urlBase + '/trips?trip_id=' + trip._id);
   };
 
+  apiFactory.updateTrip = function(trip) {
+    return $http.put(urlBase + '/trips', trip);
+  };
+
   apiFactory.getPlaces = function() {
     return $http.get(urlBase + '/trips/places');
   }
