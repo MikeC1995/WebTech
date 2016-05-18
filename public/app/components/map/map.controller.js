@@ -2,6 +2,9 @@
 
 var map = angular.module('map');
 map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'imageFactory', function($rootScope, $scope, tripDataFactory, imageFactory) {
+  // Expose utility methods
+  $scope.formatDate = Utilities.formatDate;
+
   $scope.selected = new tripDataFactory.Selected();
 
   // https://coderwall.com/p/ngisma/safe-apply-in-angular-js
@@ -132,12 +135,6 @@ map.controller('mapController', ['$rootScope', '$scope', 'tripDataFactory', 'ima
         $scope.incrementSelectedPlace();
         break;
     }
-  }
-
-  // format and ISO date into dd/mm/yyyy
-  $scope.formatDate = function(iso_date) {
-    var date = new Date(iso_date);
-    return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
   }
 
   // Load first set of images for a place. More will be loaded on scroll.

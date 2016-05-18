@@ -148,16 +148,12 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
                   }
                 }
                 if(!trips) return;
-                // format and ISO date into dd/mm/yyyy
-                function formatDate(iso_date) {
-                  var date = new Date(iso_date);
-                  return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
-                }
+
                 var infoWindowContent =
                   '<div class="map-infowindow"> \
                     <span class="placename">' + marker.args.place.location.name + '</span> \
                     <span class="tripname">' + trip.name + '</span> \
-                    <span class="dates">' + formatDate(marker.args.place.from_date) + ' - ' + formatDate(marker.args.place.to_date) + '</span> \
+                    <span class="dates">' + Utilities.formatDate(marker.args.place.from_date) + ' - ' + Utilities.formatDate(marker.args.place.to_date) + '</span> \
                   </div>';
                 infowindow.setContent(infoWindowContent);
                 infowindow.open($scope.map, marker);

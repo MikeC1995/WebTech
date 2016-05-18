@@ -1,5 +1,14 @@
 'use strict';
 
+// Global utility functions (if this gets large, put it in a service)
+var Utilities = Utilities || {};
+
+// format and ISO date into dd/mm/yyyy
+Utilities.formatDate = function(iso_date) {
+  var date = new Date(iso_date);
+  return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+}
+
 // The root application module for this app
 var app = angular.module('app', ['ui.router', 'map', 'trips', 'modals', 'ngContextMenu', 'ngAnimate']);
 

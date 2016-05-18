@@ -55,15 +55,17 @@
       label {
         cursor: pointer;
         .place-text {
-          // Required for proper alignment with nodes
-          position: absolute;
           font-size: 16px;
-
           // bold title for hover on label
           &:hover {
             font-weight: 600;
           }
         }
+        .place-date {
+          font-size: 12px;
+          font-style: italic;
+        }
+
         .add-place {
 
           color: @accent;

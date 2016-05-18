@@ -8,6 +8,7 @@
         <div class="nub-select" style="background-color: {{ selected.getTrip().colour }};"></div>
       </span>
       <span class="place-text">{{ place.location.name }}</span>
+      <span class="place-date">{{ formatDate(place.from_date)}} - {{formatDate(place.to_date) }}</span>
     </label>
     <!--<div class="node-content" ng-show="isSelected($index)"></div>-->
     <gallery place-id="place._id" class="node-content" ng-show="isSelected(place)"></gallery>

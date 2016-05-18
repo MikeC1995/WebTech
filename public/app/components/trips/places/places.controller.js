@@ -2,6 +2,8 @@
 
 var trips = angular.module('trips');
 trips.controller('placesController', ['$rootScope', '$scope', 'tripDataFactory', function($rootScope, $scope, tripDataFactory) {
+  // Expose utility methods
+  $scope.formatDate = Utilities.formatDate;
 
   $scope.places = []; // full places list
   $scope.filteredPlaces = []; // places filtered according to current trip
