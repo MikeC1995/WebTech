@@ -17,9 +17,6 @@ trips.controller('galleryController', ['$scope', 'imageFactory', '$state', funct
     }
     $scope.selectedPhotos.push(photo);
   }
-  $scope.selectAll = function() {
-    $scope.selectedPhotos = $scope.photos;
-  }
   $scope.deselectAll = function() {
     $scope.selectedPhotos = [];
   }
@@ -66,6 +63,10 @@ trips.controller('galleryController', ['$scope', 'imageFactory', '$state', funct
 
   // Delete the currently selected photos
   $scope.deletePhotos = function() {
+    if($scope.selectedPhotos.length > 50) {
+      alert("Cannot delete more than 50 photos at once!");
+      return;
+    }
     imageFactory.deletePhotos($scope.selectedPhotos, function() {
       // reset gallery by reloading photos object
       loadInitial();
