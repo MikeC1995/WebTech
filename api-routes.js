@@ -10,6 +10,10 @@ module.exports = function(app) {
     res.send("WOOO! API!!");
   });
 
+  var users = require('./routes/users.js');
+  router.route('/users')
+    .get(users.get);
+
   // Register routes
   var trips = require('./routes/trips.js');
   router.route('/trips')

@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-  facebookID: Number,
+  facebookID: String,
+  accessToken: String,
   name: String,
   email: String,
   created: Date,

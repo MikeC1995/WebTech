@@ -5,6 +5,13 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
   var urlBase = '/api';
   var apiFactory = {};
 
+  apiFactory.getUser = function(user_id) {
+    if(user_id) {
+      return $http.get(urlBase + '/users?user_id=' + user_id);
+    }
+    return $http.get(urlBase + '/users');
+  }
+
   apiFactory.getTrips = function () {
     return $http.get(urlBase + '/trips');
   };

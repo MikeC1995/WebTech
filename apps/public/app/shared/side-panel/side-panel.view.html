@@ -1,7 +1,7 @@
 <div id="side-panel" ng-controller="sidePanelController" ng-class="{ open: isSidePanelOpen }">
   <div id="menu">
-    <img id="profile-picture" src="/assets/images/tmp/profile_picture.jpg">
-    <span id="profile-name">Michael Christensen</span>
+    <div id="profile-picture" style="background-image: url('{{profilePicture()}}')"></div>
+    <span id="profile-name">{{ user().name }}</span>
     <img id="profile-settings-expand" src="/assets/images/icons/white/expand.png">
 
     <ul id="menu-items">

@@ -10,7 +10,7 @@ module.exports = function(passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-      done(null, user.id);
+      done(null, user._id);
   });
 
   // used to deserialize the user
@@ -33,7 +33,11 @@ module.exports = function(passport) {
 
           // user has account
           if(user) {
-            return done(null, user);
+            User.findOneAndUpdate({ _id: user._id }, {
+              accessToken: accessToken
+            }, { new: true }, function(err, _user) {
+              return done(null, _user);
+            });
           } else {
               // create new user
               var newUser = new User({
@@ -41,7 +45,8 @@ module.exports = function(passport) {
                 name: profile.displayName || profile.name.givenName + ' ' + profile.name.familyName,
                 email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : undefined,
                 created: Date.now(),
-                type: "standard"
+                type: "standard",
+                accessToken: accessToken
               });
 
               newUser.save(function(err) {
