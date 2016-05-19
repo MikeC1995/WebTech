@@ -4,5 +4,4 @@
 var app = angular.module('authApp', []);
 
 app.controller('authController', ['$rootScope', '$scope', function($rootScope, $scope) {
-  console.log("hi!");
 }]);
