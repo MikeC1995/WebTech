@@ -17,14 +17,15 @@ module.exports = function(grunt) {
         },
         files: {
           // destination file and source file
-          "public/assets/styles/css/app.css": "public/assets/styles/less/app.less"
+          "apps/public/assets/styles/css/app.css": "apps/public/assets/styles/less/app.less",
+          "apps/auth/assets/styles/css/app.css": "apps/auth/assets/styles/less/app.less"
         }
       }
     },
     // FILE WATCHING
     watch: {
       styles: {
-        files: ['public/assets/styles/less/**/*.less'], // which files to watch
+        files: ['apps/public/assets/styles/less/**/*.less', 'apps/auth/assets/styles/less/**/*.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true

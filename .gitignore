@@ -1,3 +1,5 @@
 prepros.cfg
 *.pptx
 *.txt
+node_modules/
+bower_components/

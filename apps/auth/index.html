@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <base href="/">
+    <title>Tripmappr | Login</title>
+    <meta name="description" content="Login to Tripmappr">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Open Graph tags (for e.g. proper display when link shared on Facebook) -->
+    <meta name="og:type" property="og:type" content="website" />
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="/auth/assets/images/icons/favicon.ico">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/auth/assets/styles/css/app.css">
+  </head>
+
+  <body ng-app="authApp" ng-controller="authController">
+    <div id="container">
+      <img src="/auth/assets/images/logo-white.png">
+      <div id="box">
+        <h2>Login with Facebook.</h2>
+        <a href="/auth/facebook">
+          <div>
+            <img src="/auth/assets/images/facebook.png">
+          </div>
+        </a>
+        <h3>We promise to never ever post on your behalf.</h3>
+      </div>
+    </div>
+
+    <!-- Dependencies -->
+    <script src="/npm_scripts/jquery/dist/jquery.min.js"></script>
+    <script src="/npm_scripts/angular/angular.min.js"></script>
+
+    <!-- ROOT -->
+    <script src="/auth/app/app.js"></script>
+
+  </body>
+</html>
