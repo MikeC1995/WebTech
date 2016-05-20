@@ -37,9 +37,11 @@ module.exports = function(app) {
   var places = require('./routes/places.js');
   router.route('/places')
     .get(places.get)
-    .post(places.post)
-    .delete(places.delete)
-    .put(places.put);
+    .post(places.post);
+  router.route('/places/:id')
+    .get(places.getById)
+    .delete(places.deleteById)
+    .put(places.updateById);
 
   // Use multer middleware to attach 'files' object to request body
   var photos = require('./routes/photos.js');

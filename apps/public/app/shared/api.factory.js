@@ -41,11 +41,11 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
   }
 
   apiFactory.updatePlace = function(place) {
-    return $http.put(urlBase + '/places', place);
+    return $http.put(urlBase + '/places/' + place._id, place);
   }
 
   apiFactory.deletePlace = function(place) {
-    return $http.delete(urlBase + '/places?place_id=' + place._id);
+    return $http.delete(urlBase + '/places/' + place._id);
   }
 
   apiFactory.getPhotos = function(params) {

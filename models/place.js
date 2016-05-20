@@ -9,6 +9,7 @@ var Location = new mongoose.Schema({
 });
 
 var placeSchema = new mongoose.Schema({
+  user_id: mongoose.Schema.Types.ObjectId,
   trip_id: mongoose.Schema.Types.ObjectId,
   location: Location,
   from_date: Date,

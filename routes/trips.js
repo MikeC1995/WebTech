@@ -25,9 +25,9 @@ module.exports = {
     if(req.params.id === undefined) {
       return error.BadRequest(res, 'id');
     } else {
-      Trip.findById(req.params.id, function(err, trips) {
+      Trip.findById(req.params.id, function(err, trip) {
         if(err) return error.InternalServerError(res);
-        return success.OK(res, trips);
+        return success.OK(res, trip);
       });
     }
   },
@@ -65,9 +65,6 @@ module.exports = {
     if(req.params.id === undefined) {
       return error.BadRequest(res, 'id');
     }
-    if(req.body.user_id === undefined) {
-      return error.BadRequest(res, 'user_id');
-    }
     if(req.body.name === undefined) {
       return error.BadRequest(res, 'name');
     }
@@ -75,8 +72,12 @@ module.exports = {
       return error.BadRequest(res, 'colour');
     }
     // Rename trip
-    Trip.findOneAndUpdate({ _id: req.params.id }, req.body,
-                          { upsert: false }, function(err, trip) {
+    Trip.findOneAndUpdate({
+      _id: req.params.id
+    }, {
+      name: req.body.name,
+      colour: req.body.colour
+    }, { upsert: false }, function(err, trip) {
         if (err) return error.InternalServerError(res);
         return success.OK(res);
     });
