@@ -4,10 +4,18 @@ module.exports = function(app) {
   var express = require('express');
   var multer = require('multer');
   var router = express.Router();
+  var success = require('./responses/successes.js');
 
   // Test route
   router.route('/').get(function(req, res) {
     res.send("WOOO! API!!");
+  });
+
+  // Logout
+  router.route('/logout').get(function(req, res) {
+    req.session.destroy();
+    req.logout();
+    return success.OK(res);
   });
 
   var users = require('./routes/users.js');

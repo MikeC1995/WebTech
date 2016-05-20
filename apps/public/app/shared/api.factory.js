@@ -5,6 +5,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
   var urlBase = '/api';
   var apiFactory = {};
 
+  apiFactory.logout = function() {
+    return $http.get(urlBase + '/logout');
+  }
+
   apiFactory.getUser = function(user_id) {
     if(user_id) {
       return $http.get(urlBase + '/users?user_id=' + user_id);

@@ -2,7 +2,7 @@
 
 var app = angular.module('app');
 
-app.factory('authFactory', ['apiFactory', function(apiFactory) {
+app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $window) {
   var authFactory = {};
 
   var user;
@@ -13,7 +13,11 @@ app.factory('authFactory', ['apiFactory', function(apiFactory) {
   });
 
   authFactory.logout = function() {
-    console.log("logout");
+    apiFactory.logout().then(function() {
+      $window.location.reload();
+    }, function(err) {
+      $window.location.reload();
+    });
   }
   authFactory.user = function() {
     return user;

@@ -2,7 +2,7 @@
   <div id="menu">
     <div id="profile-picture" style="background-image: url('{{profilePicture()}}')"></div>
     <span id="profile-name">{{ user().name }}</span>
-    <img id="profile-settings-expand" src="/assets/images/icons/white/expand.png">
+    <span id="logout" ng-click="logout()">Logout</span>
 
     <ul id="menu-items">
       <li ui-sref-active="selected">
