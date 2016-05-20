@@ -9,6 +9,7 @@ app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $windo
   apiFactory.getUser().then(function(_user) {
     user = _user.data.data;
   }, function() {
+    // TODO: handle error
     console.log("Error getting user!");
   });
 

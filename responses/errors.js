@@ -12,6 +12,13 @@ module.exports.BadRequest = function(res, missing) {
   res.send(error);
 }
 
+module.exports.Forbidden = function(res, message) {
+  res.statusCode = 403;
+  var error = {};
+  error.message = message || 'Forbidden. You need to log in.';
+  res.send(error);
+}
+
 module.exports.NotFound = function(res, message) {
   res.statusCode = 404;
   var error = {};

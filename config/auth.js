@@ -1,3 +1,5 @@
+'use strict';
+
 var User = require('../models/user.js');
 var FacebookStrategy = require('passport-facebook').Strategy;
 

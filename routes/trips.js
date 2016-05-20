@@ -7,34 +7,66 @@ var deleter = require('../helpers/delete.js');
 
 module.exports = {
   get:  function(req, res) {
-    Trip.find({}, function(err, trips) {
+    // TODO: ensure allowed to return this user's data
+    var uid;
+    if(req.query.user_id !== undefined) {
+      uid = req.query.user_id;
+    } else if(req.isAuthenticated() && req.user._id !== undefined) {
+      uid = req.user._id;
+    }
+
+    Trip.find({ user_id: uid }, function(err, trips) {
       if(err) return error.InternalServerError(res);
       return success.OK(res, trips);
     });
   },
+  getById: function(req, res) {
+    // TODO: ensure user allowed to see this trip
+    if(req.params.id === undefined) {
+      return error.BadRequest(res, 'id');
+    } else {
+      Trip.findById(req.params.id, function(err, trips) {
+        if(err) return error.InternalServerError(res);
+        return success.OK(res, trips);
+      });
+    }
+  },
   post: function(req, res) {
+    if(!req.isAuthenticated() || req.user._id === undefined) {
+      return error.Forbidden(res);
+    }
+
     if(req.body.name === undefined) {
       return error.BadRequest(res, 'name');
     }
     if(req.body.colour === undefined) {
       return error.BadRequest(res, 'colour');
     }
-    var t = new Trip({ name: req.body.name, colour: req.body.colour });
+    var t = new Trip({
+      user_id: req.user._id,
+      name: req.body.name,
+      colour: req.body.colour
+    });
     t.save(function(err) {
       if (err) return error.InternalServerError(res);
       return success.Created(res, 'Trip');
     });
   },
-  delete: function(req, res) {
-    if(req.query.trip_id === undefined) {
-      return error.BadRequest(res, 'trip_id');
+  deleteById: function(req, res) {
+    // TODO: ensure user allowed to delete this trip
+    if(req.params.id === undefined) {
+      return error.BadRequest(res, 'id');
     } else {
-      deleter.trip(res, req.query.trip_id);
+      deleter.trip(res, req.params.id);
     }
   },
-  put: function(req, res) {
-    if(req.body._id === undefined) {
-      return error.BadRequest(res, 'trip_id');
+  updateById: function(req, res) {
+    // TODO: ensure user allowed to update this trip
+    if(req.params.id === undefined) {
+      return error.BadRequest(res, 'id');
+    }
+    if(req.body.user_id === undefined) {
+      return error.BadRequest(res, 'user_id');
     }
     if(req.body.name === undefined) {
       return error.BadRequest(res, 'name');
@@ -43,7 +75,7 @@ module.exports = {
       return error.BadRequest(res, 'colour');
     }
     // Rename trip
-    Trip.findOneAndUpdate({ _id: req.body._id }, req.body,
+    Trip.findOneAndUpdate({ _id: req.params.id }, req.body,
                           { upsert: false }, function(err, trip) {
         if (err) return error.InternalServerError(res);
         return success.OK(res);

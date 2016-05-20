@@ -1,37 +1,41 @@
 'use strict';
 
-module.exports = function(app) {
-  var express = require('express');
-  var multer = require('multer');
-  var router = express.Router();
-  var success = require('./responses/successes.js');
+var express = require('express');
+var multer = require('multer');
+var router = express.Router();
+var success = require('./responses/successes.js');
 
-  // Test route
+module.exports = function(app) {
   router.route('/').get(function(req, res) {
-    res.send("WOOO! API!!");
+    res.send("Welcome to the Tripmappr API!");
   });
 
-  // Logout
+  // Logout by destroying session
   router.route('/logout').get(function(req, res) {
     req.session.destroy();
     req.logout();
     return success.OK(res);
   });
 
+  // Get user data
   var users = require('./routes/users.js');
-  router.route('/users')
-    .get(users.get);
+  router.route('/users/me')
+    .get(users.getMe);        // Get the authenticated user
+  router.route('/users/:id')
+    .get(users.getById);      // Get a specific user's data
 
   // Register routes
   var trips = require('./routes/trips.js');
   router.route('/trips')
     .get(trips.get)
-    .post(trips.post)
-    .delete(trips.delete)
-    .put(trips.put);
+    .post(trips.post);
+  router.route('/trips/:id')
+    .get(trips.getById)
+    .delete(trips.deleteById)
+    .put(trips.updateById);
 
   var places = require('./routes/places.js');
-  router.route('/trips/places')
+  router.route('/places')
     .get(places.get)
     .post(places.post)
     .delete(places.delete)
