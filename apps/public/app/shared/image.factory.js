@@ -1,7 +1,7 @@
 'use strict';
 
 var api = angular.module('api');
-api.factory('imageFactory', ['$rootScope', 'apiFactory', function imageFactory($rootScope, apiFactory) {
+api.factory('imageFactory', ['$rootScope', 'apiFactory', '$q', function imageFactory($rootScope, apiFactory, $q) {
   var imageFactory = {};
 
   var photos = [];
@@ -26,14 +26,17 @@ api.factory('imageFactory', ['$rootScope', 'apiFactory', function imageFactory($
 
   imageFactory.deletePhotos = function(photos, callback) {
     if(photos.length) {
-      console.log(photos);
-      apiFactory.deletePhotos(photos)
-        .then(function(response) {
-          callback();
-        }, function(error) {
-          // TODO: handle connection error
-          console.log("error");
-        });
+      var deletePromises = [];
+      for(var i = 0; i < photos.length; i++) {
+        deletePromises.push(apiFactory.deletePhoto(photos[i]._id));
+      }
+
+      $q.all(deletePromises).then(function() {
+        callback();
+      }, function(error) {
+        // TODO: handle connection error
+        console.log("error");
+      });
     }
   }
 

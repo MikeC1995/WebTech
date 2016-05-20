@@ -56,8 +56,8 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.get(urlBase + qstring);
   }
 
-  apiFactory.deletePhotos = function(photos) {
-    return $http.post(urlBase + '/photos/delete', photos);
+  apiFactory.deletePhoto = function(photo_id) {
+    return $http.delete(urlBase + '/photos/' + photo_id);
   }
 
   return apiFactory;

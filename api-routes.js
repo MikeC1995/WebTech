@@ -45,17 +45,21 @@ module.exports = function(app) {
 
   // Use multer middleware to attach 'files' object to request body
   var photos = require('./routes/photos.js');
-  var attach = multer({limits: {fileSize:10*1024*1024}}).any();
+  var attach = multer({ limits: { fileSize: 10*1024*1024 } }).any();
   router.use('/photos', attach);
   router.route('/photos')
     .get(photos.get)
     .post(photos.post);
+  router.route('/photos/:id')
+    .get(photos.getById)
+    .delete(photos.deleteById);
 
+  // TODO: implement DeleteById, and Delete using array of ids
   // Can't use HTTP verb DELETE as body required to specify resources to delete.
   // This could be too long to specify in the URI itself.
   // Instead, using a seperate end point with the POST verb.
-  router.route('/photos/delete')
-    .post(photos.delete);
+  //router.route('/photos/delete')
+  //  .post(photos.delete);
 
   return router;
 }

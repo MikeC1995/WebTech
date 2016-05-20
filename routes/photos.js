@@ -17,13 +17,13 @@ module.exports = {
     if(req.query.place_id === undefined) {
       return error.BadRequest(res, 'place_id');
     }
+
+    // TODO: ensure user is allowed to get photos for this place
     var params = {
       place_id: req.query.place_id
     };
-
     // default limit is 50
     var limit = 50;
-
     // If specified, limit number of returned results
     if(req.query.limit !== undefined) {
       limit = req.query.limit;
@@ -62,7 +62,26 @@ module.exports = {
       return success.OK(res, response);
     }
   },
+  getById: function(req, res) {
+    // TODO: ensure user allowed to get this photo
+    if(req.params.id === undefined) {
+      return error.BadRequest(res, 'id');
+    } else {
+      Photo.findById(req.params.id, function(err, photo) {
+        if(err) return error.InternalServerError(res);
+        return success.OK(res, photo);
+      });
+    }
+  },
   post: function(req, res) {
+    // TODO: ensure user owns the place this photo is being posted to
+    if(!req.isAuthenticated() || req.user._id === undefined) {
+      return error.Forbidden(res);
+    }
+    if(req.body.place_id === undefined) {
+      return error.BadRequest(res, 'place_id');
+    }
+
     var calls = [];
     // Upload each file to AWS S3 and store filename in db
     req.files.forEach(function(file) {
@@ -87,6 +106,7 @@ module.exports = {
             console.log("Successfully uploaded data to myBucket/myKey");
             // Save the photo reference to DB
             var p = new Photo({
+              user_id: req.user._id,
               place_id: req.body.place_id,
               key: filename,
               timestamp: timestamp
@@ -109,16 +129,16 @@ module.exports = {
       if(err) {
         return error.InternalServerError(res, "Unable to add photos");
       } else {
-        return success.Created(res, "photos");
+        return success.Created(res, "Photos");
       }
     });
   },
-  delete: function(req, res) {
-    // Photos array should be attached to request as body
-    if(req.body !== undefined) {
-      deleter.photos(res, req.body);
+  deleteById: function(req, res) {
+    // TODO: ensure the user is allowed to delete this photo
+    if(req.params.id === undefined) {
+      return error.BadRequest(res, 'id');
     } else {
-      return error.BadRequest(res, "body");
+      deleter.photo(res, req.params.id);
     }
   }
 }

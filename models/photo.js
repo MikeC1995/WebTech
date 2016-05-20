@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Place = require('./place.js');
 
 var photoSchema = new mongoose.Schema({
+  user_id: mongoose.Schema.Types.ObjectId,
   place_id: mongoose.Schema.Types.ObjectId,
   key: String,
   timestamp: Date
