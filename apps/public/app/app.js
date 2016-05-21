@@ -87,10 +87,19 @@ app.controller('appController', ['$rootScope', '$scope', '$state', 'userFactory'
   }
   $rootScope.$on('$stateChangeSuccess', $scope.closeSidePanel);
 
-  $scope.friend = function(){};
-  //$scope.friend = userFactory.getUser;
-  $scope.$state = $state;
+  function getUser() {
+    userFactory.getUser().then(function(user) {
+      $scope.user = user;
+    });
+  }
+  $scope.$watch(function() {
+    return $state.params.user_id;
+  }, function() {
+    getUser();
+  });
+  getUser();
 
+  $scope.$state = $state;
 }]);
 
 app.value('mapApiKey', 'AIzaSyCP5BKla9RY0aObtlovjVzIBV2XEsfYj48');

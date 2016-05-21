@@ -14,9 +14,17 @@ app.controller('sidePanelController', ['$scope', '$stateParams', 'userFactory', 
 
   // The user object for the user being viewed
   $scope.friend = {};
-  userFactory.getUser().then(function(friend) {
-    $scope.friend = friend;
+  function getFriend() {
+    userFactory.getUser().then(function(friend) {
+      $scope.friend = friend;
+    });
+  }
+  $scope.$watch(function() {
+    return $stateParams.user_id;
+  }, function() {
+    getFriend();
   });
+  getFriend();
 
   // Returns true if the map being viewed is not the authenticated user's
   $scope.isNotMyMap = function() {

@@ -7,7 +7,8 @@ module.exports = function(passport) {
   var config = {
     'clientID'      : process.env.FB_APP_ID,
     'clientSecret'  : process.env.FB_APP_SECRET,
-    'callbackURL'   : 'http://localhost:8081/auth/facebook/callback'  // TODO: set url based on dev or production
+    'callbackURL'   : 'http://localhost:8081/auth/facebook/callback',  // TODO: set url based on dev or production
+    'profileFields': ['id', 'displayName', 'givenName', 'displayName', 'email']
   }
 
   // used to serialize the user for the session

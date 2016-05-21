@@ -3,8 +3,8 @@
   <ul ng-repeat="friend in friends">
     <li>
       <a ui-sref="map.user({ user_id: friend.id })" class="clearfix">
-        <div class="profile-picture" style="background-image: url('{{profilePicture(friend)}}')"></div>
-        <span>{{friend.name}}</span>
+        <div class="profile-picture" style="background-image: url('{{ getProfilePicture(friend) }}')"></div>
+        <span>{{ friend.name }}</span>
       </a>
     </li>
   </ul>

@@ -48,8 +48,6 @@ module.exports = {
     }
 
     User.findOne({ facebookID: uid }, function(err, user) {
-      console.log(user);
-      console.log(uid);
       if(err) return error.InternalServerError(res);
       if(!user) return error.NotFound(res);
       return success.OK(res, user);

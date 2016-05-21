@@ -47,7 +47,10 @@ function ensureAuthenticated(req, res, next) {
 // LOGIN PAGE
 app.use('/login', express.static(__dirname + '/apps/login'));
 // URL TO LOG IN WITH FACEBOOK
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook', {
+  authType: 'rerequest',
+  scope: ['user_friends']
+}));
 // URL REACHED AFTER LOGIN ATTEMPT
 app.get('/auth/facebook/callback', passport.authenticate('facebook',
   { successRedirect: '/', failureRedirect: '/login' }

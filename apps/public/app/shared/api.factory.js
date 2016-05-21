@@ -70,7 +70,9 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
   }
 
   apiFactory.getFriends = function(user) {
-    return $http.get("https://graph.facebook.com/v2.6/" + user.facebookID + "/friends?access_token=" + user.accessToken);
+    if(user && user.facebookID && user.accessToken) {
+      return $http.get("https://graph.facebook.com/v2.6/" + user.facebookID + "/friends?access_token=" + user.accessToken);
+    }
   }
 
   return apiFactory;

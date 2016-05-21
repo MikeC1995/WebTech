@@ -58,8 +58,8 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
   // If none specified, returns authenticated user's profile picture.
   userFactory.getProfilePicture = function(user) {
     var fbBaseUrl = "https://graph.facebook.com/v2.6/";
-    if(!user) {
-      if(!me) {
+    if(!user || !user.facebookID || !user.accessToken) {
+      if(!me || !me.facebookID || !me.accessToken) {
         return "";
       }
       user = me;
@@ -72,7 +72,6 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
     return new Promise(function(resolve, reject) {
       apiFactory.getFriends(me).then(function(response) {
         var friends = response.data.data;
-
         // Fetch each friend's object using their facebook IDs
         var promises = [];
         for(var i = 0; i < friends.length; i++) {
