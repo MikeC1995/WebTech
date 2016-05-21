@@ -5,9 +5,9 @@ var app = angular.module('app');
 app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $window) {
   var authFactory = {};
 
-  var user;
+  var me;
   apiFactory.getUser().then(function(_user) {
-    user = _user.data.data;
+    me = _user.data.data;
   }, function() {
     // TODO: handle error
     console.log("Error getting user!");
@@ -20,23 +20,35 @@ app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $windo
       $window.location.reload();
     });
   }
-  authFactory.user = function() {
+  authFactory.me = function() {
     return new Promise(function(resolve, reject) {
-      if(user) {
-        resolve(user);
+      if(me) {
+        resolve(me);
       } else {
         apiFactory.getUser().then(function(_user) {
-          user = _user.data.data;
-          resolve(user);
+          me = _user.data.data;
+          resolve(me);
         }, function() {
           reject();
         });
       }
     });
   }
-  authFactory.getProfileUrl = function() {
+  authFactory.user = function(user_id) {
+    return new Promise(function(resolve, reject) {
+      apiFactory.getUser(user_id).then(function(user) {
+        user = user.data.data;
+        resolve(user);
+      }, function() {
+        reject();
+      });
+    });
+  }
+  authFactory.getProfileUrl = function(user) {
     if(user) {
       return "https://graph.facebook.com/v2.6/" + user.facebookID + "/picture" + "?width=200&height=200" + "&access_token=" + user.accessToken;
+    } else if(me) {
+      return "https://graph.facebook.com/v2.6/" + me.facebookID + "/picture" + "?width=200&height=200" + "&access_token=" + me.accessToken;
     }
     return "";
   }

@@ -28,7 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state("default", {
       url:"/",
       controller: ['$scope', '$state', 'authFactory', function($scope, $state, authFactory) {
-        authFactory.user().then(function(user) {
+        authFactory.me().then(function(user) {
           $state.go('map.user', { user_id: user._id });
         }, function() {
           // TODO: redirect to public maps page

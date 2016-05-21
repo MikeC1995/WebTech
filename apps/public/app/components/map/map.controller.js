@@ -5,8 +5,8 @@ map.controller('mapController', ['$rootScope', '$scope', '$state',
   'authFactory', 'tripDataFactory', 'imageFactory',
   function($rootScope, $scope, $state, authFactory, tripDataFactory, imageFactory) {
 
-    authFactory.user().then(function(user) {
-      if(user._id == $state.params.user_id) {
+    authFactory.me().then(function(me) {
+      if(me._id == $state.params.user_id) {
         console.log("This is me!");
       } else {
         console.log("This is someone else!");

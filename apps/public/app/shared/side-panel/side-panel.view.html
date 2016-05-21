@@ -1,12 +1,15 @@
 <div id="side-panel" ng-controller="sidePanelController" ng-class="{ open: isSidePanelOpen }">
   <div id="menu">
     <div id="profile-picture" style="background-image: url('{{profilePicture()}}')"></div>
-    <span id="profile-name">{{ user.name }}</span>
+    <span id="profile-name">{{ me.name }}</span>
     <span id="logout" ng-click="logout()">Logout</span>
 
     <ul id="menu-items">
       <li ui-sref-active="selected">
-        <a ui-sref="map.user({ user_id: user._id })"><img src="/assets/images/icons/white/pin.png">My Map</a>
+        <a ui-sref="map.user({ user_id: me._id })"><img src="/assets/images/icons/white/pin.png">My Map</a>
+      </li>
+      <li id="friendMap" ui-sref-active="selected visible" ng-show="me._id != $stateParams.user_id">
+        <a ui-sref="map.user"><img src="/assets/images/icons/white/pin.png">{{ friend.name }}</a>
       </li>
       <li ui-sref-active="selected">
         <a ui-sref="trips"><img src="/assets/images/icons/white/manage.png">Manage Trips</a>

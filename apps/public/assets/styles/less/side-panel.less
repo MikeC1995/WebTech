@@ -58,6 +58,13 @@
       width: 100%;
       li {
         box-sizing: border-box;
+        &#friendMap {
+          background-color: @accent;
+          &:not(.visible) {
+            display: none;
+          }
+        }
+
         &:hover {
           background-color: @primary-light;
           // TODO: animate this padding
