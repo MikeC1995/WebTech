@@ -13,12 +13,38 @@ Utilities.formatDate = function(iso_date) {
 var app = angular.module('app', ['ui.router', 'map', 'trips', 'modals', 'ngContextMenu', 'ngAnimate']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
+
+  // Angular misbehaves when the URL contains a "#_=_" hash,
+  // which is appended by the Facebook auth callback.
+  $urlRouterProvider.rule(function ($injector, $location) {
+    if ($location.hash() === '_=_' || $location.url() === '/_=_') {
+      $location.hash(null);
+      $location.url('/');
+    }
+  });
+
+  // Set up routes
   $stateProvider
-    .state("map", {
+    .state("default", {
       url:"/",
+      controller: ['$scope', '$state', 'authFactory', function($scope, $state, authFactory) {
+        authFactory.user().then(function(user) {
+          $state.go('map.user', { user_id: user._id });
+        }, function() {
+          // TODO: redirect to public maps page
+          console.log("No user");
+        });
+      }]
+    })
+    .state("map", {
+      abstract: true,
+      url:"/map",
       views: {
         '': { templateUrl:"/app/components/map/map.view.html" }
       }
+    })
+    .state("map.user", {
+      url:"/:user_id"
     })
     .state("trips", {
       url:"/trips",

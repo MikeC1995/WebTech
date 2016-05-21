@@ -1,7 +1,15 @@
 'use strict';
 
 var trips = angular.module('trips');
-trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', '$state', function($rootScope, $scope, tripDataFactory, $state) {
+trips.controller('tripsController', ['$rootScope', '$scope', 'tripDataFactory', '$state', 'authFactory', function($rootScope, $scope, tripDataFactory, $state, authFactory) {
+
+  // Load trips for the authenticated user only
+  authFactory.user().then(function(user) {
+    $state.params.user_id = user._id;
+  }, function() {
+    // TODO: handle no user id error
+    console.log("No user id!");
+  });
 
   $scope.selected = new tripDataFactory.Selected();
 

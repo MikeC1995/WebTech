@@ -21,7 +21,18 @@ app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $windo
     });
   }
   authFactory.user = function() {
-    return user;
+    return new Promise(function(resolve, reject) {
+      if(user) {
+        resolve(user);
+      } else {
+        apiFactory.getUser().then(function(_user) {
+          user = _user.data.data;
+          resolve(user);
+        }, function() {
+          reject();
+        });
+      }
+    });
   }
   authFactory.getProfileUrl = function() {
     if(user) {

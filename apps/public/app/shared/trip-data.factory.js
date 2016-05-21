@@ -4,11 +4,17 @@
 // server, which other modules can tap into
 
 var trips = angular.module('trips');
-trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataFactory($rootScope, apiFactory) {
+trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', function tripDataFactory($rootScope, apiFactory, $stateParams) {
   var tripDataFactory = {};
 
   var trips = undefined;
   var places = undefined;
+
+  $rootScope.$watch(function() {
+    return $stateParams.user_id;
+  }, function(user_id) {
+    initialise();
+  });
 
   function broadcast(what) {
     if(what != "trips" && what != "places") {
@@ -86,7 +92,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       if(trips) {
         resolve(trips);
       } else {
-        apiFactory.getTrips()
+        apiFactory.getTrips($stateParams.user_id)
           .then(function(response) {
             trips = response.data.data;
             resolve(trips);
@@ -125,7 +131,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       if(places) {
         resolve(places);
       } else {
-        apiFactory.getPlaces()
+        apiFactory.getPlaces($stateParams.user_id)
           .then(function(response) {
             places = sortPlacesByDate(response.data.data);
             resolve(places);
@@ -141,7 +147,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     return new Promise(function(resolve, reject) {
       apiFactory.addPlace(place)
         .then(function(data) {
-          apiFactory.getPlaces().then(function(response) {
+          apiFactory.getPlaces($stateParams.user_id).then(function(response) {
             places = sortPlacesByDate(response.data.data);
             resolve(places);
             broadcast("places");
@@ -158,7 +164,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     return new Promise(function(resolve, reject) {
       apiFactory.updatePlace(place)
         .then(function(data) {
-          apiFactory.getPlaces().then(function(response) {
+          apiFactory.getPlaces($stateParams.user_id).then(function(response) {
             places = sortPlacesByDate(response.data.data);
             resolve(places);
             broadcast("places");
@@ -175,7 +181,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     return new Promise(function(resolve, reject) {
       apiFactory.deletePlace(place)
         .then(function(data) {
-          apiFactory.getPlaces().then(function(response) {
+          apiFactory.getPlaces($stateParams.user_id).then(function(response) {
             places = sortPlacesByDate(response.data.data);
             resolve(places);
             broadcast("places");
@@ -199,7 +205,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
       return new Promise(function(resolve, reject) {
         apiFactory.addTrip(trip)
           .then(function(data) {
-            apiFactory.getTrips().then(function(response) {
+            apiFactory.getTrips($stateParams.user_id).then(function(response) {
               trips = response.data.data;
               resolve(trips);
               broadcast("trips");
@@ -217,10 +223,10 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     return new Promise(function(resolve, reject) {
       apiFactory.deleteTrip(trip)
         .then(function(data) {
-          apiFactory.getTrips().then(function(response) {
+          apiFactory.getTrips($stateParams.user_id).then(function(response) {
             trips = response.data.data;
             // Must update places too as deleting a trip will affect these
-            apiFactory.getPlaces().then(function(response) {
+            apiFactory.getPlaces($stateParams.user_id).then(function(response) {
               places = sortPlacesByDate(response.data.data);
               resolve(trips);
               broadcast("trips");
@@ -242,7 +248,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
     trip.name = trip.name.toUpperCase();
     return new Promise(function(resolve, reject) {
       apiFactory.updateTrip(trip).then(function() {
-          apiFactory.getTrips().then(function(response) {
+          apiFactory.getTrips($stateParams.user_id).then(function(response) {
             trips = response.data.data;
             resolve(trips);
             broadcast("trips");
@@ -257,15 +263,18 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', function tripDataF
 
   // Initialise factory and return tripDataFactory if successful
   function onErr() { console.error("Unable to initialise tripDataFactory");}
-  apiFactory.getTrips()
-    .then(function(response) {
-      trips = response.data.data;
-      apiFactory.getPlaces()
-        .then(function(response) {
-          places = sortPlacesByDate(response.data.data);
-          broadcast("trips");
-          broadcast("places");
-        }, onErr);
-    }, onErr);
+  function initialise() {
+    apiFactory.getTrips($stateParams.user_id)
+      .then(function(response) {
+        trips = response.data.data;
+        apiFactory.getPlaces($stateParams.user_id)
+          .then(function(response) {
+            places = sortPlacesByDate(response.data.data);
+            broadcast("trips");
+            broadcast("places");
+          }, onErr);
+      }, onErr);
+  }
+  initialise();
   return tripDataFactory;
 }]);

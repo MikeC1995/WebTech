@@ -16,7 +16,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.get(urlBase + '/users/me');
   }
 
-  apiFactory.getTrips = function () {
+  apiFactory.getTrips = function(user_id) {
+    if(user_id) {
+      return $http.get(urlBase + '/trips?user_id=' + user_id);
+    }
     return $http.get(urlBase + '/trips');
   };
 
@@ -32,7 +35,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.put(urlBase + '/trips/' + trip._id, trip);
   };
 
-  apiFactory.getPlaces = function() {
+  apiFactory.getPlaces = function(user_id) {
+    if(user_id) {
+      return $http.get(urlBase + '/places?user_id=' + user_id);
+    }
     return $http.get(urlBase + '/places');
   }
 

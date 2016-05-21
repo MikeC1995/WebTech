@@ -60,6 +60,7 @@ app.use('/api', apiRouter);
 // SERVE THE ANGULAR APP IF AUTHENTICATED
 app.use('/', ensureAuthenticated, express.static(__dirname + '/apps/public'));
 
+
 // 404 ERROR HANDLER
 // This is the last piece of middleware to be wired up.
 // If no routes matched, return a 404.
