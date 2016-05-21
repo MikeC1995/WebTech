@@ -11,8 +11,7 @@ var Place = require('../models/place.js');
 // Dependencies
 var fs = require('fs');
 var aws = require('../config/aws.js');
-// async module allows multiple async calls to be made in parallel, and action to
-// be made when all of them have resolved. See: https://github.com/caolan/async#parallel
+// async module allows multiple async calls to be made in parallel
 var _async = require('async');
 
 function deleteSinglePhoto(photo_id, resolve, reject) {
