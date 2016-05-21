@@ -9,7 +9,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.get(urlBase + '/logout');
   }
 
-  apiFactory.getUser = function(user_id) {
+  apiFactory.getUser = function(user_id, facebook) {
+    if(facebook) {
+      return $http.get(urlBase + '/users/facebook/' + user_id);
+    }
     if(user_id) {
       return $http.get(urlBase + '/users/' + user_id);
     }
@@ -64,6 +67,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
 
   apiFactory.deletePhoto = function(photo_id) {
     return $http.delete(urlBase + '/photos/' + photo_id);
+  }
+
+  apiFactory.getFriends = function(user) {
+    return $http.get("https://graph.facebook.com/v2.6/" + user.facebookID + "/friends?access_token=" + user.accessToken);
   }
 
   return apiFactory;

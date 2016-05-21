@@ -1,1 +1,11 @@
-FRIENDS
+<div id="friends-container" ng-controller="friendsController">
+  <h1>Friend's Maps</h1>
+  <ul ng-repeat="friend in friends">
+    <li>
+      <a ui-sref="map.user({ user_id: friend.id })" class="clearfix">
+        <div class="profile-picture" style="background-image: url('{{profilePicture(friend)}}')"></div>
+        <span>{{friend.name}}</span>
+      </a>
+    </li>
+  </ul>
+</div>

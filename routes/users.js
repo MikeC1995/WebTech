@@ -33,5 +33,23 @@ module.exports = {
       if(err) return error.InternalServerError(res);
       return success.OK(res, user);
     });
+  },
+  getByFacebookId: function(req, res) {
+    // TODO: ensure user is allowed to get this particular user's data
+    // TODO: limit what data is sent back!
+
+    var uid;
+    if(req.params.id !== undefined) {
+      uid = req.params.id;
+    } else {
+      return error.BadRequest(res, 'Missing user ID');
+    }
+
+    User.findOne({ facebookID: uid }, function(err, user) {
+      console.log(user);
+      console.log(uid);
+      if(err) return error.InternalServerError(res);
+      return success.OK(res, user);
+    });
   }
 }

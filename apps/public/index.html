@@ -25,7 +25,7 @@
       <!-- Menu/Back icon. Only appear when in Map state. -->
       <img id="menu-icon" ng-click="toggleSidePanelOpen()" ng-src="{{ !isSidePanelOpen && '/assets/images/icons/white/menu.png' || '/assets/images/icons/white/back.png' }}">
       <img id="logo" src="/assets/images/logo-white.png">
-      <div id="map-owner"><span>{{friend.name}}</span></div>
+      <div id="map-owner" ng-show="$state.includes('map.user')"><span>{{friend.name}}</span></div>
     </div>
     <side-panel></side-panel>
     <div ui-view id="content-panel" ng-click="closeSidePanel()">
@@ -64,6 +64,8 @@
     <script src="/app/components/map/places-navigator/places-navigator.controller.js"></script>
     <script src="/app/components/map/places-navigator/places-navigator.directive.js"></script>
     <script src="/app/components/map/trip-map/trip-map.directive.js"></script>
+    <!-- friends -->
+    <script src="/app/components/friends/friends.controller.js"></script>
 
     <!-- SHARED -->
     <script src="/app/shared/api.js"></script>

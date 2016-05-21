@@ -22,7 +22,9 @@ module.exports = function(app) {
   router.route('/users/me')
     .get(users.getMe);        // Get the authenticated user
   router.route('/users/:id')
-    .get(users.getById);      // Get a specific user's data
+    .get(users.getById);      // Get a specific user's data by ID
+  router.route('/users/facebook/:id')
+    .get(users.getByFacebookId);      // Get a specific user's data by FacebookID
 
   // Register routes
   var trips = require('./routes/trips.js');

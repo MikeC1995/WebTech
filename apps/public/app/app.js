@@ -10,7 +10,7 @@ Utilities.formatDate = function(iso_date) {
 }
 
 // The root application module for this app
-var app = angular.module('app', ['ui.router', 'map', 'trips', 'modals', 'ngContextMenu', 'ngAnimate']);
+var app = angular.module('app', ['ui.router', 'map', 'trips', 'friends', 'modals', 'ngContextMenu', 'ngAnimate']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -61,7 +61,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/");
 });
 
-app.controller('appController', ['$rootScope', '$scope', 'authFactory', '$stateParams', function($rootScope, $scope, authFactory, $stateParams) {
+app.controller('appController', ['$rootScope', '$scope', 'authFactory', '$state', function($rootScope, $scope, authFactory, $state) {
   $scope.isSidePanelOpen = false;
 
   $scope.toggleSidePanelOpen = function() {
@@ -85,10 +85,12 @@ app.controller('appController', ['$rootScope', '$scope', 'authFactory', '$stateP
   }
 
   $scope.$watch(function() {
-    return $stateParams.user_id;
+    return $state.params.user_id;
   }, function(user_id) {
     getUser();
   });
+
+  $scope.$state = $state;
 
 }]);
 
