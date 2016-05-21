@@ -1,14 +1,14 @@
 'use strict';
 
 var friends = angular.module('friends', []);
-friends.controller('friendsController', ['$scope', 'authFactory', function($scope, authFactory) {
+friends.controller('friendsController', ['$scope', 'userFactory', function($scope, userFactory) {
   $scope.friends = [];
 
-  authFactory.getFriends().then(function(friends) {
+  userFactory.getFriends().then(function(friends) {
     $scope.friends = friends;
   }, function() {
     // TODO: handle error
   });
 
-  $scope.profilePicture = authFactory.getProfileUrl;
+  $scope.profilePicture = userFactory.getProfileUrl;
 }]);

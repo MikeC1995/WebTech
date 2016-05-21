@@ -1,33 +1,25 @@
 'use strict';
 
 var app = angular.module('app');
-app.controller('sidePanelController', ['$scope', '$stateParams', 'authFactory', function($scope, $stateParams, authFactory) {
+app.controller('sidePanelController', ['$scope', '$stateParams', 'userFactory', function($scope, $stateParams, userFactory) {
+
+  $scope.getProfilePicture = userFactory.getProfilePicture;
+  $scope.logout = userFactory.logout;
+
+  // The user object for the authenticated user
   $scope.me = {};
-  authFactory.me().then(function(me) {
+  userFactory.getMe().then(function(me) {
     $scope.me = me;
-  }, function() {
-    // TODO: handle error
-    console.log("Unable to get user!");
   });
-  $scope.profilePicture = authFactory.getProfileUrl;
 
-  $scope.logout = authFactory.logout;
-  $scope.$stateParams = $stateParams;
-
+  // The user object for the user being viewed
   $scope.friend = {};
-  function getUser() {
-    authFactory.user().then(function(friend) {
-      $scope.friend = friend;
-    }, function() {
-      // TODO: handle error
-      console.log("Unable to get user!");
-    });
-  }
-
-  $scope.$watch(function() {
-    return $stateParams.user_id;
-  }, function(user_id) {
-    getUser();
+  userFactory.getUser().then(function(friend) {
+    $scope.friend = friend;
   });
 
+  // Returns true if the map being viewed is not the authenticated user's
+  $scope.isNotMyMap = function() {
+    return $scope.me._id != $stateParams.user_id;
+  }
 }]);

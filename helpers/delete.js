@@ -19,7 +19,7 @@ var _async = require('async');
 
 function deleteSinglePhoto(photo_id, resolve, reject) {
   Photo.findById(photo_id, function(err, photo) {
-    if(err) {
+    if(err || !photo) {
       console.log("Error deleting photos " + err);
       return reject(err);
     }
@@ -97,28 +97,30 @@ module.exports = {
     Photo.find({ place_id: place_id }, function(err, photos) {
       if(err) {
         return error.InternalServerError(res);
-      } else {
-        // delete photos for that place (image and db entry)..
-        new Promise(function(resolve, reject) {
-          var photoIds = [];
-          for(var i = 0; i < photos.length; i++) {
-            photoIds.push(photos[i]._id);
-          }
-          deletePhotos(photoIds, resolve, reject);
-        }).then(function() {
-          //...and the place itself.
-          Place.find({_id: place_id}).remove(function(err) {
-            if(err) {
-              console.error("Unable to delete place from database.");
-              return error.InternalServerError(res, "Unable to delete place from database");
-            } else {
-              return success.OK(res);
-            }
-          });
-        }, function() {
-          return error.InternalServerError(res, "Unable to delete photos from place");
-        });
       }
+      if(!photos) {
+        return error.NotFound(res);
+      }
+      // delete photos for that place (image and db entry)..
+      new Promise(function(resolve, reject) {
+        var photoIds = [];
+        for(var i = 0; i < photos.length; i++) {
+          photoIds.push(photos[i]._id);
+        }
+        deletePhotos(photoIds, resolve, reject);
+      }).then(function() {
+        //...and the place itself.
+        Place.find({_id: place_id}).remove(function(err) {
+          if(err) {
+            console.error("Unable to delete place from database.");
+            return error.InternalServerError(res, "Unable to delete place from database");
+          } else {
+            return success.OK(res);
+          }
+        });
+      }, function() {
+        return error.InternalServerError(res, "Unable to delete photos from place");
+      });
     });
   },
   // Delete a trip, all associated places and all associated photos
@@ -127,60 +129,61 @@ module.exports = {
     Place.find({trip_id: trip_id}, function(err, places) {
       if(err) {
         return error.InternalServerError(res);
-      } else {
+      }
+      if(!places) {
+        return error.NotFound(res);
+      }
 
-        var calls = [];
-        places.forEach(function(_place) {
-          calls.push(function(callback) {
-            // Delete all photos from each place
-            Photo.find({place_id: _place._id}, function(err, photos) {
-              if(err) {
-                console.error("Unable to find photos. Error: " + err);
-                callback(err);
-              } else {
-                // Delete photos for this place, from db + fs
-                new Promise(function(resolve, reject) {
-                  var photoIds = [];
-                  for(var i = 0; i < photos.length; i++) {
-                    photoIds.push(photos[i]._id);
-                  }
-                  deletePhotos(photoIds, resolve, reject);
-                }).then(function() {
-                  // Delete the place itself
-                  Place.find({_id: _place._id}).remove(function(err) {
-                    if(err) {
-                      console.error("Unable to delete place. Error: " + err);
-                      callback(err);
-                    } else {
-                      // Successfully deleted this place and photos from db + S3!
-                      callback(null);
-                    }
-                  });
-                }, function() {
-                  console.error("Unable to delete photos");
-                  callback(true);
-                });
+      var calls = [];
+      places.forEach(function(_place) {
+        calls.push(function(callback) {
+          // Delete all photos from each place
+          Photo.find({place_id: _place._id}, function(err, photos) {
+            if(err || !photos) {
+              console.error("Unable to find photos. Error: " + err);
+              callback(err);
+            }
+            // Delete photos for this place, from db + fs
+            new Promise(function(resolve, reject) {
+              var photoIds = [];
+              for(var i = 0; i < photos.length; i++) {
+                photoIds.push(photos[i]._id);
               }
+              deletePhotos(photoIds, resolve, reject);
+            }).then(function() {
+              // Delete the place itself
+              Place.find({_id: _place._id}).remove(function(err) {
+                if(err) {
+                  console.error("Unable to delete place. Error: " + err);
+                  callback(err);
+                } else {
+                  // Successfully deleted this place and photos from db + S3!
+                  callback(null);
+                }
+              });
+            }, function() {
+              console.error("Unable to delete photos");
+              callback(true);
             });
           });
         });
+      });
 
-        _async.parallel(calls, function(err, results) {
-          if(err) {
-            return error.InternalServerError(res, "Unable to delete trip");
-          } else {
-            // Delete the trip itself
-            Trip.find({_id: trip_id}).remove(function(err) {
-              if(err) {
-                console.error("Unable to delete trip.");
-                return error.InternalServerError(res, "Unable to delete trip");
-              } else {
-                return success.OK(res);
-              }
-            });
-          }
-        });
-      }
+      _async.parallel(calls, function(err, results) {
+        if(err) {
+          return error.InternalServerError(res, "Unable to delete trip");
+        } else {
+          // Delete the trip itself
+          Trip.find({_id: trip_id}).remove(function(err) {
+            if(err) {
+              console.error("Unable to delete trip.");
+              return error.InternalServerError(res, "Unable to delete trip");
+            } else {
+              return success.OK(res);
+            }
+          });
+        }
+      });
     });
   }
 }

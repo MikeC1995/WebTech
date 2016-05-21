@@ -13,6 +13,7 @@ module.exports = {
       // TODO: ensure user allowed to get places for this trip
       Place.find({ trip_id: req.query.trip_id }, function(err, places) {
         if(err) return error.InternalServerError(res);
+        if(!places) return error.NotFound(res);
         return success.OK(res, places);
       });
     } else {
@@ -25,6 +26,7 @@ module.exports = {
       }
       Place.find({ user_id: uid }, function(err, places) {
         if(err) return error.InternalServerError(res);
+        if(!places) return error.NotFound(res);
         return success.OK(res, places);
       });
     }
@@ -36,6 +38,7 @@ module.exports = {
     } else {
       Place.findById(req.params.id, function(err, place) {
         if(err) return error.InternalServerError(res);
+        if(!place) return error.NotFound(res);
         return success.OK(res, place);
       });
     }

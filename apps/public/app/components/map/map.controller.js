@@ -2,19 +2,8 @@
 
 var map = angular.module('map');
 map.controller('mapController', ['$rootScope', '$scope', '$state',
-  'authFactory', 'tripDataFactory', 'imageFactory',
-  function($rootScope, $scope, $state, authFactory, tripDataFactory, imageFactory) {
-
-    authFactory.me().then(function(me) {
-      if(me._id == $state.params.user_id) {
-        console.log("This is me!");
-      } else {
-        console.log("This is someone else!");
-      }
-    }, function() {
-      console.log("No idea!");
-    });
-
+  'userFactory', 'tripDataFactory', 'imageFactory',
+  function($rootScope, $scope, $state, userFactory, tripDataFactory, imageFactory) {
     // Expose utility methods
     $scope.formatDate = Utilities.formatDate;
 

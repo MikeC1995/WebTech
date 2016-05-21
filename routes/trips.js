@@ -17,6 +17,7 @@ module.exports = {
 
     Trip.find({ user_id: uid }, function(err, trips) {
       if(err) return error.InternalServerError(res);
+      if(!trips) return error.NotFound(res);
       return success.OK(res, trips);
     });
   },
@@ -27,6 +28,7 @@ module.exports = {
     } else {
       Trip.findById(req.params.id, function(err, trip) {
         if(err) return error.InternalServerError(res);
+        if(!trip) return error.NotFound(res);
         return success.OK(res, trip);
       });
     }
@@ -79,6 +81,7 @@ module.exports = {
       colour: req.body.colour
     }, { upsert: false }, function(err, trip) {
         if (err) return error.InternalServerError(res);
+        if(!trip) return error.NotFound(res);
         return success.OK(res);
     });
   }

@@ -15,6 +15,7 @@ module.exports = {
 
     User.findById(uid, function(err, user) {
       if(err) return error.InternalServerError(res);
+      if(!user) return error.NotFound(res);
       return success.OK(res, user);
     });
   },
@@ -31,6 +32,7 @@ module.exports = {
 
     User.findById(uid, function(err, user) {
       if(err) return error.InternalServerError(res);
+      if(!user) return error.NotFound(res);
       return success.OK(res, user);
     });
   },
@@ -49,6 +51,7 @@ module.exports = {
       console.log(user);
       console.log(uid);
       if(err) return error.InternalServerError(res);
+      if(!user) return error.NotFound(res);
       return success.OK(res, user);
     });
   },
@@ -66,6 +69,7 @@ module.exports = {
       public: req.body.public
     }, { upsert: false }, function(err, user) {
         if (err) return error.InternalServerError(res);
+        if(!user) return error.NotFound(res);
         return success.OK(res, user);
     });
   }

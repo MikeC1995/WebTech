@@ -27,12 +27,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state("default", {
       url:"/",
-      controller: ['$scope', '$state', 'authFactory', function($scope, $state, authFactory) {
-        authFactory.me().then(function(user) {
-          $state.go('map.user', { user_id: user._id });
-        }, function() {
-          // TODO: redirect to public maps page
-          console.log("No user");
+      controller: ['$scope', '$state', 'userFactory', function($scope, $state, userFactory) {
+        userFactory.getMe().then(function(me) {
+          $state.go('map.user', { user_id: me._id });
         });
       }]
     })
@@ -50,20 +47,38 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url:"/trips",
       views: {
         '': { templateUrl:"/app/components/trips/trips.view.html" }
+      },
+      // ensure current user is the authenticated user when on manage trips
+      resolve: {
+        init: function($state, userFactory) {
+          userFactory.getMe().then(function(me) {
+            $state.params.user_id = me._id;
+          });
+        }
       }
     })
     .state("friends", {
       url:"/friends",
       views: {
         '': { templateUrl:"/app/components/friends/friends.view.html" }
+      },
+      // ensure current user is the authenticated user when on manage trips
+      resolve: {
+        init: function($state, userFactory) {
+          userFactory.getMe().then(function(me) {
+            $state.params.user_id = me._id;
+          });
+        }
       }
     });
   $urlRouterProvider.otherwise("/");
 });
 
-app.controller('appController', ['$rootScope', '$scope', 'authFactory', '$state', function($rootScope, $scope, authFactory, $state) {
-  $scope.isSidePanelOpen = false;
+app.controller('appController', ['$rootScope', '$scope', '$state', 'userFactory', function($rootScope, $scope, $state, userFactory) {
 
+  $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f'];
+
+  $scope.isSidePanelOpen = false;
   $scope.toggleSidePanelOpen = function() {
     $scope.isSidePanelOpen = !$scope.isSidePanelOpen;
   }
@@ -72,24 +87,8 @@ app.controller('appController', ['$rootScope', '$scope', 'authFactory', '$state'
   }
   $rootScope.$on('$stateChangeSuccess', $scope.closeSidePanel);
 
-  $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f'];
-
-  $scope.friend = {};
-  function getUser() {
-    authFactory.user().then(function(friend) {
-      $scope.friend = friend;
-    }, function() {
-      // TODO: handle error
-      console.log("Unable to get user!");
-    });
-  }
-
-  $scope.$watch(function() {
-    return $state.params.user_id;
-  }, function(user_id) {
-    getUser();
-  });
-
+  $scope.friend = function(){};
+  //$scope.friend = userFactory.getUser;
   $scope.$state = $state;
 
 }]);

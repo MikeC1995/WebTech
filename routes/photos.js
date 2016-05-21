@@ -42,6 +42,7 @@ module.exports = {
       .exec(
         function(err, photos) {
           if(err) return error.InternalServerError(res);
+          if(!photos) return error.NotFound(res);
           sendUrls(photos);
         }
       );
@@ -69,6 +70,7 @@ module.exports = {
     } else {
       Photo.findById(req.params.id, function(err, photo) {
         if(err) return error.InternalServerError(res);
+        if(!photo) return error.NotFound(res);
         return success.OK(res, photo);
       });
     }
@@ -128,9 +130,9 @@ module.exports = {
     _async.parallel(calls, function(err, results) {
       if(err) {
         return error.InternalServerError(res, "Unable to add photos");
-      } else {
-        return success.Created(res, "Photos");
       }
+      if(!results) return error.NotFound(res);
+      return success.Created(res, "Photos");
     });
   },
   deleteById: function(req, res) {
