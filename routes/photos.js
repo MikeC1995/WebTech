@@ -2,15 +2,10 @@
 
 var error = require('../responses/errors.js');
 var success = require('../responses/successes.js');
-var fs = require('fs');
-var imageurls = require('../helpers/image-urls.js');
 var Photo = require('../models/photo.js');
 var deleter = require('../helpers/delete.js');
 var aws = require('../config/aws.js');
 var _async = require('async');
-var gm = require('gm').subClass({
-    imageMagick: true
-});
 
 module.exports = {
   get:  function(req, res) {

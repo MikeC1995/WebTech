@@ -7,7 +7,7 @@ var User = require('../models/user.js');
 module.exports = {
   getMe:  function(req, res) {
     var uid;
-    if(req.isAuthenticated() && req.user._id !== undefined) {
+    if(req.isAuthenticated() && req.user._id) {
       uid = req.user._id;
     } else {
       return error.Forbidden(res);

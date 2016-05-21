@@ -8,8 +8,6 @@ var success = require('../responses/successes.js');
 var Trip = require('../models/trip.js');
 var Photo = require('../models/photo.js');
 var Place = require('../models/place.js');
-// Helpers
-var imageurls = require('../helpers/image-urls.js');
 // Dependencies
 var fs = require('fs');
 var aws = require('../config/aws.js');
