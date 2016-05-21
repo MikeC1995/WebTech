@@ -20,7 +20,8 @@ module.exports = function(app) {
   // Get user data
   var users = require('./routes/users.js');
   router.route('/users/me')
-    .get(users.getMe);        // Get the authenticated user
+    .get(users.getMe)        // Get the authenticated user
+    .put(users.updateMe);     // Update the authenticated user
   router.route('/users/:id')
     .get(users.getById);      // Get a specific user's data by ID
   router.route('/users/facebook/:id')
@@ -56,12 +57,8 @@ module.exports = function(app) {
     .get(photos.getById)
     .delete(photos.deleteById);
 
-  // TODO: implement DeleteById, and Delete using array of ids
-  // Can't use HTTP verb DELETE as body required to specify resources to delete.
-  // This could be too long to specify in the URI itself.
-  // Instead, using a seperate end point with the POST verb.
-  //router.route('/photos/delete')
-  //  .post(photos.delete);
+  // Make map public route
+
 
   return router;
 }

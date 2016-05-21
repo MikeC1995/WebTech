@@ -44,11 +44,12 @@ module.exports = function(passport) {
               // create new user
               var newUser = new User({
                 facebookID: profile.id,
+                accessToken: accessToken,
                 name: profile.displayName || profile.name.givenName + ' ' + profile.name.familyName,
                 email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : undefined,
                 created: Date.now(),
                 type: "standard",
-                accessToken: accessToken
+                public: false
               });
 
               newUser.save(function(err) {

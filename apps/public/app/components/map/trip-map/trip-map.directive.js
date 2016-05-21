@@ -184,13 +184,15 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
 
             // set starting position of map to be the bounding box of the
             // all the places on the current trip
-            var bounds = new google.maps.LatLngBounds();
-            for(var i = 0; i < $scope.places.length; i++) {
-              if($scope.selected.getPlace().trip_id == $scope.places[i].trip_id) {
-                bounds.extend(new google.maps.LatLng($scope.places[i].location));
+            if($scope.places.length > 0) {
+              var bounds = new google.maps.LatLngBounds();
+              for(var i = 0; i < $scope.places.length; i++) {
+                if($scope.selected.getPlace().trip_id == $scope.places[i].trip_id) {
+                  bounds.extend(new google.maps.LatLng($scope.places[i].location));
+                }
               }
+              $scope.map.fitBounds(bounds);
             }
-            $scope.map.fitBounds(bounds);
           });
 
           // ADD THE CONNECTORS

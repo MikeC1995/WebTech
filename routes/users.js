@@ -51,5 +51,22 @@ module.exports = {
       if(err) return error.InternalServerError(res);
       return success.OK(res, user);
     });
+  },
+  updateMe: function(req, res) {
+    if(!req.isAuthenticated() || req.user._id === undefined) {
+      return error.Forbidden(res);
+    }
+    if(!req.body.public) {
+      return error.BadRequest(res, 'public');
+    }
+
+    User.findOneAndUpdate({
+      _id: req.user._id
+    }, {
+      public: req.body.public
+    }, { upsert: false }, function(err, user) {
+        if (err) return error.InternalServerError(res);
+        return success.OK(res, user);
+    });
   }
 }
