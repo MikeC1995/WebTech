@@ -16,7 +16,7 @@ app.controller('sidePanelController', ['$scope', '$stateParams', 'authFactory', 
 
   $scope.friend = {};
   function getUser() {
-    authFactory.user($stateParams.user_id).then(function(friend) {
+    authFactory.user().then(function(friend) {
       $scope.friend = friend;
     }, function() {
       // TODO: handle error
@@ -28,8 +28,6 @@ app.controller('sidePanelController', ['$scope', '$stateParams', 'authFactory', 
     return $stateParams.user_id;
   }, function(user_id) {
     getUser();
-    console.log("updated friend");
-    console.log($scope.friend);
   });
 
 }]);

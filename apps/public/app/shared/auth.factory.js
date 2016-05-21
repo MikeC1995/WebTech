@@ -2,7 +2,7 @@
 
 var app = angular.module('app');
 
-app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $window) {
+app.factory('authFactory', ['apiFactory', '$window', '$stateParams', function(apiFactory, $window, $stateParams) {
   var authFactory = {};
 
   var me;
@@ -35,6 +35,9 @@ app.factory('authFactory', ['apiFactory', '$window', function(apiFactory, $windo
     });
   }
   authFactory.user = function(user_id) {
+    if(!user_id) {
+      user_id = $stateParams.user_id;
+    }
     return new Promise(function(resolve, reject) {
       apiFactory.getUser(user_id).then(function(user) {
         user = user.data.data;

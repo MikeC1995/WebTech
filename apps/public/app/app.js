@@ -61,7 +61,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/");
 });
 
-app.controller('appController', ['$rootScope', '$scope', function($rootScope, $scope) {
+app.controller('appController', ['$rootScope', '$scope', 'authFactory', '$stateParams', function($rootScope, $scope, authFactory, $stateParams) {
   $scope.isSidePanelOpen = false;
 
   $scope.toggleSidePanelOpen = function() {
@@ -73,6 +73,23 @@ app.controller('appController', ['$rootScope', '$scope', function($rootScope, $s
   $rootScope.$on('$stateChangeSuccess', $scope.closeSidePanel);
 
   $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f'];
+
+  $scope.friend = {};
+  function getUser() {
+    authFactory.user().then(function(friend) {
+      $scope.friend = friend;
+    }, function() {
+      // TODO: handle error
+      console.log("Unable to get user!");
+    });
+  }
+
+  $scope.$watch(function() {
+    return $stateParams.user_id;
+  }, function(user_id) {
+    getUser();
+  });
+
 }]);
 
 app.value('mapApiKey', 'AIzaSyCP5BKla9RY0aObtlovjVzIBV2XEsfYj48');
