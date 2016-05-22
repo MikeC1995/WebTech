@@ -78,8 +78,6 @@ module.exports = {
     if(!req.params.id) {
       return error.BadRequest(res, 'id');
     }
-    // is not auth, place owner must be on whitelist
-    // if auth, place owner must be on friends list or whitelist or be themself
 
     Place.findById(req.params.id, function(err, place) {
       if(err) return error.InternalServerError(res);
@@ -190,7 +188,7 @@ module.exports = {
     if(!req.isAuthenticated() || !req.user._id) {
       return error.Forbidden(res);
     }
-    
+
     // ensure necessary params
     if(!req.params.id) {
       return error.BadRequest(res, 'id');
