@@ -7,7 +7,9 @@ module.exports = function(passport) {
   var config = {
     'clientID'      : process.env.FB_APP_ID,
     'clientSecret'  : process.env.FB_APP_SECRET,
-    'callbackURL'   : 'http://localhost:8081/auth/facebook/callback',  // TODO: set url based on dev or production
+    'callbackURL'   : process.env.NODE_ENV == 'production' ?
+                      'http://map.tripmappr.com/auth/facebook/callback' : // production url
+                      'http://localhost:8081/auth/facebook/callback',     // development url
     'profileFields': ['id', 'displayName', 'givenName', 'displayName', 'email']
   }
 
