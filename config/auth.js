@@ -12,8 +12,6 @@ module.exports = function(passport) {
                       'http://localhost:8081/auth/facebook/callback',     // development url
     'profileFields': ['id', 'displayName', 'givenName', 'displayName', 'email']
   }
-  console.error("callbackURL is:");
-  console.error(config.callbackURL);
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
