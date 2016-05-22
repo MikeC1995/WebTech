@@ -4,7 +4,7 @@
 // server, which other modules can tap into
 
 var trips = angular.module('trips');
-trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', function tripDataFactory($rootScope, apiFactory, $stateParams) {
+trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', '$window', function tripDataFactory($rootScope, apiFactory, $stateParams, $window) {
   var tripDataFactory = {};
 
   var trips = undefined;
@@ -262,7 +262,11 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', fu
   }
 
   // Initialise factory and return tripDataFactory if successful
-  function onErr() { console.error("Unable to initialise tripDataFactory");}
+  function onErr() {
+    // cannot initialise, therefore server requests have been rejected.
+    // Assume guest user trying to access private map, so redirect to login
+    $window.location.href = "/login";
+  }
   function initialise() {
     apiFactory.getTrips($stateParams.user_id)
       .then(function(response) {

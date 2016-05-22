@@ -61,7 +61,7 @@ var apiRouter = require('./api-routes.js')(app);
 app.use('/api', apiRouter);
 
 // SERVE THE ANGULAR APP IF AUTHENTICATED
-app.use('/', ensureAuthenticated, express.static(__dirname + '/apps/public'));
+app.use('/', express.static(__dirname + '/apps/public'));
 
 
 // 404 ERROR HANDLER

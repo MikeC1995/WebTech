@@ -100,6 +100,9 @@ app.controller('appController', ['$rootScope', '$scope', '$state', 'userFactory'
   getUser();
 
   $scope.$state = $state;
+
+  // hide menu if guest
+  $scope.isGuest = userFactory.isGuest;
 }]);
 
 app.value('mapApiKey', 'AIzaSyCP5BKla9RY0aObtlovjVzIBV2XEsfYj48');

@@ -6,13 +6,18 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
   var userFactory = {};
 
   var me; // stores the authenticated user's object
+  var isGuest = false;
 
   apiFactory.getUser().then(function(response) {
     me = response.data.data;
   }, function() {
-    // TODO: handle error
-    console.log("Error getting user!");
+    // Not logged in
+    isGuest = true;
   });
+
+  userFactory.isGuest = function() {
+    return isGuest;
+  }
 
   // Logout from the server and reload page
   userFactory.logout = function() {

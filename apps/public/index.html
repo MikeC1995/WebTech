@@ -23,7 +23,7 @@
   <body ng-app="app" ng-controller="appController">
     <div id="top-bar">
       <!-- Menu/Back icon. Only appear when in Map state. -->
-      <img id="menu-icon" ng-click="toggleSidePanelOpen()" ng-src="{{ !isSidePanelOpen && '/assets/images/icons/white/menu.png' || '/assets/images/icons/white/back.png' }}">
+      <img id="menu-icon" ng-show="!isGuest()" ng-click="toggleSidePanelOpen()" ng-src="{{ !isSidePanelOpen && '/assets/images/icons/white/menu.png' || '/assets/images/icons/white/back.png' }}">
       <img id="logo" src="/assets/images/logo-white.png">
       <div id="map-owner" ng-show="$state.includes('map.user')"><span>{{ user.name }}</span></div>
     </div>
