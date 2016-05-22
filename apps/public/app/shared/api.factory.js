@@ -19,6 +19,10 @@ api.factory('apiFactory', ['$http', function apiFactory($http) {
     return $http.get(urlBase + '/users/me');
   }
 
+  apiFactory.setUser = function(user) {
+    return $http.put(urlBase + '/users/me', user);
+  }
+
   apiFactory.getTrips = function(user_id) {
     if(user_id) {
       return $http.get(urlBase + '/trips?user_id=' + user_id);

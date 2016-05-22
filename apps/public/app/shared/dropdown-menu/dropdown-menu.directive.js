@@ -17,7 +17,7 @@ app.directive('dropdownMenu', function() {
         function init() {
           if($scope.items().length != 0) {
             $scope.selectedItem = $scope.items()[0];
-            $scope.set($scope.selectedItem);
+            //$scope.set($scope.selectedItem);
           }
         }
 

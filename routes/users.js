@@ -137,7 +137,7 @@ module.exports = {
     if(!req.isAuthenticated() || !req.user._id) {
       return error.Forbidden(res);
     }
-    if(!req.body.public) {
+    if(req.body.public === undefined) { // NB: public is boolean so will never be truthy
       return error.BadRequest(res, 'public');
     }
 

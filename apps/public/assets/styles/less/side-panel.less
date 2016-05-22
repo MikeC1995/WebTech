@@ -53,8 +53,37 @@
       }
     }
 
+    #public-map {
+      width: 100%;
+      padding-top: 20px;
+
+      span {
+        font-family: "Open Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+      }
+
+      #visibleTo {
+        span {
+          font-weight: 400;
+          &#selectedItem::after {
+            background-image: url('/assets/images/icons/white/expand-down.png');
+          }
+        }
+        .dropdown-content {
+          background-color: @primary-light;
+          span {
+            &:hover {
+              background-color: @accent;
+            }
+          }
+        }
+      }
+    }
+
     #menu-items {
-      margin-top: 20px;
+      margin-top: 40px;
       text-align: left;
       font-size: 14px;
       width: 100%;

@@ -3,10 +3,17 @@
   z-index: 1000;
   padding: 10px;
 
-  img {
+  #selectedItem::after {
+    display: inline-block;
+    content: " ";
+    margin-left: 15px;
     width: 10px;
     height: 10px;
+    background-image: url('/assets/images/icons/black/expand-down.png');
+    background-position: center;
+    background-size: contain;
   }
+  
   &:hover .dropdown-content, .dropdown-content:hover {
     display: block;
     cursor: pointer;

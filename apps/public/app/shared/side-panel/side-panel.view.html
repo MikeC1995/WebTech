@@ -3,6 +3,10 @@
     <div id="profile-picture" style="background-image: url('{{ getProfilePicture() }}')"></div>
     <span id="profile-name">{{ me.name }}</span>
     <span id="logout" ng-click="logout()">Logout</span>
+    <div id="public-map">
+      <span>Make my map visible to</span>
+      <dropdown-menu id="visibleTo" items="visibleToItems" get="getVisibleToItems" set="setVisibleTo"></dropdown-menu>
+    </div>
 
     <ul id="menu-items">
       <li ui-sref-active="selected">

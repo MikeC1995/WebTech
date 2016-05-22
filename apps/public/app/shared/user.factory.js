@@ -54,6 +54,30 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
     });
   }
 
+  // Set whether a user map is public or friends only
+  userFactory.setUserPublic = function(isPublic) {
+    return new Promise(function(resolve, reject) {
+      if(me) {
+        apiFactory.setUser({
+          public: isPublic
+        }).then(function() {
+          // success, now update me user object
+          apiFactory.getUser().then(function(response) {
+            me = response.data.data;
+            resolve();
+          }, function() {
+            reject();
+          });
+        }, function() {
+          console.log("error");
+          reject();
+        });
+      } else {
+        reject();
+      }
+    });
+  }
+
   // Returns the URL of the profile picture for the specified user
   // If none specified, returns authenticated user's profile picture.
   userFactory.getProfilePicture = function(user) {
