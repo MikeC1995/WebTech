@@ -16,7 +16,7 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
 
     // if path is empty then redirect to login
     if($window.location.pathname == "/") {
-      $window.location.href = "/login";
+      //$window.location.href = "/login";
     }
     isGuest = true;
   });
