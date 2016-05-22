@@ -9,9 +9,15 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
   var isGuest = false;
 
   apiFactory.getUser().then(function(response) {
+    isGuest = false;
     me = response.data.data;
   }, function() {
     // Not logged in
+
+    // if path is empty then redirect to login
+    if($window.location.pathname == "/") {
+      $window.location.href = "/login";
+    }
     isGuest = true;
   });
 
