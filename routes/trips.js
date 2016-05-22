@@ -16,14 +16,14 @@ module.exports = {
           resolve(req.user._id);
         } else {
           // requested query user could be self:
-          if(req.user._id == req.query.user_id) {
+          if(String(req.user._id) == String(req.query.user_id)) {
             resolve(req.user._id);
           }
 
           // otherwise requested query user must be in whitelist or friendlist
           userLists.allowedList(req.user).then(function(users) {
             for(var i = 0; i < users.length; i++) {
-              if(users[i]._id == req.query.user_id) {
+              if(String(users[i]._id) == String(req.query.user_id)) {
                 resolve(req.query.user_id);
               }
             }
@@ -34,7 +34,7 @@ module.exports = {
         // not authenticated: requested user must be in whitelist
         userLists.whitelist().then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if(users[i]._id == req.query.user_id) {
+            if(String(users[i]._id) == String(req.query.user_id)) {
               resolve(req.query.user_id);
             }
           }
@@ -59,13 +59,13 @@ module.exports = {
     new Promise(function(resolve, reject) {
       if(req.isAuthenticated()) {
         // requested query user could be self:
-        if(req.user._id == req.params.id) {
+        if(String(req.user._id) == String(req.params.id)) {
           resolve(req.user._id);
         }
         // otherwise requested query user must be in whitelist or friendlist
         userLists.allowedList(req.user).then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if(users[i]._id == req.params.id) {
+            if(String(users[i]._id) == String(req.params.id)) {
               resolve(req.params.id);
             }
           }
@@ -75,7 +75,7 @@ module.exports = {
         // not authenticated: requested user must be in whitelist
         userLists.whitelist().then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if(users[i]._id == req.params.id) {
+            if(String(users[i]._id) == String(req.params.id)) {
               resolve(req.params.id);
             }
           }

@@ -34,7 +34,7 @@ module.exports = {
       if(!req.isAuthenticated()) {
         userLists.whitelist().then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if(users[i]._id == req.params.id) {
+            if(String(users[i]._id) == String(req.params.id)) {
               var allowedUser = {
                 _id: user._id,
                 facebookID: user.facebookID,
@@ -51,14 +51,14 @@ module.exports = {
         });
       } else {  // Authenticated:
         // This is authenticated user themself
-        if(req.user._id == req.params.id) {
+        if(String(req.user._id) == String(req.params.id)) {
           return success.OK(res, user);
         }
 
         // The user is a friend of the authenticated user or in the whitelist
         userLists.allowedList(req.user).then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if(users[i]._id == req.params.id) {
+            if(String(users[i]._id) == String(req.params.id)) {
               var allowedUser = {
                 _id: user._id,
                 facebookID: user.facebookID,
@@ -90,7 +90,7 @@ module.exports = {
       if(!req.isAuthenticated()) {
         userLists.whitelist().then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if(users[i].facebookID == req.params.id) {
+            if(String(users[i].facebookID) == String(req.params.id)) {
               var allowedUser = {
                 _id: user._id,
                 facebookID: user.facebookID,
@@ -107,13 +107,13 @@ module.exports = {
         });
       } else {  // Authenticated:
         // This is authenticated user themself
-        if(req.user.facebookID == req.params.id) {
+        if(String(req.user.facebookID) == String(req.params.id)) {
           return success.OK(res, user);
         }
         // The user is a friend of the authenticated user or in the whitelist
         userLists.allowedList(req.user).then(function(users) {
           for(var i = 0; i < users.length; i++) {
-            if((users[i].facebookID) == (req.params.id)) {
+            if(String(users[i].facebookID) == String(req.params.id)) {
               var allowedUser = {
                 _id: user._id,
                 facebookID: user.facebookID,

@@ -44,7 +44,7 @@ module.exports = {
           userLists.whitelist().then(function(users) {
             for(var i = 0; i < users.length; i++) {
               if(String(users[i]._id) == String(place.user_id)) {
-                // TODO OK
+                resolve();
               }
             }
             return reject(error.Forbidden);
