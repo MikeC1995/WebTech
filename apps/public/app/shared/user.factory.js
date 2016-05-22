@@ -13,11 +13,6 @@ app.factory('userFactory', ['apiFactory', '$window', '$stateParams', '$q', funct
     me = response.data.data;
   }, function() {
     // Not logged in
-
-    // if path is empty then redirect to login
-    if($window.location.pathname == "/") {
-      //$window.location.href = "/login";
-    }
     isGuest = true;
   });
 

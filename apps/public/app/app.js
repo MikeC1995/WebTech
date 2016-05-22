@@ -27,9 +27,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state("default", {
       url:"/",
-      controller: ['$scope', '$state', 'userFactory', function($scope, $state, userFactory) {
+      controller: ['$scope', '$state', 'userFactory', '$window', function($scope, $state, userFactory, $window) {
         userFactory.getMe().then(function(me) {
           $state.go('map.user', { user_id: me._id });
+        }, function() {
+          // Guest user
+          $window.location.href = '/login';
         });
       }]
     })
