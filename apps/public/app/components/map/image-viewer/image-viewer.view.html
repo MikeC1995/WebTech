@@ -1,4 +1,4 @@
-<div id="image-viewer" when-scrolled="loadMore()">
+<div id="image-viewer" when-scrolled="loadMore()" ng-show="filteredPlaces.length > 0">
   <div>
     <div id="empty" ng-show="photos.length == 0 && !isLoadingPhotos()">
       <img src="/assets/images/icons/empty/camera-screen.png">
