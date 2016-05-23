@@ -60,10 +60,7 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
             zoomControl: true
           });
 
-          // pan map when location changes
-          $scope.$watch(function() {
-            return $scope.selected.getPlace()._id;
-          }, function(new_place_id, old_place_id) {
+          $rootScope.$on("selected.updated", function() {
             var place = $scope.selected.getPlace();
             if(place && place.location && place.location.lat && place.location.lng) {
               $scope.map.panTo($scope.selected.getPlace().location);

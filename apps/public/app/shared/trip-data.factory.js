@@ -17,7 +17,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', '$
   });
 
   function broadcast(what) {
-    if(what != "trips" && what != "places") {
+    if(what != "trips" && what != "places" && what != "selected") {
       return;
     }
     $rootScope.$broadcast(what + ".updated");
@@ -38,6 +38,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', '$
           for(var j = 0; j < places.length; j++) {
             if(places[j].trip_id == trip._id) {
               _place = places[j];
+              broadcast("selected");
               return;
             }
           }
@@ -54,6 +55,7 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', '$
           for(var j = 0; j < trips.length; j++) {
             if(trips[j]._id == _place.trip_id) {
               _trip = trips[j];
+              broadcast("selected");
               return;
             }
           }

@@ -1,6 +1,6 @@
 <div id="places" class="clearfix" ng-style="{'border-color': tripColor()}" ng-show="filteredPlaces.length > 0">
   <div class="place" ng-class="{'selected' : $index == selectedPlaceIndex, 'few': filteredPlaces.length < 3 }"
-       ng-repeat="place in filteredPlaces = (places | filter:{ trip_id: selected.getTrip()._id } | orderBy:'from_date':false)" ng-click="selectPlace(place)"
+       ng-repeat="place in filteredPlaces" ng-click="selectPlace(place)"
        ng-style="{'transform': transform }">
     <div class="place-nub" ng-style="{'border-color': tripColor()}">
       <div class="place-nub-select"  ng-style="{'background-color': tripColor()}"></div>

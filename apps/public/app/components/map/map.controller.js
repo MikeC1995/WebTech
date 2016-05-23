@@ -59,24 +59,25 @@ map.controller('mapController', ['$rootScope', '$scope', '$state',
 
     $scope.selectedPhotoIndex = 0;
     $scope.photos = [];
+    $scope.filteredPlaces = [];
 
     // update photos and selected index when selected place changes
-    $scope.$watch(function() {
-      return $scope.selected.getPlace()._id;
-    }, function(value) {
-      var filtered = $scope.places.filter(function(place) {
+    $rootScope.$on("selected.updated", function() {
+      $scope.filteredPlaces = $scope.places.filter(function(place) {
         return place.trip_id == $scope.selected.getPlace().trip_id;
       });
-      for(var i = 0; i < filtered.length; i++) {
-        if(filtered[i]._id == value) {
+
+      for(var i = 0; i < $scope.filteredPlaces.length; i++) {
+        if($scope.filteredPlaces[i]._id == $scope.selected.getPlace()._id) {
           $scope.selectedPlaceIndex = i;
         }
       }
       $scope.photos = [];
-      if(value !== undefined) {
+      if($scope.selected.getPlace()) {
         loadInitial();
       }
       $scope.selectedPhotoIndex = 0;
+      $scope.updateTransform();
     });
 
     $scope.tripColor = function() {
