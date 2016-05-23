@@ -137,6 +137,9 @@ map.controller('mapController', ['$rootScope', '$scope', '$state',
         case 40:  // down
           $scope.incrementSelectedPlace();
           break;
+        case 27:  // escape
+          $scope.close();
+          break;
       }
     }
 

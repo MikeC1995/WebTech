@@ -55,6 +55,7 @@ map.directive('tripMap', ['loadGoogleMapAPI', 'tripDataFactory', '$rootScope', f
           $scope.map = new google.maps.Map(document.getElementById($scope.mapId), {
             zoom: 5,
             minZoom: 3,
+            maxZoom: 10,
             center: {lat: 49.198353, lng: 9.767022},
             disableDefaultUI: true,
             zoomControl: true
