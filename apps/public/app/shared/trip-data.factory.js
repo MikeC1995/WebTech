@@ -199,8 +199,8 @@ trips.factory('tripDataFactory', ['$rootScope', 'apiFactory', '$stateParams', '$
     if (tripName) {
       var trip = {
         name: tripName.toUpperCase(),
-        // if run out of trip colours, will default to black
-        colour: $rootScope.defaultTripColours[trips.length] || '#000'
+        // if run out of trip colours, will wrap around
+        colour: $rootScope.defaultTripColours[trips.length % $rootScope.defaultTripColours.length] || '#000'
       };
       return new Promise(function(resolve, reject) {
         apiFactory.addTrip(trip)

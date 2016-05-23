@@ -79,7 +79,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 app.controller('appController', ['$rootScope', '$scope', '$state', 'userFactory', function($rootScope, $scope, $state, userFactory) {
 
-  $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f'];
+  $rootScope.defaultTripColours = ['#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', '#34495e', '#e67e22', '#f1c40f',
+                                   '#E91E63', '#3F51B5', '#00BCD4', '#009688', '#4CAF50', '#795548', '#607D8B', '#ff5722',
+                                   '#b71c1c', '#7B1FA2', '#CDDC39', '#9ccc65', '#FFEB3B', '#BF360C', '#5D4037', '#424242'];
 
   $scope.isSidePanelOpen = false;
   $scope.toggleSidePanelOpen = function() {
