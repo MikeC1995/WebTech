@@ -53,9 +53,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
       },
       // ensure current user is the authenticated user when on manage trips
       resolve: {
-        init: function($state, userFactory) {
+        init: function($state, $window, userFactory) {
           userFactory.getMe().then(function(me) {
             $state.params.user_id = me._id;
+          }, function() {
+            // Guest user
+            $window.location.href = '/login';
           });
         }
       }
@@ -65,11 +68,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
       views: {
         '': { templateUrl:"/app/components/friends/friends.view.html" }
       },
-      // ensure current user is the authenticated user when on manage trips
+      // ensure current user is the authenticated user when on friends
       resolve: {
-        init: function($state, userFactory) {
+        init: function($state, $window, userFactory) {
           userFactory.getMe().then(function(me) {
             $state.params.user_id = me._id;
+          }, function() {
+            // Guest user
+            $window.location.href = '/login';
           });
         }
       }
